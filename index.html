@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="css/main.css" as="style">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crystal Facility Solutions | Houston</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <div class="logo">
+                <img src="./images/CFSlogo.png" alt="Crystal Facility Solutions">
+                <!-- <div class="logo-text">
+                    <h1>Crystal Facility Solutions</h1>
+                    <p>Houston's Trusted Partner</p>
+                </div> -->
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active" onclick="scrollToSection('home'); return false;">Home</a></li>
+                <li><a href="#services" onclick="scrollToSection('services'); return false;">Services</a></li>
+                <li><a href="#about" onclick="scrollToSection('about'); return false;">About</a></li>
+                <li><a href="#testimonials" onclick="scrollToSection('testimonials'); return false;">Reviews</a></li>
+                <li><a href="#contact" onclick="scrollToSection('contact'); return false;">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="badge">Serving Houston Since 2010</span>
+            <h1>Facility Solutions <span>Reimagined</span></h1>
+            <p>Premium cleaning, transportation, landscaping, and maintenance services for schools and businesses.</p>
+            <div class="hero-buttons">
+                <button type="button" class="btn btn-primary" onclick="scrollToSection('services')">Our Services</button>
+                <button type="button" class="btn btn-glass" onclick="scrollToSection('contact')">Get Quote</button>
+            </div>
+        </div>
+    </section>
+
+<!-- Services Section -->
+<section id="services" class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>Comprehensive facility management solutions</p>
+        </div>
+        
+        <div class="services-grid">
+            <!-- Card 1: Cleaning (CLICKABLE) -->
+            <div class="service-card clickable" onclick="openModal('cleaning')">
+                <div class="service-img" style="background-image: url('images/cleaning.jpeg');">
+                    <i class="fas fa-broom service-icon"></i>
+                    <div class="click-hint">Click for Quote</div>
+                </div>
+                <h3>Cleaning Services</h3>
+                <p>Professional janitorial services for schools and offices.</p>
+                <ul>
+                    <li>Daily & Nightly Cleaning</li>
+                    <li>Carpet Shampooing</li>
+                    <li>Floor Waxing (VCT)</li>
+                </ul>
+            </div>
+
+            <!-- Card 2: Transportation (NOT clickable) -->
+            <div class="service-card">
+                <div class="service-img" style="background-image: url('images/BusImage.png');">
+                    <i class="fas fa-bus service-icon"></i>
+                </div>
+                <h3>Transportation</h3>
+                <p>Safe and reliable transportation for schools and events.</p>
+                <ul>
+                    <li>School Bus Services</li>
+                    <li>Field Trips</li>
+                    <li>Corporate Shuttle</li>
+                </ul>
+            </div>
+
+            <!-- Card 3: Landscaping (CLICKABLE) -->
+            <div class="service-card clickable" onclick="openModal('landscaping')">
+                <div class="service-img" style="background-image: url('images/garden-1024x367.jpg');">
+                    <i class="fas fa-leaf service-icon"></i>
+                    <div class="click-hint">Click for Quote</div>
+                </div>
+                <h3>Landscaping</h3>
+                <p>Beautiful outdoor spaces with eco-friendly practices.</p>
+                <ul>
+                    <li>Lawn Maintenance</li>
+                    <li>Garden Design</li>
+                    <li>Seasonal Planting</li>
+                </ul>
+            </div>
+
+            <!-- Card 4: Maintenance (CLICKABLE) -->
+            <div class="service-card clickable" onclick="openModal('maintenance')">
+                <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600');">
+                    <i class="fas fa-tools service-icon"></i>
+                    <div class="click-hint">Click for Quote</div>
+                </div>
+                <h3>Maintenance</h3>
+                <p>Comprehensive property maintenance and repairs.</p>
+                <ul>
+                    <li>General Repairs</li>
+                    <li>HVAC Maintenance</li>
+                    <li>Preventive Care</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Why Choose <span class="highlight">Crystal?</span></h2>
+                    <p>Since 2010, we've been Houston's trusted partner in facility management. Our cloud-based systems and mobile app ensure real-time tracking and quality control.</p>
+                    <p>With over 14 years of experience, we don't just clean buildings – we build lasting partnerships with schools and businesses across Texas.</p>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="number">14+</span>
+                            <span class="label">Years</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">500+</span>
+                            <span class="label">Clients</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">50+</span>
+                            <span class="label">Staff</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">99%</span>
+                            <span class="label">Happy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="visual-box">
+                        <i class="fas fa-award"></i>
+                        <h3>Excellence in Every Detail</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section testimonials-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Clients Say</h2>
+                <p>Trusted by schools, businesses, and communities across Houston</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <p class="quote">Crystal Facility Solutions transformed our school campus. Their attention to detail and consistent quality have made them an invaluable partner.</p>
+                    <div class="author">
+                        <div class="avatar">SM</div>
+                        <div class="info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>Principal, Houston ISD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="quote">We've been using CFS for 3 years. Their transportation service is punctual and safe. Highly recommend for any facility needs.</p>
+                    <div class="author">
+                        <div class="avatar">RJ</div>
+                        <div class="info">
+                            <h4>Robert Johnson</h4>
+                            <p>Facilities Director, TechCorp</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="quote">The landscaping team is exceptional. They transformed our corporate grounds into a beautiful, welcoming space.</p>
+                    <div class="author">
+                        <div class="avatar">EP</div>
+                        <div class="info">
+                            <h4>Emily Parker</h4>
+                            <p>CEO, GreenSpace Industries</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dots">
+                    <span class="dot active" onclick="showTestimonial(0)"></span>
+                    <span class="dot" onclick="showTestimonial(1)"></span>
+                    <span class="dot" onclick="showTestimonial(2)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>We'd Love Your Feedback</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div>
+                        <h3>Contact Info</h3>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Address</strong><br>
+                                4807 Sugar Grove Blvd Suite 101<br>
+                                Stafford, TX 77477
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Phone</strong><br>
+                                281-506-8826
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong><br>
+                                info@cfshouston.com
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hours-box">
+                        <h4><i class="fas fa-clock"></i>Working Hours</h4>
+                        <p>
+                            <strong>Mon - Fri:</strong> 8:00 AM - 6:00 PM<br>
+                            <strong>Sat:</strong> 9:00 AM - 2:00 PM<br>
+                            <span style="color: var(--cfs-green); font-weight: 600;">24/7 Emergency Support</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="feedbackForm">
+                    <h3>Share Your Feedback</h3>
+                    
+                    <div class="form-row">
+                        <input type="text" name="firstName" placeholder="Your Name *" required>
+                        <input type="email" name="email" placeholder="Email Address *" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <select name="userType" required>
+                            <option value="">I am a... *</option>
+                            <option value="school">School Admin</option>
+                            <option value="business">Business Owner</option>
+                            <option value="parent">Parent</option>
+                            <option value="employee">Employee</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <select name="serviceUsed" required>
+                            <option value="">Service Used *</option>
+                            <option value="cleaning">Cleaning</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="multiple">Multiple</option>
+                        </select>
+                    </div>
+                    
+                    <div class="rating-group">
+                        <label>Rate Our Service *</label>
+                        <div class="stars">
+                            <span class="star" onclick="setRating(1)">★</span>
+                            <span class="star" onclick="setRating(2)">★</span>
+                            <span class="star" onclick="setRating(3)">★</span>
+                            <span class="star" onclick="setRating(4)">★</span>
+                            <span class="star" onclick="setRating(5)">★</span>
+                        </div>
+                        <input type="hidden" name="rating" id="ratingInput" value="0" required>
+                    </div>
+                    
+                    <textarea name="feedback" placeholder="Your feedback..." required></textarea>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="permission" id="permissionCheck">
+                        <label for="permissionCheck">Use my feedback as testimonial</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i> Submit Feedback
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <img src="./images/whiteLogo.png" alt="CFS">
+                <h2>Crystal Facility Solutions</h2>
+                <p>Making your facility management easy since 2010</p>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#home" onclick="scrollToSection('home'); return false;">Home</a>
+                <a href="#services" onclick="scrollToSection('services'); return false;">Services</a>
+                <a href="#about" onclick="scrollToSection('about'); return false;">About</a>
+                <a href="#testimonials" onclick="scrollToSection('testimonials'); return false;">Reviews</a>
+                <a href="#contact" onclick="scrollToSection('contact'); return false;">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2026 Crystal Facility Solutions. Powered by Salesforce.</p>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <div class="chat-avatar">CFS</div>
+                    <div>
+                        <strong>Crystal Support</strong>
+                        <small>Online now</small>
+                    </div>
+                </div>
+                <button type="button" onclick="toggleChat()">&times;</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="message bot">
+                    <strong>👋 Hi there!</strong><br>
+                    How can I help you today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
+                <button type="button" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button type="button" class="chat-button" onclick="toggleChat()">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- Quote Request Modal -->
+    <div class="modal" id="quoteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Request a Quote</h2>
+                <button type="button" class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="quoteForm" novalidate>
+                    <input type="hidden" name="serviceType" id="serviceTypeInput">
+                    
+                    <div class="form-row">
+                        <div class="form-field">
+                            <input type="text" name="name" id="quoteName" placeholder="Full Name *">
+                            <span class="error-message" id="nameError"></span>
+                        </div>
+                        <div class="form-field">
+                            <input type="email" name="email" id="quoteEmail" placeholder="Email Address *">
+                            <span class="error-message" id="emailError"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-field">
+                            <input type="tel" name="phone" id="quotePhone" placeholder="Phone Number *">
+                            <span class="error-message" id="phoneError"></span>
+                        </div>
+                        <div class="form-field">
+                            <input type="text" name="company" id="quoteCompany" placeholder="Company/School Name *">
+                            <span class="error-message" id="companyError"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-field">
+                            <select name="propertyType" id="quotePropertyType">
+                                <option value="">Property Type *</option>
+                                <option value="school">School</option>
+                                <option value="office">Office Building</option>
+                                <option value="retail">Retail Space</option>
+                                <option value="warehouse">Warehouse</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="error-message" id="propertyTypeError"></span>
+                        </div>
+                        <div class="form-field">
+                            <input type="text" name="propertySize" id="quotePropertySize" placeholder="Approx. Sq. Ft. *">
+                            <span class="error-message" id="propertySizeError"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <select name="frequency" id="quoteFrequency">
+                            <option value="">Service Frequency *</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="one-time">One-time</option>
+                        </select>
+                        <span class="error-message" id="frequencyError"></span>
+                    </div>
+                    
+                    <textarea name="details" rows="3" placeholder="Additional details about your needs..."></textarea>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i> Submit Quote Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Modules - Load in order -->
+    <script src="js/modules/navigation.js"></script>
+    <script src="js/modules/modal.js"></script>
+    <script src="js/modules/forms.js"></script>
+    <script src="js/modules/testimonials.js"></script>
+    <script src="js/modules/chat.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

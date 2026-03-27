@@ -1,0 +1,176 @@
+/* ============================================
+   CRYSTAL FACILITY SOLUTIONS - NAVIGATION
+   Navigation Bar, Logo, and Menu Styles
+   ============================================ */
+
+/* ============================================
+   NAVIGATION CONTAINER
+   ============================================ */
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* Scrolled state - added via JS */
+.nav.scrolled {
+    box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.98);
+}
+
+/* ============================================
+   NAVIGATION CONTENT
+   ============================================ */
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ============================================
+   LOGO
+   ============================================ */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo img {
+    height: 80px !important;
+    width: auto !important;
+    display: block;
+}
+
+/* Alternative: Logo Box (CSS-only diamond logo) */
+.logo-box {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transform: rotate(45deg);
+}
+
+.logo-box::after {
+    content: 'CFS';
+    transform: rotate(-45deg);
+}
+
+/* Logo Text */
+.logo-text h1 {
+    font-size: 1.3rem;
+    color: var(--dark);
+    line-height: 1.2;
+    margin: 0;
+    font-weight: 700;
+}
+
+.logo-text p {
+    font-size: 0.75rem;
+    color: var(--cfs-green);
+    margin: 0;
+    font-weight: 500;
+}
+
+
+/* ============================================
+   NAVIGATION LINKS
+   ============================================ */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: var(--cfs-green);
+    color: white;
+}
+
+/* ============================================
+   MOBILE NAVIGATION
+   ============================================ */
+@media (max-width: 768px) {
+    .nav-content {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .logo img {
+        height: 60px !important;
+    }
+
+    .logo-text h1 {
+        font-size: 1.1rem;
+    }
+
+    .logo-text p {
+        font-size: 0.7rem;
+    }
+
+    /* Hide desktop nav links on mobile */
+    .nav-links {
+        display: none;
+    }
+
+    /* Optional: Mobile menu button (if needed later) */
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--dark);
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .nav-content {
+        padding: 0.5rem 1rem;
+    }
+
+    .logo {
+        gap: 0.75rem;
+    }
+
+    .logo img {
+        height: 50px !important;
+    }
+
+    .logo-text h1 {
+        font-size: 1rem;
+    }
+}

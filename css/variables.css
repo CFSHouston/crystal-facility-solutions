@@ -1,0 +1,133 @@
+/* ============================================
+   CRYSTAL FACILITY SOLUTIONS - VARIABLES
+   CSS Custom Properties and Color Palette
+   ============================================ */
+
+:root {
+    /* ============================================
+       PRIMARY COLORS - Brand Green
+       ============================================ */
+    --cfs-green: #7CB342;
+    --cfs-dark-green: #558B2F;
+    --cfs-light-green: #9CCC65;
+    
+    /* ============================================
+       NEUTRAL COLORS
+       ============================================ */
+    --dark: #1a1a1a;
+    --gray: #666;
+    --light-gray: #f5f5f5;
+    --white: #ffffff;
+    
+    /* ============================================
+       SEMANTIC COLORS
+       ============================================ */
+    --error-color: #e74c3c;
+    --error-bg: #fdf2f2;
+    --success-color: var(--cfs-green);
+    --success-bg: #f0f9eb;
+    --warning-color: #ffc107;
+    
+    /* ============================================
+       BACKGROUND GRADIENTS
+       ============================================ */
+    --bg-gradient-main: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
+    --bg-gradient-hero: linear-gradient(135deg, rgba(124, 179, 66, 0.1) 0%, rgba(156, 204, 101, 0.1) 100%);
+    --bg-gradient-testimonials: linear-gradient(135deg, rgba(124, 179, 66, 0.05) 0%, rgba(156, 204, 101, 0.05) 100%);
+    --bg-gradient-visual: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
+    --bg-gradient-header: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
+    
+    /* ============================================
+       SHADOWS
+       ============================================ */
+    --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+    --shadow-hover: 0 25px 60px rgba(0,0,0,0.2);
+    
+    --shadow-green-sm: 0 4px 15px rgba(124, 179, 66, 0.2);
+    --shadow-green-md: 0 10px 30px rgba(124, 179, 66, 0.4);
+    --shadow-green-lg: 0 15px 40px rgba(124, 179, 66, 0.5);
+    --shadow-green-xl: 0 20px 60px rgba(124, 179, 66, 0.3);
+    
+    /* ============================================
+       TYPOGRAPHY
+       ============================================ */
+    --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.85rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.1rem;
+    --font-size-lg: 1.3rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 1.8rem;
+    --font-size-3xl: 2.5rem;
+    --font-size-4xl: 4rem;
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.6;
+    --line-height-relaxed: 1.8;
+    
+    /* ============================================
+       SPACING
+       ============================================ */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 2.5rem;
+    --spacing-3xl: 3rem;
+    --spacing-4xl: 4rem;
+    --spacing-5xl: 6rem;
+    
+    /* ============================================
+       BORDERS
+       ============================================ */
+    --border-radius-sm: 10px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 15px;
+    --border-radius-xl: 20px;
+    --border-radius-2xl: 25px;
+    --border-radius-full: 50px;
+    --border-radius-circle: 50%;
+    
+    /* ============================================
+       Z-INDEX SCALE
+       ============================================ */
+    --z-base: 1;
+    --z-nav: 1000;
+    --z-chat: 1001;
+    --z-modal: 2000;
+    
+    /* ============================================
+       TRANSITIONS
+       ============================================ */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.4s ease;
+    --transition-slower: 0.6s ease;
+    
+    /* ============================================
+       CONTAINER
+       ============================================ */
+    --container-max-width: 1200px;
+    --container-padding: 2rem;
+    
+    /* ============================================
+       COMPONENT SIZES
+       ============================================ */
+    --nav-height: 80px;
+    --chat-button-size: 60px;
+    --chat-window-width: 350px;
+    --chat-window-height: 450px;
+    --modal-max-width: 600px;
+    --service-card-img-height: 150px;
+}
