@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Thank You | Crystal Facility Solutions</title>
+    <meta name="description" content="Thank you for contacting Crystal Facility Solutions. We'll be in touch shortly.">
+    <meta name="robots" content="noindex, nofollow"> <!-- Don't index thank-you page -->
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Page-specific styles -->
+    <style>
+        .thank-you-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--spacing-8);
+            background: var(--bg-gradient-hero);
+        }
+        
+        .thank-you-content {
+            max-width: 600px;
+            animation: fadeInUp var(--duration-slow);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--bg-gradient-visual);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-8);
+            box-shadow: var(--shadow-green-xl);
+            animation: scaleIn var(--duration-slow) 0.2s both;
+        }
+        
+        .success-icon i {
+            font-size: 3rem;
+            color: var(--white);
+        }
+        
+        .thank-you-content h1 {
+            font-size: var(--font-size-3xl);
+            color: var(--dark);
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .thank-you-content p {
+            color: var(--gray);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-6);
+            line-height: var(--line-height-relaxed);
+        }
+        
+        .next-steps {
+            background: var(--white);
+            border-radius: var(--border-radius-2xl);
+            padding: var(--spacing-8);
+            box-shadow: var(--shadow-lg);
+            margin: var(--spacing-8) 0;
+            text-align: left;
+        }
+        
+        .next-steps h2 {
+            font-size: var(--font-size-xl);
+            color: var(--dark);
+            margin-bottom: var(--spacing-6);
+            text-align: center;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--cfs-pale-green);
+            border: 2px solid var(--cfs-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-weight-bold);
+            color: var(--cfs-green);
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            font-size: var(--font-size-base);
+            color: var(--dark);
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .step-content p {
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+            margin: 0;
+        }
+        
+        .contact-info-box {
+            background: var(--cfs-pale-green);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-6);
+            margin-top: var(--spacing-6);
+        }
+        
+        .contact-info-box h3 {
+            font-size: var(--font-size-lg);
+            color: var(--dark);
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-3);
+            color: var(--gray);
+        }
+        
+        .contact-detail:last-child {
+            margin-bottom: 0;
+        }
+        
+        .contact-detail i {
+            color: var(--cfs-green);
+            width: 20px;
+        }
+        
+        .contact-detail a {
+            color: var(--cfs-green);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .contact-detail a:hover {
+            text-decoration: underline;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-4);
+            justify-content: center;
+            margin-top: var(--spacing-8);
+            flex-wrap: wrap;
+        }
+        
+        .action-buttons .btn {
+            min-width: 200px;
+        }
+        
+        /* Urgency banner for emergency submissions */
+        .urgency-banner {
+            background: var(--error-color);
+            color: var(--white);
+            padding: var(--spacing-4) var(--spacing-6);
+            border-radius: var(--border-radius-lg);
+            margin-bottom: var(--spacing-6);
+            display: none; /* Hidden by default, shown via JS */
+        }
+        
+        .urgency-banner.show {
+            display: block;
+            animation: slideDown var(--duration-fast);
+        }
+        
+        .urgency-banner i {
+            margin-right: var(--spacing-2);
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .thank-you-content h1 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .success-icon {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .success-icon i {
+                font-size: 2rem;
+            }
+            
+            .next-steps {
+                padding: var(--spacing-6);
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Simple Navigation -->
+    <nav class="nav" id="nav" style="position: absolute;">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <img src="./images/CFSlogo.png" alt="Crystal Facility Solutions Logo" width="60" height="60" loading="eager">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Thank You Section -->
+    <section class="thank-you-hero">
+        <div class="thank-you-content">
+            <!-- Emergency Banner (shown via JS if urgent) -->
+            <div class="urgency-banner" id="urgencyBanner">
+                <i class="fas fa-exclamation-circle"></i>
+                <strong>Emergency Request Received</strong> - We're prioritizing your inquiry!
+            </div>
+            
+            <!-- Success Icon -->
+            <div class="success-icon">
+                <i class="fas fa-check" aria-hidden="true"></i>
+            </div>
+            
+            <h1>Thank You!</h1>
+            <p>Your submission has been received. Our team is reviewing your request and will contact you within <strong>2 business hours</strong>.</p>
+            
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <h2>What Happens Next?</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Review</h3>
+                        <p>Our team reviews your facility needs and requirements.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Contact</h3>
+                        <p>We call or email to discuss details and schedule a site visit if needed.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Proposal</h3>
+                        <p>You receive a customized service proposal within 24 hours.</p>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="contact-info-box">
+                    <h3>Need Immediate Assistance?</h3>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>Call us: <a href="tel:281-506-8826">281-506-8826</a></span>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>Email: <a href="mailto:info@cfshouston.com">info@cfshouston.com</a></span>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-clock" aria-hidden="true"></i>
+                        <span>24/7 Emergency Support Available</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-home" aria-hidden="true"></i> Back to Home
+                </a>
+                <a href="index.html#services" class="btn btn-glass">
+                    <i class="fas fa-th-large" aria-hidden="true"></i> Explore Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Footer -->
+    <footer style="padding: var(--spacing-6); text-align: center; background: var(--dark); color: var(--white);">
+        <p class="copyright" style="border: none; padding: 0; margin: 0;">&copy; 2026 Crystal Facility Solutions. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for dynamic content -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // Parse URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const formType = urlParams.get('form');
+            const isUrgent = urlParams.get('urgent') === 'true';
+            const serviceType = urlParams.get('service');
+            
+            // Show urgency banner for emergency submissions
+            if (isUrgent) {
+                const banner = document.getElementById('urgencyBanner');
+                if (banner) banner.classList.add('show');
+            }
+            
+            // Customize message based on form type
+            const heading = document.querySelector('h1');
+            const paragraph = document.querySelector('.thank-you-content > p');
+            
+            if (formType === 'quote' && serviceType) {
+                heading.textContent = 'Quote Request Received!';
+                paragraph.innerHTML = `Thank you for your interest in our <strong>${decodeURIComponent(serviceType)}</strong>. We'll prepare your customized quote and contact you within 2 business hours.`;
+            } else if (formType === 'feedback') {
+                heading.textContent = 'Feedback Submitted!';
+                paragraph.textContent = 'Thank you for sharing your experience with us. Your feedback helps us improve our services.';
+            }
+            
+            // Track conversion (optional - add your analytics here)
+            console.log('Conversion tracked:', { formType, serviceType, isUrgent });
+            
+        })();
+    </script>
+</body>
+</html>

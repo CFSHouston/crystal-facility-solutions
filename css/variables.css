@@ -1,6 +1,6 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - VARIABLES
-   CSS Custom Properties and Color Palette
+   CSS Custom Properties & Design Tokens
    ============================================ */
 
 :root {
@@ -10,12 +10,16 @@
     --cfs-green: #7CB342;
     --cfs-dark-green: #558B2F;
     --cfs-light-green: #9CCC65;
+    --cfs-pale-green: #E8F5E9;
     
     /* ============================================
        NEUTRAL COLORS
        ============================================ */
     --dark: #1a1a1a;
+    --dark-secondary: #2d2d2d;
     --gray: #666;
+    --gray-light: #999;
+    --gray-pale: #e0e0e0;
     --light-gray: #f5f5f5;
     --white: #ffffff;
     
@@ -24,9 +28,22 @@
        ============================================ */
     --error-color: #e74c3c;
     --error-bg: #fdf2f2;
+    --error-border: #fca5a5;
     --success-color: var(--cfs-green);
     --success-bg: #f0f9eb;
+    --success-border: #86efac;
     --warning-color: #ffc107;
+    --warning-bg: #fffbeb;
+    --info-color: #3b82f6;
+    --info-bg: #eff6ff;
+    
+    /* ============================================
+       INTERACTIVE STATES
+       ============================================ */
+    --focus-ring: 0 0 0 3px rgba(124, 179, 66, 0.4);
+    --focus-ring-error: 0 0 0 3px rgba(231, 76, 60, 0.3);
+    --hover-translate: translateY(-3px);
+    --active-scale: scale(0.98);
     
     /* ============================================
        BACKGROUND GRADIENTS
@@ -36,6 +53,7 @@
     --bg-gradient-testimonials: linear-gradient(135deg, rgba(124, 179, 66, 0.05) 0%, rgba(156, 204, 101, 0.05) 100%);
     --bg-gradient-visual: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
     --bg-gradient-header: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
+    --bg-gradient-dark: linear-gradient(135deg, var(--dark), var(--dark-secondary));
     
     /* ============================================
        SHADOWS
@@ -54,17 +72,19 @@
     /* ============================================
        TYPOGRAPHY
        ============================================ */
-    --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family-base: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
     
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.85rem;
-    --font-size-base: 1rem;
-    --font-size-md: 1.1rem;
-    --font-size-lg: 1.3rem;
-    --font-size-xl: 1.5rem;
-    --font-size-2xl: 1.8rem;
-    --font-size-3xl: 2.5rem;
-    --font-size-4xl: 4rem;
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-md: 1.125rem;   /* 18px */
+    --font-size-lg: 1.25rem;    /* 20px */
+    --font-size-xl: 1.5rem;     /* 24px */
+    --font-size-2xl: 1.875rem;  /* 30px */
+    --font-size-3xl: 2.25rem;   /* 36px */
+    --font-size-4xl: 3rem;      /* 48px */
+    --font-size-5xl: 3.75rem;   /* 60px */
     
     --font-weight-normal: 400;
     --font-weight-medium: 500;
@@ -72,62 +92,244 @@
     --font-weight-bold: 700;
     
     --line-height-tight: 1.2;
+    --line-height-snug: 1.375;
     --line-height-normal: 1.6;
     --line-height-relaxed: 1.8;
     
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.025em;
+    
     /* ============================================
-       SPACING
+       SPACING SCALE
        ============================================ */
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 0.75rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 2.5rem;
-    --spacing-3xl: 3rem;
-    --spacing-4xl: 4rem;
-    --spacing-5xl: 6rem;
+    --spacing-0: 0;
+    --spacing-1: 0.25rem;   /* 4px */
+    --spacing-2: 0.5rem;    /* 8px */
+    --spacing-3: 0.75rem;   /* 12px */
+    --spacing-4: 1rem;      /* 16px */
+    --spacing-5: 1.25rem;   /* 20px */
+    --spacing-6: 1.5rem;    /* 24px */
+    --spacing-8: 2rem;      /* 32px */
+    --spacing-10: 2.5rem;   /* 40px */
+    --spacing-12: 3rem;     /* 48px */
+    --spacing-16: 4rem;     /* 64px */
+    --spacing-20: 5rem;     /* 80px */
+    --spacing-24: 6rem;     /* 96px */
     
     /* ============================================
        BORDERS
        ============================================ */
-    --border-radius-sm: 10px;
-    --border-radius-md: 12px;
-    --border-radius-lg: 15px;
-    --border-radius-xl: 20px;
-    --border-radius-2xl: 25px;
-    --border-radius-full: 50px;
-    --border-radius-circle: 50%;
+    --border-width-0: 0;
+    --border-width-1: 1px;
+    --border-width-2: 2px;
+    --border-width-4: 4px;
+    
+    --border-radius-none: 0;
+    --border-radius-sm: 0.375rem;   /* 6px */
+    --border-radius-md: 0.5rem;     /* 8px */
+    --border-radius-lg: 0.75rem;    /* 12px */
+    --border-radius-xl: 1rem;       /* 16px */
+    --border-radius-2xl: 1.25rem;     /* 20px */
+    --border-radius-3xl: 1.5rem;      /* 24px */
+    --border-radius-full: 9999px;
     
     /* ============================================
        Z-INDEX SCALE
        ============================================ */
-    --z-base: 1;
+    --z-hide: -1;
+    --z-base: 0;
+    --z-dropdown: 100;
+    --z-sticky: 200;
     --z-nav: 1000;
-    --z-chat: 1001;
+    --z-modal-backdrop: 1500;
     --z-modal: 2000;
+    --z-popover: 3000;
+    --z-tooltip: 4000;
+    --z-toast: 5000;
     
     /* ============================================
-       TRANSITIONS
+       TRANSITIONS & ANIMATION
        ============================================ */
-    --transition-fast: 0.2s ease;
-    --transition-base: 0.3s ease;
-    --transition-slow: 0.4s ease;
-    --transition-slower: 0.6s ease;
+    --transition-none: none;
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-normal: 300ms ease;
+    --transition-slow: 400ms ease;
+    --transition-slower: 500ms ease;
+    
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     /* ============================================
-       CONTAINER
+       ANIMATION DURATIONS
+       ============================================ */
+    --duration-instant: 100ms;
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    --duration-slower: 700ms;
+    
+    /* ============================================
+       CONTAINER & LAYOUT
        ============================================ */
     --container-max-width: 1200px;
+    --container-max-width-lg: 1400px;
     --container-padding: 2rem;
+    --container-padding-sm: 1rem;
     
     /* ============================================
        COMPONENT SIZES
        ============================================ */
     --nav-height: 80px;
+    --nav-height-scrolled: 64px;
     --chat-button-size: 60px;
     --chat-window-width: 350px;
     --chat-window-height: 450px;
+    --chat-window-height-mobile: 80vh;
     --modal-max-width: 600px;
+    --modal-max-width-lg: 800px;
     --service-card-img-height: 150px;
+    
+    /* ============================================
+       FORM ELEMENTS
+       ============================================ */
+    --input-height: 3rem;
+    --input-padding-x: 1rem;
+    --input-padding-y: 0.75rem;
+    --input-border-width: 2px;
+    --input-border-radius: var(--border-radius-lg);
+    --input-bg: var(--white);
+    --input-border-color: var(--gray-pale);
+    --input-focus-border-color: var(--cfs-green);
+    
+    /* ============================================
+       BUTTON SIZES
+       ============================================ */
+    --btn-height-sm: 2.25rem;
+    --btn-height-md: 2.75rem;
+    --btn-height-lg: 3.25rem;
+    --btn-padding-x: 1.5rem;
+    --btn-padding-x-lg: 2.5rem;
+    
+    /* ============================================
+       LOADING & SKELETON
+       ============================================ */
+    --skeleton-bg: linear-gradient(90deg, var(--light-gray) 25%, #e8e8e8 50%, var(--light-gray) 75%);
+    --skeleton-animation: shimmer 1.5s infinite;
+    --spinner-size: 1.5rem;
+    --spinner-color: var(--cfs-green);
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Future-proofing)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Uncomment when ready for dark mode
+        --dark: #f5f5f5;
+        --dark-secondary: #e0e0e0;
+        --gray: #999;
+        --light-gray: #2d2d2d;
+        --white: #1a1a1a;
+        --bg-gradient-main: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        */
+    }
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-fast: 0ms;
+        --transition-base: 0ms;
+        --transition-normal: 0ms;
+        --transition-slow: 0ms;
+        --transition-slower: 0ms;
+        --duration-instant: 0ms;
+        --duration-fast: 0ms;
+        --duration-normal: 0ms;
+        --duration-slow: 0ms;
+        --duration-slower: 0ms;
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================ */
+@media (prefers-contrast: high) {
+    :root {
+        --focus-ring: 0 0 0 4px var(--cfs-green);
+        --shadow-sm: 0 2px 0 0 rgba(0,0,0,0.3);
+        --shadow-md: 0 4px 0 0 rgba(0,0,0,0.3);
+    }
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpMobile {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -30px) scale(1.1); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }

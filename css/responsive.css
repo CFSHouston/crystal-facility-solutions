@@ -7,134 +7,157 @@
    LARGE SCREENS (1200px and below)
    ============================================ */
 @media (max-width: 1200px) {
-    /* Services grid - 2 columns */
+    /* Services Grid */
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
         max-width: 900px;
     }
+    
+    /* Container */
+    .container {
+        padding-inline: var(--spacing-6);
+    }
 }
 
 /* ============================================
-   TABLET (768px and below)
+   TABLET (992px and below)
+   ============================================ */
+@media (max-width: 992px) {
+    /* Typography Scale Down */
+    .section-title h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* About Section */
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-10);
+    }
+    
+    .about-text h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* Stats */
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-4);
+    }
+    
+    /* Contact Grid */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-6);
+    }
+    
+    .contact-info,
+    .contact-form {
+        padding: var(--spacing-6);
+    }
+}
+
+/* ============================================
+   MOBILE (768px and below)
    ============================================ */
 @media (max-width: 768px) {
     /* Navigation */
     .nav-links {
         display: none;
     }
-
-    .nav-content {
-        padding: 0.75rem 1.5rem;
+    
+    .mobile-menu-btn {
+        display: flex;
     }
-
+    
     /* Hero Section */
     .hero {
         min-height: auto;
-        padding: 6rem 1.5rem 3rem;
+        padding-block: calc(var(--nav-height) + var(--spacing-6)) var(--spacing-12);
     }
-
+    
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: var(--font-size-3xl);
     }
-
+    
     .hero p {
-        font-size: 1.1rem;
+        font-size: var(--font-size-lg);
     }
-
+    
     .hero-buttons {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
     }
-
+    
     .hero-buttons .btn {
         width: 100%;
-        max-width: 300px;
     }
-
+    
     /* Sections */
     .section {
-        padding: 4rem 1.5rem;
+        padding-block: var(--spacing-12);
+        padding-inline: var(--spacing-4);
     }
-
+    
     .section-title {
-        font-size: 2rem;
-        margin-bottom: 3rem;
+        margin-bottom: var(--spacing-10);
     }
-
+    
     .section-title h2 {
-        font-size: 2rem;
+        font-size: var(--font-size-xl);
     }
-
-    /* Grids - Stack to single column */
-    .about-grid,
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .about-text h2 {
-        font-size: 2rem;
-    }
-
+    
     /* Services */
     .services-grid {
         grid-template-columns: 1fr;
         max-width: 500px;
     }
-
+    
+    .service-img {
+        height: 180px;
+    }
+    
     /* Stats */
-    .stats {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1.5rem;
-    }
-
     .stat {
-        flex: 0 0 calc(50% - 1rem);
+        padding: var(--spacing-3);
     }
-
+    
+    .number {
+        font-size: var(--font-size-2xl);
+    }
+    
     /* Testimonials */
     .quote {
-        font-size: 1.1rem;
-        padding: 0 1rem;
+        font-size: var(--font-size-lg);
+        padding-inline: var(--spacing-4);
     }
-
+    
     .quote::before,
     .quote::after {
         font-size: 2rem;
     }
-
-    /* Forms */
-    .form-row {
-        grid-template-columns: 1fr;
+    
+    /* Contact */
+    .contact-info,
+    .contact-form {
+        padding: var(--spacing-5);
     }
-
-    .contact-form,
-    .contact-info {
-        padding: 1.5rem;
+    
+    .contact-info h3,
+    .contact-form h3 {
+        font-size: var(--font-size-lg);
     }
-
-    /* Chat Widget */
-    .chat-window {
-        width: 90vw;
-        right: -20px;
-        max-width: 350px;
-    }
-
+    
     /* Footer */
     .footer-links {
-        gap: 1rem;
+        gap: var(--spacing-4);
         flex-direction: column;
     }
-
-    .social-links {
-        gap: 0.75rem;
-    }
-
-    .social-links a {
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
+    
+    /* Chat Widget */
+    .chat-window {
+        width: calc(100vw - var(--spacing-8));
+        right: calc(-1 * var(--spacing-2));
+        height: 80vh;
     }
 }
 
@@ -144,97 +167,75 @@
 @media (max-width: 480px) {
     /* Navigation */
     .nav-content {
-        padding: 0.5rem 1rem;
+        padding-inline: var(--spacing-4);
     }
-
+    
     .logo img {
-        height: 50px !important;
+        height: 50px;
     }
-
-    .logo-text h1 {
-        font-size: 1rem;
-    }
-
-    .logo-text p {
-        font-size: 0.65rem;
-    }
-
+    
     /* Hero */
     .hero h1 {
-        font-size: 2rem;
+        font-size: var(--font-size-2xl);
     }
-
+    
     .hero p {
-        font-size: 1rem;
+        font-size: var(--font-size-base);
     }
-
+    
     .badge {
-        font-size: 0.8rem;
-        padding: 0.4rem 1rem;
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-1) var(--spacing-3);
     }
-
+    
     /* Sections */
     .section {
-        padding: 3rem 1rem;
+        padding-block: var(--spacing-10);
     }
-
-    .section-title {
-        font-size: 1.75rem;
-    }
-
+    
     .section-title h2 {
-        font-size: 1.75rem;
+        font-size: var(--font-size-xl);
     }
-
+    
     /* Service Cards */
     .service-card h3 {
-        font-size: 1.1rem;
+        font-size: var(--font-size-lg);
     }
-
-    .service-card p {
-        font-size: 0.85rem;
-    }
-
+    
     .service-img {
-        height: 120px;
+        height: 150px;
     }
-
+    
     /* Stats */
+    .stats {
+        grid-template-columns: 1fr;
+    }
+    
     .stat {
-        flex: 0 0 100%;
+        padding: var(--spacing-3);
     }
-
-    .number {
-        font-size: 2rem;
+    
+    /* Forms */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
-
-    /* Contact */
-    .contact-form h3,
-    .contact-info h3 {
-        font-size: 1.5rem;
+    
+    input,
+    select,
+    textarea {
+        font-size: 16px; /* Prevent iOS zoom */
     }
-
-    .info-item {
-        padding: 1rem;
-    }
-
-    .info-item i {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
+    
     /* Footer */
-    footer {
-        padding: 3rem 1rem 1.5rem;
+    .footer-logo img {
+        height: 80px;
     }
-
-    .footer-logo h2 {
-        font-size: 1.25rem;
-    }
-
-    .copyright {
-        font-size: 0.8rem;
+    
+    .social-links a {
+        width: 44px;
+        height: 44px;
+        font-size: var(--font-size-base);
     }
 }
 
@@ -245,14 +246,14 @@
     .hero h1 {
         font-size: 1.75rem;
     }
-
+    
     .section-title h2 {
         font-size: 1.5rem;
     }
-
+    
     .btn {
-        padding: 0.875rem 2rem;
-        font-size: 0.9rem;
+        padding: var(--spacing-2) var(--spacing-4);
+        font-size: var(--font-size-sm);
     }
 }
 
@@ -262,14 +263,14 @@
 @media (max-height: 500px) and (orientation: landscape) {
     .hero {
         min-height: auto;
-        padding-top: 5rem;
+        padding-block: calc(var(--nav-height) + var(--spacing-4)) var(--spacing-8);
     }
-
+    
     .chat-window {
         height: 80vh;
         max-height: 350px;
     }
-
+    
     .modal-content {
         max-height: 95vh;
     }
@@ -280,19 +281,19 @@
    ============================================ */
 @media (min-width: 1920px) {
     .container {
-        max-width: 1400px;
+        max-width: var(--container-max-width-lg);
     }
-
+    
     .nav-content {
-        max-width: 1400px;
+        max-width: var(--container-max-width-lg);
     }
-
+    
     .hero-content {
         max-width: 900px;
     }
-
+    
     .hero h1 {
-        font-size: 5rem;
+        font-size: var(--font-size-5xl);
     }
 }
 
@@ -303,16 +304,76 @@
     .nav,
     .chat-widget,
     .hero-buttons,
-    .modal {
+    .modal,
+    .dots,
+    .mobile-menu-btn,
+    .mobile-nav {
         display: none !important;
     }
-
+    
     .section {
-        padding: 2rem 0;
+        padding-block: var(--spacing-6);
         page-break-inside: avoid;
     }
-
+    
     body {
-        background: white;
+        background: var(--white);
+    }
+    
+    .hero {
+        min-height: auto;
+        padding-block: var(--spacing-8);
+    }
+    
+    .contact-form,
+    .contact-info {
+        box-shadow: none;
+        border: 1px solid var(--gray-pale);
+    }
+    
+    a {
+        text-decoration: none;
+        color: var(--dark);
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: var(--font-size-xs);
+        color: var(--gray);
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE
+   ============================================ */
+@media (prefers-contrast: high) {
+    .btn:focus-visible,
+    .modal-close:focus-visible,
+    .dot:focus-visible,
+    .chat-button:focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 2px;
+        box-shadow: none;
+    }
+    
+    .service-card.clickable:focus-visible {
+        box-shadow: 0 0 0 3px currentColor;
     }
 }

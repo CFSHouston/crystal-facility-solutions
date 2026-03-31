@@ -1,6 +1,6 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - NAVIGATION MODULE
-   Navigation, Scroll, and Active State Management
+   Modern Event Listeners, No Window Globals
    ============================================ */
 
 (function() {
@@ -12,6 +12,8 @@
     let nav = null;
     let navLinks = null;
     let sections = null;
+    let mobileMenuBtn = null;
+    let mobileNav = null;
 
     // ============================================
     // INITIALIZATION
@@ -20,38 +22,64 @@
         nav = document.getElementById('nav');
         navLinks = document.querySelectorAll('.nav-links a');
         sections = document.querySelectorAll('section[id]');
+        mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        mobileNav = document.getElementById('mobileNav');
 
         if (!nav) {
-            console.warn('Navigation element not found in DOM');
+            console.warn('Navigation element not found');
             return;
         }
 
-        // Bind global scroll function
-        window.scrollToSection = scrollToSection;
-
-        // Set up event listeners
         setupScrollListener();
         setupNavClickListeners();
+        setupMobileMenu();
+        setupSmoothScroll();
     }
 
     // ============================================
-    // SCROLL TO SECTION
+    // SMOOTH SCROLL (Event Delegation)
     // ============================================
-    function scrollToSection(sectionId) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-        return false;
+    function setupSmoothScroll() {
+        // Handle all data-scroll clicks
+        document.addEventListener('click', function(e) {
+            const scrollTrigger = e.target.closest('[data-scroll]');
+            if (!scrollTrigger) return;
+
+            e.preventDefault();
+            const targetId = scrollTrigger.dataset.scroll;
+            const target = document.getElementById(targetId);
+
+            if (target) {
+                // Close mobile menu if open
+                closeMobileMenu();
+
+                // Smooth scroll
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Update active state
+                updateActiveLink(targetId);
+            }
+        });
     }
 
     // ============================================
     // SCROLL EVENT LISTENER
     // ============================================
     function setupScrollListener() {
+        let ticking = false;
+
         window.addEventListener('scroll', function() {
-            updateNavOnScroll();
-            highlightActiveSection();
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    updateNavOnScroll();
+                    highlightActiveSection();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
     }
 
@@ -61,8 +89,8 @@
     function updateNavOnScroll() {
         if (!nav) return;
         
-        // Add/remove scrolled class for styling
-        nav.classList.toggle('scrolled', window.scrollY > 50);
+        const shouldBeScrolled = window.scrollY > 50;
+        nav.classList.toggle('scrolled', shouldBeScrolled);
     }
 
     // ============================================
@@ -72,7 +100,7 @@
         if (!navLinks || !sections) return;
 
         let current = '';
-        const scrollPos = window.scrollY + 200; // Offset for better detection
+        const scrollPos = window.scrollY + 200;
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -85,25 +113,128 @@
 
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
-            link.classList.toggle('active', href === '#' + current);
+            const isActive = href === '#' + current;
+            link.classList.toggle('active', isActive);
+            
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
         });
     }
 
     // ============================================
-    // NAV CLICK LISTENERS
+    // UPDATE ACTIVE LINK (Manual)
+    // ============================================
+    function updateActiveLink(sectionId) {
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            const isActive = href === '#' + sectionId;
+            
+            link.classList.toggle('active', isActive);
+            
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
+    }
+
+    // ============================================
+    // NAV CLICK LISTENERS (Desktop)
     // ============================================
     function setupNavClickListeners() {
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                // Remove active from all links
-                navLinks.forEach(l => l.classList.remove('active'));
+                // Update active state immediately
+                navLinks.forEach(l => {
+                    l.classList.remove('active');
+                    l.removeAttribute('aria-current');
+                });
                 
-                // Add active to clicked link
                 this.classList.add('active');
-                
-                // Smooth scroll is handled by onclick attribute
+                this.setAttribute('aria-current', 'page');
             });
         });
+    }
+
+    // ============================================
+    // MOBILE MENU
+    // ============================================
+    function setupMobileMenu() {
+        if (!mobileMenuBtn || !mobileNav) return;
+
+        // Toggle on button click
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isMobileMenuOpen()) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close on backdrop click
+        mobileNav.addEventListener('click', function(e) {
+            if (e.target === mobileNav) {
+                closeMobileMenu();
+            }
+        });
+
+        // Prevent body scroll when menu is open
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'hidden') {
+                    const isHidden = mobileNav.hasAttribute('hidden');
+                    document.body.style.overflow = isHidden ? '' : 'hidden';
+                }
+            });
+        });
+
+        observer.observe(mobileNav, { attributes: true });
+    }
+
+    function toggleMobileMenu() {
+        if (!mobileNav || !mobileMenuBtn) return;
+
+        const isHidden = mobileNav.hasAttribute('hidden');
+        
+        if (isHidden) {
+            openMobileMenu();
+        } else {
+            closeMobileMenu();
+        }
+    }
+
+    function openMobileMenu() {
+        if (!mobileNav || !mobileMenuBtn) return;
+
+        mobileNav.removeAttribute('hidden');
+        mobileNav.classList.add('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+        
+        // Focus first link
+        const firstLink = mobileNav.querySelector('a');
+        if (firstLink) {
+            setTimeout(() => firstLink.focus(), 100);
+        }
+    }
+
+    function closeMobileMenu() {
+        if (!mobileNav || !mobileMenuBtn) return;
+
+        mobileNav.setAttribute('hidden', '');
+        mobileNav.classList.remove('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        
+        // Return focus to button
+        mobileMenuBtn.focus();
+    }
+
+    function isMobileMenuOpen() {
+        return mobileNav && !mobileNav.hasAttribute('hidden');
     }
 
     // ============================================
