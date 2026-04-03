@@ -639,110 +639,175 @@
 })();
 
 // ============================================
-// INDUSTRY HOVER TOOLTIP
+// INDUSTRY HOVER TOOLTIP - SIMPLE & RELIABLE
 // ============================================
 
 (function() {
     'use strict';
 
-    // Industry data
+    // Industry data with ALL services
     const industryData = {
-        'Education Cleaning': {
+        'Education Facilities': {
             icon: 'fa-graduation-cap',
             title: 'Education Facilities',
-            description: 'Comprehensive cleaning for schools, colleges, and universities.',
-            services: ['Classroom sanitization', 'Laboratory cleaning', 'Cafeteria deep clean', 'Gym maintenance', 'Daycare hygiene'],
+            description: 'Comprehensive facility solutions for schools, colleges, and universities ensuring safe, clean learning environments.',
+            services: {
+                cleaning: ['Classroom sanitization', 'Laboratory deep cleaning', 'Cafeteria & kitchen hygiene', 'Gym & locker room maintenance', 'Daycare disinfection protocols'],
+                transportation: ['School bus fleet management', 'Field trip transportation', 'Sports team travel', 'Safe route planning'],
+                landscaping: ['Campus grounds maintenance', 'Sports field care', 'Playground safety surfacing', 'Seasonal planting programs'],
+                maintenance: ['HVAC system servicing', 'Plumbing & electrical repairs', 'Preventive maintenance plans', 'Emergency repair services']
+            },
             highlight: 'Trusted by 50+ educational institutions'
         },
-        'Office Building Cleaning': {
+        'Corporate Offices': {
             icon: 'fa-building',
             title: 'Corporate Offices',
-            description: 'Professional cleaning for modern workspaces and corporate headquarters.',
-            services: ['Workspace sanitization', 'Conference room prep', 'Break room cleaning', 'Carpet care', 'Window cleaning'],
+            description: 'Professional facility management for modern workspaces and corporate headquarters.',
+            services: {
+                cleaning: ['Workspace sanitization', 'Conference room preparation', 'Break room & kitchen cleaning', 'Carpet & upholstery care', 'Window cleaning services'],
+                transportation: ['Employee shuttle services', 'Corporate event transport', 'Airport transfer coordination', 'Executive car services'],
+                landscaping: ['Corporate campus grounds', 'Entryway & reception gardens', 'Outdoor meeting spaces', 'Sustainable landscape design'],
+                maintenance: ['Building system maintenance', 'Office equipment repairs', 'Lighting & electrical work', 'Facility upgrades & renovations']
+            },
             highlight: 'Serving 200+ corporate clients'
         },
         'Apartment Complex': {
             icon: 'fa-home',
             title: 'Multi-Family Residences',
-            description: 'Full-service cleaning for apartment communities and condominiums.',
-            services: ['Common area maintenance', 'Move-in/out cleaning', 'Clubhouse care', 'Pool area cleaning', 'Parking garage wash'],
+            description: 'Full-service facility solutions for apartment communities and condominiums.',
+            services: {
+                cleaning: ['Common area maintenance', 'Move-in/out deep cleaning', 'Clubhouse & amenity cleaning', 'Trash chute & dumpster areas', 'Window washing services'],
+                landscaping: ['Community grounds keeping', 'Pool area maintenance', 'Walking path care', 'Seasonal flower programs', 'Tree & shrub management'],
+                maintenance: ['Unit turnover repairs', 'Plumbing & electrical', 'HVAC servicing', 'Appliance maintenance', '24/7 emergency repairs']
+            },
             highlight: 'Managing 75+ apartment communities'
         },
         'Car Dealerships': {
             icon: 'fa-car',
             title: 'Automotive Showrooms',
-            description: 'Spotless cleaning for showrooms, service centers, and lots.',
-            services: ['Showroom polishing', 'Service bay degreasing', 'Customer lounge care', 'Vehicle prep', 'Exterior maintenance'],
+            description: 'Spotless facility solutions for showrooms, service centers, and dealership lots.',
+            services: {
+                cleaning: ['Showroom floor polishing', 'Vehicle display detailing', 'Customer lounge maintenance', 'Service bay degreasing', 'Window & glass cleaning'],
+                landscaping: ['Lot maintenance & debris removal', 'Entryway presentation', 'Test drive route care', 'Seasonal decorations'],
+                maintenance: ['Service equipment upkeep', 'Lighting maintenance', 'Building repairs', 'Signage maintenance']
+            },
             highlight: 'Trusted by major auto brands'
         },
         'Gyms': {
             icon: 'fa-dumbbell',
             title: 'Fitness Centers',
-            description: 'Hygiene-focused cleaning for gyms, studios, and wellness centers.',
-            services: ['Equipment sanitization', 'Locker room deep clean', 'Pool & spa care', 'Studio maintenance', 'Steam room cleaning'],
+            description: 'Hygiene-focused facility solutions for gyms, studios, and wellness centers.',
+            services: {
+                cleaning: ['Equipment sanitization', 'Locker room deep cleaning', 'Steam room & sauna care', 'Pool & spa maintenance', 'Studio floor care', 'Shower & restroom disinfection'],
+                landscaping: ['Outdoor training areas', 'Pool deck maintenance', 'Entryway greenery', 'Parking lot cleanliness'],
+                maintenance: ['Equipment repairs', 'HVAC & ventilation', 'Plumbing for showers', 'Electrical systems']
+            },
             highlight: 'Health club certified protocols'
         },
         'Retail Stores': {
             icon: 'fa-shopping-bag',
             title: 'Retail Spaces',
-            description: 'Immaculate cleaning for stores, boutiques, and shopping centers.',
-            services: ['Sales floor care', 'Fitting room sanitization', 'Restroom maintenance', 'Display cleaning', 'Stock room organization'],
+            description: 'Immaculate facility solutions for stores, boutiques, and shopping centers.',
+            services: {
+                cleaning: ['Sales floor care', 'Fitting room sanitization', 'Restroom maintenance', 'Display & fixture cleaning', 'Stock room organization', 'Window & entrance cleaning'],
+                landscaping: ['Storefront presentation', 'Entryway maintenance', 'Seasonal decorations', 'Outdoor display areas'],
+                maintenance: ['Fixture repairs', 'Lighting maintenance', 'HVAC systems', 'Point-of-sale equipment']
+            },
             highlight: 'Serving 100+ retail locations'
         },
-        'Industrial Cleaning': {
+        'Industrial Facilities': {
             icon: 'fa-industry',
             title: 'Industrial Facilities',
-            description: 'Heavy-duty cleaning for warehouses, factories, and plants.',
-            services: ['Floor scrubbing', 'Machinery degreasing', 'Loading dock care', 'Office cleaning', 'Safety compliance'],
+            description: 'Heavy-duty facility solutions for warehouses, factories, and manufacturing plants.',
+            services: {
+                cleaning: ['Industrial floor scrubbing', 'Machinery degreasing', 'Warehouse dust control', 'Loading dock cleaning', 'High-dusting services', 'Confined space cleaning'],
+                transportation: ['Employee shuttle services', 'Inter-facility transport', 'Shift change coordination', 'Logistics support'],
+                landscaping: ['Industrial grounds maintenance', 'Perimeter fencing care', 'Storm water management', 'Environmental compliance'],
+                maintenance: ['Production equipment care', 'Building envelope repairs', 'Electrical & mechanical', 'Preventive maintenance programs', 'OSHA compliance support']
+            },
             highlight: 'OSHA compliant operations'
         },
-        'Hospitality Cleaning': {
+        'Hotels & Hospitality': {
             icon: 'fa-hotel',
             title: 'Hotels & Hospitality',
-            description: 'Guest-ready cleaning for hotels, resorts, and venues.',
-            services: ['Guest room turnover', 'Lobby maintenance', 'Restaurant cleaning', 'Event prep', 'Spa sanitization'],
+            description: 'Guest-ready facility solutions for hotels, resorts, and hospitality venues.',
+            services: {
+                cleaning: ['Guest room turnover', 'Lobby & common areas', 'Restaurant & bar cleaning', 'Spa & wellness center care', 'Pool & recreation areas', 'Back-of-house deep cleaning'],
+                transportation: ['Guest shuttle services', 'Airport transfers', 'Tour & excursion transport', 'Valet parking management'],
+                landscaping: ['Resort grounds & gardens', 'Poolscape maintenance', 'Outdoor event spaces', 'Entryway & porte-cochère', 'Tropical plant programs'],
+                maintenance: ['Room repairs & upkeep', 'HVAC & climate control', 'Plumbing & electrical', 'Pool & spa equipment', '24/7 engineering support']
+            },
             highlight: '4.9/5 guest satisfaction rating'
         },
-        'Event Center Cleaning': {
+        'Event Venues': {
             icon: 'fa-calendar-alt',
             title: 'Event Venues',
-            description: 'Pre and post-event cleaning for convention centers and halls.',
-            services: ['Pre-event setup', 'Post-event deep clean', 'Stage cleaning', 'Catering prep', 'Same-day service'],
+            description: 'Pre and post-event facility solutions for convention centers, halls, and arenas.',
+            services: {
+                cleaning: ['Pre-event venue preparation', 'Post-event deep cleaning', 'Stage & backstage care', 'Catering prep areas', 'Restroom servicing', 'Same-day turnaround service'],
+                transportation: ['Attendee shuttle coordination', 'VIP transport services', 'Equipment & gear moving', 'Parking management support'],
+                landscaping: ['Outdoor event preparation', 'Tent & pavilion areas', 'Grounds beautification', 'Post-event restoration'],
+                maintenance: ['Setup & breakdown support', 'Equipment installation', 'Lighting & AV coordination', 'Emergency repairs during events']
+            },
             highlight: 'Handled 500+ events in 2024'
         },
-        'Recreation And Shopping Cleaning': {
+        'Recreation And Shopping Areas': {
             icon: 'fa-shopping-cart',
-            title: 'Recreation & Shopping',
-            description: 'Comprehensive care for malls, entertainment, and recreation centers.',
-            services: ['Food court sanitization', 'Theater cleaning', 'Play area care', 'Parking structure wash', 'Seasonal deep cleans'],
+            title: 'Recreation & Shopping Areas',
+            description: 'Comprehensive care for malls, entertainment centers, and recreation facilities.',
+            services: {
+                cleaning: ['Food court sanitization', 'Theater & cinema cleaning', 'Play area disinfection', 'Common area maintenance', 'Escalator & elevator care', 'Seasonal deep cleaning'],
+                transportation: ['Customer shuttle services', 'Security transport', 'Employee parking shuttles', 'Special event transport'],
+                landscaping: ['Outdoor mall areas', 'Parking lot islands', 'Entryway gardens', 'Seasonal displays', 'Storm debris management'],
+                maintenance: ['Building systems', 'Security equipment', 'Lighting & signage', 'Emergency repairs']
+            },
             highlight: 'Managing 2M+ sq ft of retail space'
         },
-        'Healthcare Environmental Services': {
+        'Healthcare Facilities': {
             icon: 'fa-hospital',
             title: 'Healthcare Facilities',
-            description: 'Medical-grade cleaning following CDC and Joint Commission standards.',
-            services: ['Patient room care', 'OR terminal cleaning', 'Waiting area disinfection', 'Medical waste handling', 'Infection control'],
+            description: 'Medical-grade facility solutions following CDC and Joint Commission standards.',
+            services: {
+                cleaning: ['Patient room terminal cleaning', 'OR & surgical suite sterilization', 'Waiting area disinfection', 'Medical waste handling', 'Infection control protocols', 'Pharmacy & lab cleaning'],
+                transportation: ['Patient transport services', 'Medical equipment moving', 'Staff shuttle coordination', 'Emergency logistics'],
+                landscaping: ['Healing garden maintenance', 'Patient outdoor areas', 'Entryway wellness gardens', 'Smoke-free zone enforcement'],
+                maintenance: ['Medical equipment calibration', 'HVAC & air quality', 'Plumbing & medical gases', 'Emergency generator care', '24/7 biomedical support']
+            },
             highlight: 'Joint Commission compliant'
         },
-        'Religious Building Cleaning': {
+        'Places of Worship': {
             icon: 'fa-place-of-worship',
             title: 'Places of Worship',
-            description: 'Respectful, thorough cleaning for churches, temples, and mosques.',
-            services: ['Sanctuary care', 'Fellowship hall cleaning', 'Classroom sanitization', 'Kitchen service', 'Event preparation'],
+            description: 'Respectful, thorough facility solutions for churches, temples, mosques, and synagogues.',
+            services: {
+                cleaning: ['Sanctuary & worship hall care', 'Fellowship hall cleaning', 'Classroom & nursery sanitization', 'Kitchen & dining areas', 'Restroom maintenance', 'Religious artifact care'],
+                transportation: ['Congregation shuttle services', 'Youth group transport', 'Event & retreat coordination', 'Elderly & special needs access'],
+                landscaping: ['Grounds & cemetery care', 'Memorial garden maintenance', 'Entryway presentation', 'Seasonal decorations', 'Parking lot landscaping'],
+                maintenance: ['Historic building preservation', 'Stained glass & artwork care', 'HVAC for large halls', 'Sound system support', 'Event setup assistance']
+            },
             highlight: 'Serving 40+ faith communities'
         },
-        'Government Building Cleaning': {
+        'Government Buildings': {
             icon: 'fa-landmark',
-            title: 'Government Facilities',
-            description: 'Secure, reliable cleaning for federal, state, and municipal buildings.',
-            services: ['Office cleaning', 'Public area maintenance', 'Secure protocols', 'Courtroom prep', 'Record storage care'],
+            title: 'Government Buildings',
+            description: 'Secure, reliable facility solutions for federal, state, and municipal buildings.',
+            services: {
+                cleaning: ['Office & workspace cleaning', 'Public area maintenance', 'Courtroom preparation', 'Secure facility protocols', 'Record storage care', 'High-security clearance staff'],
+                transportation: ['Official vehicle services', 'Employee shuttle programs', 'Secure transport coordination', 'Event logistics support'],
+                landscaping: ['Public grounds maintenance', 'Monument & memorial care', 'Sustainable practices', 'Storm response'],
+                maintenance: ['Building system maintenance', 'Security system support', 'Emergency preparedness', 'Energy efficiency programs', 'Historic preservation']
+            },
             highlight: 'GSA schedule holder'
         },
-        'Banks And Financial Institution Cleaning': {
+        'Banks And Financial Institutions': {
             icon: 'fa-university',
             title: 'Financial Institutions',
-            description: 'Discreet, professional cleaning for banks and financial centers.',
-            services: ['Lobby care', 'Teller area cleaning', 'Safe deposit maintenance', 'Office service', 'ATM area care'],
+            description: 'Discreet, professional facility solutions for banks and financial centers.',
+            services: {
+                cleaning: ['Lobby & customer areas', 'Teller station sanitization', 'Safe deposit vault care', 'Office & conference rooms', 'ATM area maintenance', 'High-security protocols'],
+                landscaping: ['Professional exterior presentation', 'Drive-thru lane maintenance', 'Entryway gardens', 'Seasonal decorations'],
+                maintenance: ['Security system maintenance', 'Vault & safe care', 'HVAC & climate control', 'Technology infrastructure', 'After-hours service available']
+            },
             highlight: 'Trusted by 25+ financial institutions'
         }
     };
@@ -755,13 +820,14 @@
         tooltip = document.createElement('div');
         tooltip.className = 'industry-tooltip';
         tooltip.style.cssText = `
-            position: fixed;
+            position: absolute;
             background: linear-gradient(135deg, rgba(26, 26, 26, 0.98), rgba(40, 40, 40, 0.98));
             border: 1px solid rgba(124, 179, 66, 0.3);
             border-radius: 16px;
             padding: 1.5rem;
-            width: 320px;
-            max-width: 90vw;
+            width: 90vw;
+            max-width: 700px;
+            max-height: 80vh;
             z-index: 9999;
             opacity: 0;
             visibility: hidden;
@@ -769,49 +835,80 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 179, 66, 0.1);
             backdrop-filter: blur(10px);
             pointer-events: none;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         `;
         document.body.appendChild(tooltip);
     }
 
-    function showTooltip(industryName, x, y) {
+    function showTooltip(industryName, logoRect) {
         const data = industryData[industryName];
         if (!data) return;
 
         if (!tooltip) createTooltip();
 
-        const servicesHtml = data.services.map(s => 
-            `<li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.9); margin-bottom: 0.4rem;">
-                <i class="fas fa-check" style="color: #7cb342; font-size: 0.75rem;"></i>${s}
-            </li>`
-        ).join('');
+        // Build services HTML
+        let servicesHtml = '';
+        const categories = [
+            { key: 'cleaning', icon: 'fa-broom', label: 'Cleaning' },
+            { key: 'transportation', icon: 'fa-bus', label: 'Transportation' },
+            { key: 'landscaping', icon: 'fa-leaf', label: 'Landscaping' },
+            { key: 'maintenance', icon: 'fa-tools', label: 'Maintenance' }
+        ];
 
+        categories.forEach(cat => {
+            if (data.services[cat.key]) {
+                const items = data.services[cat.key].map(s => 
+                    `<li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.9); margin-bottom: 0.4rem;">
+                        <i class="fas fa-check" style="color: #7cb342; font-size: 0.75rem;"></i>${s}
+                    </li>`
+                ).join('');
+                
+                servicesHtml += `
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem;">
+                        <h6 style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #7cb342; margin: 0 0 0.75rem 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <i class="fas ${cat.icon}" style="font-size: 0.85rem;"></i>${cat.label}
+                        </h6>
+                        <ul style="list-style: none; padding: 0; margin: 0;">${items}</ul>
+                    </div>
+                `;
+            }
+        });
+
+        // Build tooltip content with scrollable area
         tooltip.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(124, 179, 66, 0.2);">
+            <div style="flex-shrink: 0; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(124, 179, 66, 0.2);">
                 <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #7cb342, #9ccc65); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: white;">
                     <i class="fas ${data.icon}"></i>
                 </div>
                 <h4 style="font-size: 1.1rem; font-weight: 700; color: #ffffff; margin: 0;">${data.title}</h4>
             </div>
-            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 1rem;">${data.description}</p>
-            <ul style="list-style: none; padding: 0; margin: 0 0 1rem;">${servicesHtml}</ul>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: rgba(124, 179, 66, 0.15); border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: #7cb342;">
+            <p style="flex-shrink: 0; font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 1rem;">${data.description}</p>
+            <div class="services-scroll-area" style="flex: 1; overflow-y: auto; min-height: 0; margin-bottom: 1rem; padding-right: 0.5rem;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    ${servicesHtml}
+                </div>
+            </div>
+            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: rgba(124, 179, 66, 0.15); border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: #7cb342;">
                 <i class="fas fa-star" style="color: #ffd700;"></i>
                 <span>${data.highlight}</span>
             </div>
         `;
 
-        // Position tooltip above the element
-        const tooltipRect = tooltip.getBoundingClientRect();
-        let top = y - tooltipRect.height - 15;
-        let left = x - tooltipRect.width / 2;
+        // Calculate position - always center in viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const scrollY = window.pageYOffset;
 
-        // Keep within viewport
-        if (top < 10) top = y + 30; // Show below if not enough space above
-        if (left < 10) left = 10;
-        if (left + tooltipRect.width > window.innerWidth - 10) {
-            left = window.innerWidth - tooltipRect.width - 10;
-        }
+        // Center horizontally
+        let left = (viewportWidth - Math.min(700, viewportWidth * 0.9)) / 2;
+        
+        // Position in middle of viewport vertically
+        let top = scrollY + (viewportHeight * 0.1);
 
+        // Apply position and show
+        tooltip.style.position = 'absolute';
         tooltip.style.top = top + 'px';
         tooltip.style.left = left + 'px';
         tooltip.style.opacity = '1';
@@ -833,36 +930,30 @@
         if (!marquee) return;
 
         // Use event delegation for hover
-        marquee.addEventListener('mouseover', function(e) {
+        marquee.addEventListener('mouseenter', function(e) {
             const logo = e.target.closest('.client-logo');
             if (!logo) return;
 
             const industryName = logo.textContent.trim();
             const rect = logo.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top;
 
-            showTooltip(industryName, x, y);
-        });
+            showTooltip(industryName, rect);
+        }, true);
 
-        marquee.addEventListener('mouseout', function(e) {
+        marquee.addEventListener('mouseleave', function(e) {
             const logo = e.target.closest('.client-logo');
             if (!logo) return;
 
             hideTimeout = setTimeout(hideTooltip, 100);
-        });
+        }, true);
 
         // Keep tooltip visible when hovering over it
-        document.addEventListener('mouseover', function(e) {
-            if (e.target.closest('.industry-tooltip')) {
-                clearTimeout(hideTimeout);
-            }
+        tooltip && tooltip.addEventListener('mouseenter', function() {
+            clearTimeout(hideTimeout);
         });
 
-        document.addEventListener('mouseout', function(e) {
-            if (e.target.closest('.industry-tooltip')) {
-                hideTimeout = setTimeout(hideTooltip, 100);
-            }
+        tooltip && tooltip.addEventListener('mouseleave', function() {
+            hideTimeout = setTimeout(hideTooltip, 100);
         });
 
         // Keyboard support
@@ -872,10 +963,8 @@
 
             const industryName = logo.textContent.trim();
             const rect = logo.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top;
 
-            showTooltip(industryName, x, y);
+            showTooltip(industryName, rect);
         }, true);
 
         marquee.addEventListener('blur', function(e) {

@@ -4276,3 +4276,31 @@
         transition: none;
     }
 }
+/* Industry tooltip scrollable area */
+.services-scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 179, 66, 0.5) rgba(255, 255, 255, 0.05);
+}
+
+.services-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.services-scroll-area::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.services-scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(124, 179, 66, 0.5);
+    border-radius: 3px;
+}
+
+.services-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 179, 66, 0.8);
+}
+
+/* Ensure tooltip is properly positioned */
+.industry-tooltip {
+    box-sizing: border-box;
+}
