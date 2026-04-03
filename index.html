@@ -29,6 +29,108 @@
     <link rel="stylesheet" href="css/sections.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/responsive.css">
+<style>
+/* Facility Types Header */
+.facility-types-header {
+    text-align: center;
+    margin: 4rem 0 2rem;
+    padding: 2rem 0;
+    position: relative;
+}
+
+.facility-types-header .header-eyebrow {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(124, 179, 66, 0.15);
+    border: 1px solid rgba(124, 179, 66, 0.3);
+    border-radius: 50px;
+    color: #7cb342;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+}
+
+.facility-types-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.facility-types-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .facility-types-header {
+        margin: 3rem 0 1.5rem;
+        padding: 1.5rem 0;
+    }
+}
+
+/* Industry tooltip */
+.industry-tooltip {
+    position: fixed;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.98), rgba(40, 40, 40, 0.98));
+    border: 1px solid rgba(124, 179, 66, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    width: 320px;
+    max-width: 90vw;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 179, 66, 0.1);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+}
+
+.industry-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: rgba(124, 179, 66, 0.3);
+}
+
+/* Client logo buttons - transparent like original */
+.client-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: transparent !important;
+    border: none !important;
+    font-family: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none !important;
+}
+
+.client-logo:hover,
+.client-logo:focus {
+    color: #7cb342;
+    background: transparent !important;
+    text-shadow: 0 0 20px rgba(124, 179, 66, 0.3);
+    transform: translateY(-2px);
+    outline: none;
+    box-shadow: none !important;
+}
+</style><base target="_blank">
 </head>
 <body>
     <!-- Skip Link for Accessibility -->
@@ -790,26 +892,7 @@
                 <div class="progress-bar"></div>
             </div>
         </div>
-        
-        <!-- Client Logos Marquee -->
-        <div class="clients-marquee">
-            <div class="marquee-track">
-                <div class="marquee-content">
-                    <span class="client-logo">Houston ISD</span>
-                    <span class="client-logo">TechCorp</span>
-                    <span class="client-logo">GreenSpace</span>
-                    <span class="client-logo">Metro Schools</span>
-                    <span class="client-logo">City Hospital</span>
-                    <span class="client-logo">Texas University</span>
-                    <span class="client-logo">Houston ISD</span>
-                    <span class="client-logo">TechCorp</span>
-                    <span class="client-logo">GreenSpace</span>
-                    <span class="client-logo">Metro Schools</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- CTA -->
+                <!-- CTA -->
         <div class="testimonials-cta">
             <div class="cta-card">
                 <div class="cta-icon">
@@ -824,6 +907,63 @@
                 </button>
             </div>
         </div>
+        
+        <!-- Facility Types We Serve -->
+        <div class="facility-types-header">
+            <span class="header-eyebrow">Our Expertise</span>
+            <h3 class="facility-types-title">Facility Types We Serve</h3>
+            <p class="facility-types-subtitle">Specialized cleaning solutions for every industry</p>
+        </div>
+
+<!-- Client Logos Marquee with Navigation -->
+<div class="clients-marquee-container">
+    <button type="button" class="marquee-nav-btn marquee-prev" aria-label="Scroll left">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="clients-marquee" id="clientMarquee">
+        <div class="marquee-track" id="marqueeTrack">
+            <div class="marquee-content">
+                <button type="button" class="client-logo" tabindex="0">Education Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Office Building Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
+                <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
+                <button type="button" class="client-logo" tabindex="0">Gyms</button>
+                <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
+                <button type="button" class="client-logo" tabindex="0">Industrial Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Hospitality Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Event Center Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Healthcare Environmental Services</button>
+                <button type="button" class="client-logo" tabindex="0">Religious Building Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Government Building Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Banks And Financial Institution Cleaning</button>
+            </div>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-content" aria-hidden="true">
+                <button type="button" class="client-logo" tabindex="0">Education Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Office Building Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
+                <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
+                <button type="button" class="client-logo" tabindex="0">Gyms</button>
+                <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
+                <button type="button" class="client-logo" tabindex="0">Industrial Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Hospitality Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Event Center Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Healthcare Environmental Services</button>
+                <button type="button" class="client-logo" tabindex="0">Religious Building Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Government Building Cleaning</button>
+                <button type="button" class="client-logo" tabindex="0">Banks And Financial Institution Cleaning</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="marquee-nav-btn marquee-next" aria-label="Scroll right">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+        
     </div>
 </section> 
 <!-- ============================================
