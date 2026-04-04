@@ -673,7 +673,7 @@
         },
         'Apartment Complex': {
             icon: 'fa-home',
-            title: 'Multi-Family Residences',
+            title: 'Apartment Complex',
             description: 'Full-service facility solutions for apartment communities and condominiums.',
             services: {
                 cleaning: ['Common area maintenance', 'Move-in/out deep cleaning', 'Clubhouse & amenity cleaning', 'Trash chute & dumpster areas', 'Window washing services'],
@@ -684,7 +684,7 @@
         },
         'Car Dealerships': {
             icon: 'fa-car',
-            title: 'Automotive Showrooms',
+            title: 'Car Dealershipss',
             description: 'Spotless facility solutions for showrooms, service centers, and dealership lots.',
             services: {
                 cleaning: ['Showroom floor polishing', 'Vehicle display detailing', 'Customer lounge maintenance', 'Service bay degreasing', 'Window & glass cleaning'],
@@ -695,7 +695,7 @@
         },
         'Gyms': {
             icon: 'fa-dumbbell',
-            title: 'Fitness Centers',
+            title: 'Gyms',
             description: 'Hygiene-focused facility solutions for gyms, studios, and wellness centers.',
             services: {
                 cleaning: ['Equipment sanitization', 'Locker room deep cleaning', 'Steam room & sauna care', 'Pool & spa maintenance', 'Studio floor care', 'Shower & restroom disinfection'],
@@ -706,7 +706,7 @@
         },
         'Retail Stores': {
             icon: 'fa-shopping-bag',
-            title: 'Retail Spaces',
+            title: 'Retail Stores',
             description: 'Immaculate facility solutions for stores, boutiques, and shopping centers.',
             services: {
                 cleaning: ['Sales floor care', 'Fitting room sanitization', 'Restroom maintenance', 'Display & fixture cleaning', 'Stock room organization', 'Window & entrance cleaning'],
@@ -753,7 +753,7 @@
         },
         'Recreation And Shopping Areas': {
             icon: 'fa-shopping-cart',
-            title: 'Recreation & Shopping Areas',
+            title: 'Recreation And Shopping Areas',
             description: 'Comprehensive care for malls, entertainment centers, and recreation facilities.',
             services: {
                 cleaning: ['Food court sanitization', 'Theater & cinema cleaning', 'Play area disinfection', 'Common area maintenance', 'Escalator & elevator care', 'Seasonal deep cleaning'],
@@ -801,7 +801,7 @@
         },
         'Banks And Financial Institutions': {
             icon: 'fa-university',
-            title: 'Financial Institutions',
+            title: 'Banks and Financial Institutions',
             description: 'Discreet, professional facility solutions for banks and financial centers.',
             services: {
                 cleaning: ['Lobby & customer areas', 'Teller station sanitization', 'Safe deposit vault care', 'Office & conference rooms', 'ATM area maintenance', 'High-security protocols'],

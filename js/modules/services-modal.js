@@ -1,5 +1,5 @@
 /* ============================================
-   CRYSTAL FACILITY SOLUTIONS - MODAL MODULE
+   SERVICES - MODAL MODULE
    Modern Event Listeners, No Window Globals
    ============================================ */
 

@@ -286,266 +286,316 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="section" aria-labelledby="services-heading">
-        <div class="container">
-            <div class="section-title">
-                <h2 id="services-heading">Our Services</h2>
-                <p>Comprehensive facility management solutions</p>
-            </div>
-            
-            <div class="services-grid">
-                <!-- Card 1: Cleaning -->
-                <article class="service-card clickable" data-modal="cleaning" role="button" tabindex="0" aria-label="Request quote for Cleaning Services">
-                    <div class="service-img" style="background-image: url('images/cleaning.jpeg');" role="img" aria-label="Professional cleaning service">
-                        <i class="fas fa-broom service-icon" aria-hidden="true"></i>
-                        <div class="click-hint">Click for Quote</div>
-                    </div>
-                    <h3>Cleaning Services</h3>
-                    <p>Professional janitorial services for schools and offices.</p>
-                    <ul>
-                        <li>Daily & Nightly Cleaning</li>
-                        <li>Carpet Shampooing</li>
-                        <li>Floor Waxing (VCT)</li>
-                    </ul>
-                </article>
-
-                <!-- Card 2: Transportation -->
-                <article class="service-card">
-                    <div class="service-img" style="background-image: url('images/BusImage.png');" role="img" aria-label="School bus transportation">
-                        <i class="fas fa-bus service-icon" aria-hidden="true"></i>
-                    </div>
-                    <h3>Transportation</h3>
-                    <p>Safe and reliable transportation for schools and events.</p>
-                    <ul>
-                        <li>School Bus Services</li>
-                        <li>Field Trips</li>
-                        <li>Corporate Shuttle</li>
-                    </ul>
-                </article>
-
-                <!-- Card 3: Landscaping -->
-                <article class="service-card clickable" data-modal="landscaping" role="button" tabindex="0" aria-label="Request quote for Landscaping Services">
-                    <div class="service-img" style="background-image: url('images/garden-1024x367.jpg');" role="img" aria-label="Landscaping and garden design">
-                        <i class="fas fa-leaf service-icon" aria-hidden="true"></i>
-                        <div class="click-hint">Click for Quote</div>
-                    </div>
-                    <h3>Landscaping</h3>
-                    <p>Beautiful outdoor spaces with eco-friendly practices.</p>
-                    <ul>
-                        <li>Lawn Maintenance</li>
-                        <li>Garden Design</li>
-                        <li>Seasonal Planting</li>
-                    </ul>
-                </article>
-
-                <!-- Card 4: Maintenance -->
-                <article class="service-card clickable" data-modal="maintenance" role="button" tabindex="0" aria-label="Request quote for Maintenance Services">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600');" role="img" aria-label="Maintenance and repair services">
-                        <i class="fas fa-tools service-icon" aria-hidden="true"></i>
-                        <div class="click-hint">Click for Quote</div>
-                    </div>
-                    <h3>Maintenance</h3>
-                    <p>Comprehensive property maintenance and repairs.</p>
-                    <ul>
-                        <li>General Repairs</li>
-                        <li>HVAC Maintenance</li>
-                        <li>Preventive Care</li>
-                    </ul>
-                </article>
-            </div>
+<section id="services" class="services-section" aria-labelledby="services-heading">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-title">
+            <h2 id="services-heading">Our Services</h2>
+            <p>Comprehensive facility management solutions tailored to your needs</p>
         </div>
-    </section>
+        
+        <!-- Services Grid -->
+        <div class="services-grid">
+            <!-- Card 1: Cleaning -->
+            <article class="service-card" data-modal="cleaning" tabindex="0" role="article" aria-label="Cleaning Services - Click for quote">
+                <div class="service-glow"></div>
+                <div class="service-img" style="background-image: url('images/cleaning.jpeg');" role="img" aria-label="Professional cleaning service">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <div class="click-hint">
+                        <i class="fas fa-hand-pointer"></i> Click for Quote
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3>Cleaning Services</h3>
+                    <p>Professional janitorial services for schools and offices. We ensure spotless environments using eco-friendly products.</p>
+                    <ul>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Daily & Nightly Cleaning</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Carpet Shampooing</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Floor Waxing (VCT)</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Card 2: Transportation -->
+            <article class="service-card" tabindex="0" role="article" aria-label="Transportation Services">
+                <div class="service-glow"></div>
+                <div class="service-img" style="background-image: url('images/BusImage.png');" role="img" aria-label="School bus transportation">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-bus"></i>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3>Transportation</h3>
+                    <p>Safe and reliable transportation for schools and events. Fully licensed drivers and well-maintained vehicles.</p>
+                    <ul>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> School Bus Services</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Field Trips</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Corporate Shuttle</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Card 3: Landscaping -->
+            <article class="service-card" data-modal="landscaping" tabindex="0" role="article" aria-label="Landscaping Services - Click for quote">
+                <div class="service-glow"></div>
+                <div class="service-img" style="background-image: url('images/garden-1024x367.jpg');" role="img" aria-label="Landscaping and garden design">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="click-hint">
+                        <i class="fas fa-hand-pointer"></i> Click for Quote
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3>Landscaping</h3>
+                    <p>Beautiful outdoor spaces with eco-friendly practices. Transform your property into a green oasis.</p>
+                    <ul>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Lawn Maintenance</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Garden Design</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Seasonal Planting</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Card 4: Maintenance -->
+            <article class="service-card" data-modal="maintenance" tabindex="0" role="article" aria-label="Maintenance Services - Click for quote">
+                <div class="service-glow"></div>
+                <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600');" role="img" aria-label="Maintenance and repair services">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="click-hint">
+                        <i class="fas fa-hand-pointer"></i> Click for Quote
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3>Maintenance</h3>
+                    <p>Comprehensive property maintenance and repairs. Keep your facilities running smoothly 24/7.</p>
+                    <ul>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> General Repairs</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> HVAC Maintenance</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Preventive Care</li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
 
     <!-- About Section -->
-    <section id="about" class="why-crystal-section" aria-labelledby="about-heading">
-        <div class="container">
-            <!-- Section Header -->
-            <div class="section-header">
-                <span class="section-tag">About Us</span>
-                <h2 id="about-heading">Why Choose <span class="gradient-text">Crystal?</span></h2>
-                <p class="section-subtitle">Transforming facilities into exceptional spaces since 2010</p>
-            </div>
+ <section id="about" class="why-crystal-section" aria-labelledby="about-heading">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+            <span class="section-tag">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                About Us
+            </span>
+            <h2 id="about-heading">Why Choose <span class="gradient-text">Crystal?</span></h2>
+            <p class="section-subtitle">Transforming facilities into exceptional spaces since 2010</p>
+        </div>
 
-            <!-- Main Content Grid -->
-            <div class="about-content-grid">
-                <!-- Left: Story Card -->
-                <div class="story-card">
-                    <div class="story-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        <!-- Main Content Grid -->
+        <div class="about-content-grid">
+            <!-- Left: Story Card -->
+            <article class="story-card" tabindex="0">
+                <div class="story-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h3>Our Story</h3>
+                <p>Since 2010, we've been Houston's trusted partner in facility management. Our cloud-based systems and mobile app ensure real-time tracking and quality control.</p>
+                <p class="story-highlight">We don't just clean buildings – we build lasting partnerships with schools and businesses across Texas.</p>
+                <div class="story-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>Cloud-Based Management</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>Real-Time Quality Control</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>Mobile App Integration</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Center: Animated Stats -->
+            <div class="stats-container">
+                <div class="stat-card" data-target="15">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
                         </svg>
                     </div>
-                    <h3>Our Story</h3>
-                    <p>Since 2010, we've been Houston's trusted partner in facility management. Our cloud-based systems and mobile app ensure real-time tracking and quality control.</p>
-                    <p class="story-highlight">We don't just clean buildings – we build lasting partnerships with schools and businesses across Texas.</p>
-                    <div class="story-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Cloud-Based Management</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Real-Time Quality Control</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Mobile App Integration</span>
-                        </div>
+                    <div class="stat-number">
+                        <span class="counter">0</span>+
+                    </div>
+                    <div class="stat-label">Years Experience</div>
+                    <div class="stat-progress-ring">
+                        <div class="stat-progress"></div>
                     </div>
                 </div>
 
-                <!-- Center: Animated Stats -->
-                <div class="stats-container">
-                    <div class="stat-card" data-target="14">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">
-                            <span class="counter">0</span>+
-                        </div>
-                        <div class="stat-label">Years Experience</div>
-                        <div class="stat-bar">
-                            <div class="stat-progress"></div>
-                        </div>
+                <div class="stat-card" data-target="500">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
                     </div>
-
-                    <div class="stat-card" data-target="500">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">
-                            <span class="counter">0</span>+
-                        </div>
-                        <div class="stat-label">Happy Clients</div>
-                        <div class="stat-bar">
-                            <div class="stat-progress"></div>
-                        </div>
+                    <div class="stat-number">
+                        <span class="counter">0</span>+
                     </div>
-
-                    <div class="stat-card" data-target="50">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">
-                            <span class="counter">0</span>+
-                        </div>
-                        <div class="stat-label">Expert Staff</div>
-                        <div class="stat-bar">
-                            <div class="stat-progress"></div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card highlight" data-target="99">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">
-                            <span class="counter">0</span>%
-                        </div>
-                        <div class="stat-label">Satisfaction Rate</div>
-                        <div class="stat-bar">
-                            <div class="stat-progress"></div>
-                        </div>
+                    <div class="stat-label">Happy Clients</div>
+                    <div class="stat-progress-ring">
+                        <div class="stat-progress"></div>
                     </div>
                 </div>
 
-                <!-- Right: Excellence Card -->
-                <div class="excellence-card">
-                    <div class="excellence-badge">
-                        <i class="fas fa-award"></i>
-                        <span>Excellence</span>
+                <div class="stat-card" data-target="50">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
                     </div>
-                    <h3>Excellence in Every Detail</h3>
-                    <p>Our commitment to quality has earned us recognition as Houston's premier facility management partner.</p>
-                    
-                    <div class="excellence-metrics">
-                        <div class="metric">
-                            <span class="metric-value">24/7</span>
-                            <span class="metric-desc">Support Available</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-value">&lt;2hr</span>
-                            <span class="metric-desc">Response Time</span>
-                        </div>
+                    <div class="stat-number">
+                        <span class="counter">0</span>+
                     </div>
+                    <div class="stat-label">Expert Staff</div>
+                    <div class="stat-progress-ring">
+                        <div class="stat-progress"></div>
+                    </div>
+                </div>
 
-                    <div class="certifications">
-                        <div class="cert-badge" title="ISO Certified">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <div class="cert-badge" title="Green Cleaning">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <div class="cert-badge" title="Safety Certified">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
+                <div class="stat-card highlight" data-target="99">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                        </svg>
+                    </div>
+                    <div class="stat-number">
+                        <span class="counter">0</span>%
+                    </div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                    <div class="stat-progress-ring">
+                        <div class="stat-progress"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Interactive Timeline -->
-            <div class="timeline-section">
-                <h3>Our Journey</h3>
-                <div class="timeline">
-                    <div class="timeline-item" data-year="2010">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="year">2010</span>
-                            <p>Founded in Houston</p>
-                        </div>
+            <!-- Right: Excellence Card -->
+            <article class="excellence-card" tabindex="0">
+                <div class="excellence-badge">
+                    <i class="fas fa-award" aria-hidden="true"></i>
+                    <span>Excellence</span>
+                </div>
+                <h3>Excellence in Every Detail</h3>
+                <p>Our commitment to quality has earned us recognition as Houston's premier facility management partner.</p>
+                
+                <div class="excellence-metrics">
+                    <div class="metric">
+                        <span class="metric-value">24/7</span>
+                        <span class="metric-desc">Support Available</span>
                     </div>
-                    <div class="timeline-item" data-year="2015">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="year">2015</span>
-                            <p>Expanded to 100+ clients</p>
-                        </div>
+                    <div class="metric">
+                        <span class="metric-value">&lt;2hr</span>
+                        <span class="metric-desc">Response Time</span>
                     </div>
-                    <div class="timeline-item" data-year="2018">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="year">2018</span>
-                            <p>Launched mobile app</p>
-                        </div>
+                </div>
+
+                <div class="certifications">
+                    <div class="cert-badge" title="ISO Certified" tabindex="0" aria-label="ISO Certified">
+                        <i class="fas fa-certificate" aria-hidden="true"></i>
                     </div>
-                    <div class="timeline-item active" data-year="2024">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="year">2024</span>
-                            <p>500+ clients & growing</p>
-                        </div>
+                    <div class="cert-badge" title="Green Cleaning" tabindex="0" aria-label="Green Cleaning">
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
+                    </div>
+                    <div class="cert-badge" title="Safety Certified" tabindex="0" aria-label="Safety Certified">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Interactive Timeline -->
+        <div class="timeline-section">
+            <h3>Our Journey</h3>
+            <div class="timeline" role="list" aria-label="Company timeline">
+                <div class="timeline-progress"></div>
+                
+                <div class="timeline-item" data-year="2010" role="listitem" tabindex="0">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="year">2010</span>
+                        <p>Founded in Houston</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-year="2015" role="listitem" tabindex="0">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="year">2015</span>
+                        <p>Expanded to 100+ clients</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-year="2018" role="listitem" tabindex="0">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="year">2018</span>
+                        <p>Launched mobile app</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item active" data-year="2024" role="listitem" tabindex="0">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="year">2024</span>
+                        <p>500+ clients & growing</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
      <!-- Our Core Values Section -->
-    <section id="core-values" class="core-values-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">What We Stand For</span>
-                <h2>Our Core Values</h2>
-                <div class="section-line"></div>
-            </div>
-            
-            <div class="values-container">
-                <!-- Value 1: Quality -->
-                <div class="value-card" data-value="quality">
+<section id="core-values" class="core-values-section" aria-labelledby="core-values-heading">
+    <!-- Floating Decorative Elements -->
+    <div class="values-decoration">
+        <div class="value-orb orb-1"></div>
+        <div class="value-orb orb-2"></div>
+        <div class="value-orb orb-3"></div>
+    </div>
+    
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+            <span class="section-label">
+                <i class="fas fa-gem" aria-hidden="true"></i>
+                What We Stand For
+            </span>
+            <h2 id="core-values-heading">Our Core Values</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <!-- Values Container -->
+        <div class="values-container">
+            <!-- Value 1: Quality -->
+            <article class="value-card" data-value="quality" tabindex="0" role="button" aria-expanded="false">
+                <div class="value-card-inner">
                     <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -567,18 +617,20 @@
                         </div>
                         <button class="value-toggle" aria-expanded="false">
                             <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="value-number">01</div>
+                    <div class="value-number" aria-hidden="true">01</div>
                 </div>
+            </article>
 
-                <!-- Value 2: Customer Satisfaction -->
-                <div class="value-card" data-value="satisfaction">
+            <!-- Value 2: Customer Satisfaction -->
+            <article class="value-card" data-value="satisfaction" tabindex="0" role="button" aria-expanded="false">
+                <div class="value-card-inner">
                     <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -599,18 +651,20 @@
                         </div>
                         <button class="value-toggle" aria-expanded="false">
                             <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="value-number">02</div>
+                    <div class="value-number" aria-hidden="true">02</div>
                 </div>
+            </article>
 
-                <!-- Value 3: Innovation -->
-                <div class="value-card" data-value="innovation">
+            <!-- Value 3: Innovation -->
+            <article class="value-card" data-value="innovation" tabindex="0" role="button" aria-expanded="false">
+                <div class="value-card-inner">
                     <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                             <polyline points="2 17 12 22 22 17"></polyline>
                             <polyline points="2 12 12 17 22 12"></polyline>
@@ -630,18 +684,20 @@
                         </div>
                         <button class="value-toggle" aria-expanded="false">
                             <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="value-number">03</div>
+                    <div class="value-number" aria-hidden="true">03</div>
                 </div>
+            </article>
 
-                <!-- Value 4: Operational Excellence -->
-                <div class="value-card" data-value="excellence">
+            <!-- Value 4: Operational Excellence -->
+            <article class="value-card" data-value="excellence" tabindex="0" role="button" aria-expanded="false">
+                <div class="value-card-inner">
                     <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                             <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
@@ -660,18 +716,20 @@
                         </div>
                         <button class="value-toggle" aria-expanded="false">
                             <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="value-number">04</div>
+                    <div class="value-number" aria-hidden="true">04</div>
                 </div>
+            </article>
 
-                <!-- Value 5: Teamwork -->
-                <div class="value-card" data-value="teamwork">
+            <!-- Value 5: Teamwork -->
+            <article class="value-card" data-value="teamwork" tabindex="0" role="button" aria-expanded="false">
+                <div class="value-card-inner">
                     <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -692,18 +750,20 @@
                         </div>
                         <button class="value-toggle" aria-expanded="false">
                             <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="value-number">05</div>
+                    <div class="value-number" aria-hidden="true">05</div>
                 </div>
+            </article>
 
-                <!-- Value 6: Safety -->
-                <div class="value-card" data-value="safety">
+            <!-- Value 6: Safety -->
+            <article class="value-card" data-value="safety" tabindex="0" role="button" aria-expanded="false">
+                <div class="value-card-inner">
                     <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                         </svg>
                         <div class="icon-bg"></div>
@@ -721,16 +781,17 @@
                         </div>
                         <button class="value-toggle" aria-expanded="false">
                             <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="value-number">06</div>
+                    <div class="value-number" aria-hidden="true">06</div>
                 </div>
-            </div>
+            </article>
         </div>
-    </section> 
+    </div>
+</section>
 <!-- ============================================
    CINEMATIC TESTIMONIALS SECTION
    ============================================ -->
@@ -1459,12 +1520,13 @@
 <!-- JavaScript Modules -->
 <script src="js/modules/navigation.js" defer></script>
 <script src="js/modules/hero.js" defer></script>  <!-- ADD THIS LINE -->
-<script src="js/modules/modal.js" defer></script>
+<script src="js/modules/services.js" defer></script>
+<script src="js/modules/services-modal.js" defer></script>
 <script src="js/modules/forms.js" defer></script>
 <script src="js/modules/testimonials.js" defer></script>
 <script src="js/modules/chat.js" defer></script>
-<script src="js/modules/values.js"></script>
-<script src="js/modules/about.js"></script>
+<script src="js/modules/values.js" defer></script>
+<script src="js/modules/about.js" defer></script>
 <script src="js/modules/contact.js" defer></script>
 <script src="js/main.js" defer></script>
 </body>
