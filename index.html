@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/forms.css">
     <link rel="stylesheet" href="css/sections.css">
-    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/services.css">
+    <!-- <link rel="stylesheet" href="css/modal.css"> -->
     <link rel="stylesheet" href="css/responsive.css">
 <style>
 /* Facility Types Header */
@@ -286,103 +287,687 @@
     </section>
 
     <!-- Services Section -->
-<section id="services" class="services-section" aria-labelledby="services-heading">
-    <div class="container">
-        <!-- Section Header -->
-        <div class="section-title">
-            <h2 id="services-heading">Our Services</h2>
-            <p>Comprehensive facility management solutions tailored to your needs</p>
+    <section id="services" class="services-theater" aria-labelledby="services-heading">
+        <!-- Background Layers -->
+        <div class="services-bg-layers">
+            <div class="bg-grid-pattern"></div>
+            <div class="bg-gradient-orb orb-1"></div>
+            <div class="bg-gradient-orb orb-2"></div>
+            <div class="bg-gradient-orb orb-3"></div>
+            <canvas id="servicesParticleCanvas" class="services-particles-canvas"></canvas>
         </div>
         
-        <!-- Services Grid -->
-        <div class="services-grid">
-            <!-- Card 1: Cleaning -->
-            <article class="service-card" data-modal="cleaning" tabindex="0" role="article" aria-label="Cleaning Services - Click for quote">
-                <div class="service-glow"></div>
-                <div class="service-img" style="background-image: url('images/cleaning.jpeg');" role="img" aria-label="Professional cleaning service">
-                    <div class="service-icon" aria-hidden="true">
-                        <i class="fas fa-broom"></i>
-                    </div>
-                    <div class="click-hint">
-                        <i class="fas fa-hand-pointer"></i> Click for Quote
+        <div class="container services-container">
+            <!-- Section Header -->
+            <div class="services-header">
+                <span class="header-eyebrow">
+                    <i class="fas fa-sparkles"></i>
+                    What We Offer
+                </span>
+                <h2 id="services-heading" class="header-title">
+                    <span class="title-line">Our</span>
+                    <span class="title-line highlight">Services</span>
+                </h2>
+                <p class="header-subtitle">
+                    Comprehensive facility management solutions, reimagined through innovation and excellence
+                </p>
+                
+                <!-- Service Filter Tabs -->
+                <div class="service-filters" role="tablist" aria-label="Service categories">
+                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
+                        <span>All Services</span>
+                    </button>
+                    <button class="filter-btn" data-filter="indoor" role="tab" aria-selected="false">
+                        <i class="fas fa-home"></i>
+                        <span>Indoor</span>
+                    </button>
+                    <button class="filter-btn" data-filter="outdoor" role="tab" aria-selected="false">
+                        <i class="fas fa-tree"></i>
+                        <span>Outdoor</span>
+                    </button>
+                    <button class="filter-btn" data-filter="mobility" role="tab" aria-selected="false">
+                        <i class="fas fa-route"></i>
+                        <span>Mobility</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 3D Services Stage -->
+            <div class="services-stage">
+                <div class="stage-perspective">
+                    <!-- Service Card 1: Cleaning -->
+                    <article class="service-card-3d" data-category="indoor" data-service="cleaning" tabindex="0">
+                        <div class="card-3d-inner">
+                            <div class="card-front">
+                                <div class="card-media">
+                                    <div class="media-overlay"></div>
+                                    <img src="images/cleaning.jpeg" alt="Professional cleaning service" loading="lazy">
+                                    <div class="card-badge">
+                                        <i class="fas fa-star"></i>
+                                        <span>Most Popular</span>
+                                    </div>
+                                    <div class="card-icon">
+                                        <i class="fas fa-broom"></i>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Cleaning Services</h3>
+                                    <p>Premium janitorial solutions for pristine environments</p>
+                                    <div class="card-meta">
+                                        <span class="meta-item">
+                                            <i class="fas fa-clock"></i>
+                                            24/7 Available
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="fas fa-leaf"></i>
+                                            Eco-Friendly
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-cta">
+                                    <span class="cta-text">Explore Details</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <h4>What's Included</h4>
+                                    <ul class="feature-list">
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Daily & Nightly Cleaning</strong>
+                                                <span>Flexible scheduling for minimal disruption</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Carpet Shampooing</strong>
+                                                <span>Deep extraction cleaning & stain removal</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Floor Waxing (VCT)</strong>
+                                                <span>Professional strip & wax services</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Window Cleaning</strong>
+                                                <span>Interior & exterior, up to 3 stories</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="back-actions">
+                                        <button class="btn-quick-quote" data-service="cleaning">
+                                            <i class="fas fa-calculator"></i>
+                                            Quick Quote
+                                        </button>
+                                        <button class="btn-learn-more" data-service="cleaning">
+                                            <i class="fas fa-info-circle"></i>
+                                            Learn More
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="btn-close-back" aria-label="Close details">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Service Card 2: Transportation -->
+                    <article class="service-card-3d" data-category="mobility" data-service="transportation" tabindex="0">
+                        <div class="card-3d-inner">
+                            <div class="card-front">
+                                <div class="card-media">
+                                    <div class="media-overlay"></div>
+                                    <img src="images/BusImage.png" alt="School bus transportation" loading="lazy">
+                                    <div class="card-badge badge-safety">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Safety First</span>
+                                    </div>
+                                    <div class="card-icon">
+                                        <i class="fas fa-bus"></i>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Transportation</h3>
+                                    <p>Safe, reliable fleet services for schools & events</p>
+                                    <div class="card-meta">
+                                        <span class="meta-item">
+                                            <i class="fas fa-users"></i>
+                                            50+ Vehicles
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            GPS Tracked
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-cta">
+                                    <span class="cta-text">Explore Details</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <h4>Transport Solutions</h4>
+                                    <ul class="feature-list">
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>School Bus Services</strong>
+                                                <span>Daily routes with certified drivers</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Field Trips</strong>
+                                                <span>Educational & recreational outings</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Corporate Shuttle</strong>
+                                                <span>Employee transportation programs</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Event Transport</strong>
+                                                <span>Conferences, weddings & special events</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="back-actions">
+                                        <button class="btn-quick-quote" data-service="transportation">
+                                            <i class="fas fa-calculator"></i>
+                                            Quick Quote
+                                        </button>
+                                        <button class="btn-learn-more" data-service="transportation">
+                                            <i class="fas fa-info-circle"></i>
+                                            Learn More
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="btn-close-back" aria-label="Close details">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Service Card 3: Landscaping -->
+                    <article class="service-card-3d" data-category="outdoor" data-service="landscaping" tabindex="0">
+                        <div class="card-3d-inner">
+                            <div class="card-front">
+                                <div class="card-media">
+                                    <div class="media-overlay"></div>
+                                    <img src="images/garden-1024x367.jpg" alt="Professional landscaping" loading="lazy">
+                                    <div class="card-badge badge-eco">
+                                        <i class="fas fa-leaf"></i>
+                                        <span>Eco-Friendly</span>
+                                    </div>
+                                    <div class="card-icon">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Landscaping</h3>
+                                    <p>Transform outdoor spaces into living art</p>
+                                    <div class="card-meta">
+                                        <span class="meta-item">
+                                            <i class="fas fa-seedling"></i>
+                                            Native Plants
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="fas fa-tint"></i>
+                                            Smart Irrigation
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-cta">
+                                    <span class="cta-text">Explore Details</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <h4>Outdoor Services</h4>
+                                    <ul class="feature-list">
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Lawn Maintenance</strong>
+                                                <span>Weekly mowing, edging & fertilization</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Garden Design</strong>
+                                                <span>Custom landscape architecture</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Seasonal Planting</strong>
+                                                <span>Color rotation & bed preparation</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Tree & Shrub Care</strong>
+                                                <span>Pruning, disease management & removal</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="back-actions">
+                                        <button class="btn-quick-quote" data-service="landscaping">
+                                            <i class="fas fa-calculator"></i>
+                                            Quick Quote
+                                        </button>
+                                        <button class="btn-learn-more" data-service="landscaping">
+                                            <i class="fas fa-info-circle"></i>
+                                            Learn More
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="btn-close-back" aria-label="Close details">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Service Card 4: Maintenance -->
+                    <article class="service-card-3d" data-category="indoor" data-service="maintenance" tabindex="0">
+                        <div class="card-3d-inner">
+                            <div class="card-front">
+                                <div class="card-media">
+                                    <div class="media-overlay"></div>
+                                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600" alt="Maintenance services" loading="lazy">
+                                    <div class="card-badge badge-24h">
+                                        <i class="fas fa-clock"></i>
+                                        <span>24/7 Response</span>
+                                    </div>
+                                    <div class="card-icon">
+                                        <i class="fas fa-tools"></i>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Maintenance</h3>
+                                    <p>Comprehensive facility care & emergency repairs</p>
+                                    <div class="card-meta">
+                                        <span class="meta-item">
+                                            <i class="fas fa-wrench"></i>
+                                            < 2hr Response
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="fas fa-clipboard-check"></i>
+                                            Certified Techs
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-cta">
+                                    <span class="cta-text">Explore Details</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <h4>Maintenance Coverage</h4>
+                                    <ul class="feature-list">
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>General Repairs</strong>
+                                                <span>Plumbing, electrical & carpentry</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>HVAC Maintenance</strong>
+                                                <span>Preventive care & emergency service</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Preventive Care</strong>
+                                                <span>Scheduled inspections & tune-ups</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <div>
+                                                <strong>Emergency Response</strong>
+                                                <span>24/7 on-call technician network</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="back-actions">
+                                        <button class="btn-quick-quote" data-service="maintenance">
+                                            <i class="fas fa-calculator"></i>
+                                            Quick Quote
+                                        </button>
+                                        <button class="btn-learn-more" data-service="maintenance">
+                                            <i class="fas fa-info-circle"></i>
+                                            Learn More
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="btn-close-back" aria-label="Close details">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            
+            <!-- Bottom CTA - Build Custom Package -->
+            <div class="services-cta" id="custom-bundle-section">
+                <div class="cta-content">
+                    <h3>Need a Custom Solution?</h3>
+                    <p>Combine multiple services for comprehensive facility management</p>
+                    <button class="btn-bundle-quote" id="btnOpenBundle">
+                        <i class="fas fa-layer-group"></i>
+                        Build Custom Package
+                    </button>
+                </div>
+                <div class="cta-visual">
+                    <div class="bundle-preview">
+                        <div class="bundle-icon icon-1">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <div class="bundle-icon icon-2">
+                            <i class="fas fa-bus"></i>
+                        </div>
+                        <div class="bundle-icon icon-3">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="bundle-icon icon-4">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="bundle-connector"></div>
                     </div>
                 </div>
-                <div class="service-content">
-                    <h3>Cleaning Services</h3>
-                    <p>Professional janitorial services for schools and offices. We ensure spotless environments using eco-friendly products.</p>
-                    <ul>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Daily & Nightly Cleaning</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Carpet Shampooing</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Floor Waxing (VCT)</li>
-                    </ul>
+            </div>
+        </div>
+    </section>
+    <div class="quick-quote-drawer" id="quickQuoteDrawer" aria-hidden="true">
+        <div class="drawer-backdrop"></div>
+        <div class="drawer-panel">
+            <div class="drawer-header">
+                <div class="drawer-title">
+                    <i class="fas fa-calculator"></i>
+                    <div>
+                        <h3>Quick Quote</h3>
+                        <span class="selected-service" id="drawerServiceName">Select a service</span>
+                    </div>
                 </div>
-            </article>
+                <button class="btn-close-drawer" aria-label="Close quote drawer">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="drawer-body">
+                <form id="quickQuoteForm" class="quote-form-compact">
+                    <!-- Step 1: Service Selection -->
+                    <div class="form-step active" data-step="1">
+                        <h4>Step 1: Service Details</h4>
+                        
+                        <div class="form-group">
+                            <label for="quoteServiceType">Service Type *</label>
+                            <select id="quoteServiceType" name="service_type" required>
+                                <option value="">Select service...</option>
+                                <option value="cleaning">Cleaning Services</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="bundle">Custom Bundle (Multiple Services)</option>
+                            </select>
+                        </div>
 
-            <!-- Card 2: Transportation -->
-            <article class="service-card" tabindex="0" role="article" aria-label="Transportation Services">
-                <div class="service-glow"></div>
-                <div class="service-img" style="background-image: url('images/BusImage.png');" role="img" aria-label="School bus transportation">
-                    <div class="service-icon" aria-hidden="true">
-                        <i class="fas fa-bus"></i>
-                    </div>
-                </div>
-                <div class="service-content">
-                    <h3>Transportation</h3>
-                    <p>Safe and reliable transportation for schools and events. Fully licensed drivers and well-maintained vehicles.</p>
-                    <ul>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> School Bus Services</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Field Trips</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Corporate Shuttle</li>
-                    </ul>
-                </div>
-            </article>
+                        <!-- DYNAMIC FIELDS CONTAINER -->
+                        <div id="dynamicFieldsContainer">
+                            
+                            <!-- Default Property Size (shown for cleaning, landscaping, maintenance) -->
+                            <div class="form-group property-size-group" id="propertySizeGroup">
+                                <label>Property Size *</label>
+                                <div class="size-selector">
+                                    <button type="button" class="size-option" data-size="small">
+                                        <i class="fas fa-home"></i>
+                                        <span>Small</span>
+                                        <small>&lt; 5,000 sq ft</small>
+                                    </button>
+                                    <button type="button" class="size-option" data-size="medium">
+                                        <i class="fas fa-building"></i>
+                                        <span>Medium</span>
+                                        <small>5,000 - 20,000</small>
+                                    </button>
+                                    <button type="button" class="size-option" data-size="large">
+                                        <i class="fas fa-city"></i>
+                                        <span>Large</span>
+                                        <small>&gt; 20,000 sq ft</small>
+                                    </button>
+                                </div>
+                                <input type="hidden" id="quoteSizeValue" name="property_size">
+                            </div>
 
-            <!-- Card 3: Landscaping -->
-            <article class="service-card" data-modal="landscaping" tabindex="0" role="article" aria-label="Landscaping Services - Click for quote">
-                <div class="service-glow"></div>
-                <div class="service-img" style="background-image: url('images/garden-1024x367.jpg');" role="img" aria-label="Landscaping and garden design">
-                    <div class="service-icon" aria-hidden="true">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <div class="click-hint">
-                        <i class="fas fa-hand-pointer"></i> Click for Quote
-                    </div>
-                </div>
-                <div class="service-content">
-                    <h3>Landscaping</h3>
-                    <p>Beautiful outdoor spaces with eco-friendly practices. Transform your property into a green oasis.</p>
-                    <ul>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Lawn Maintenance</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Garden Design</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Seasonal Planting</li>
-                    </ul>
-                </div>
-            </article>
+                            <!-- TRANSPORTATION SPECIFIC FIELDS -->
+                            <div class="transportation-fields" id="transportationFields" style="display: none;">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="numBuses"># of Buses *</label>
+                                        <input type="number" id="numBuses" name="num_buses" min="1" placeholder="e.g., 2">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numPassengers"># of Passengers *</label>
+                                        <input type="number" id="numPassengers" name="num_passengers" min="1" placeholder="e.g., 50">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pickupDate">Pick-Up Date *</label>
+                                        <input type="date" id="pickupDate" name="pickup_date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pickupTime">Pick-Up Time *</label>
+                                        <input type="time" id="pickupTime" name="pickup_time">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="dropoffTime">Drop-Off Time *</label>
+                                        <input type="time" id="dropoffTime" name="dropoff_time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tripType">Trip Type *</label>
+                                        <select id="tripType" name="trip_type">
+                                            <option value="">Select type...</option>
+                                            <option value="school_daily">School Daily Route</option>
+                                            <option value="field_trip">Field Trip</option>
+                                            <option value="corporate">Corporate Shuttle</option>
+                                            <option value="event">Special Event</option>
+                                            <option value="airport">Airport Transfer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="pickupLocation">Pick-Up Location *</label>
+                                    <textarea id="pickupLocation" name="pickup_location" rows="2" placeholder="Full address with zip code..."></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="destinationAddress">Destination Address *</label>
+                                    <textarea id="destinationAddress" name="destination_address" rows="2" placeholder="Full address with zip code..."></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="transportExtras">Extra Needs or Comments</label>
+                                    <textarea id="transportExtras" name="transport_extras" rows="2" placeholder="e.g., seat belts, A/C, wheelchair access, extra drop-offs..."></textarea>
+                                </div>
+                            </div>
 
-            <!-- Card 4: Maintenance -->
-            <article class="service-card" data-modal="maintenance" tabindex="0" role="article" aria-label="Maintenance Services - Click for quote">
-                <div class="service-glow"></div>
-                <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600');" role="img" aria-label="Maintenance and repair services">
-                    <div class="service-icon" aria-hidden="true">
-                        <i class="fas fa-tools"></i>
+                            <!-- BUNDLE SPECIFIC FIELDS -->
+                            <div class="bundle-fields" id="bundleFields" style="display: none;">
+                                <div class="form-group">
+                                    <label>Select Services for Your Bundle *</label>
+                                    <div class="bundle-checkboxes">
+                                        <label class="bundle-checkbox">
+                                            <input type="checkbox" name="bundle_services" value="cleaning">
+                                            <span class="checkmark"></span>
+                                            <div class="checkbox-content">
+                                                <i class="fas fa-broom"></i>
+                                                <span>Cleaning Services</span>
+                                            </div>
+                                        </label>
+                                        <label class="bundle-checkbox">
+                                            <input type="checkbox" name="bundle_services" value="transportation">
+                                            <span class="checkmark"></span>
+                                            <div class="checkbox-content">
+                                                <i class="fas fa-bus"></i>
+                                                <span>Transportation</span>
+                                            </div>
+                                        </label>
+                                        <label class="bundle-checkbox">
+                                            <input type="checkbox" name="bundle_services" value="landscaping">
+                                            <span class="checkmark"></span>
+                                            <div class="checkbox-content">
+                                                <i class="fas fa-leaf"></i>
+                                                <span>Landscaping</span>
+                                            </div>
+                                        </label>
+                                        <label class="bundle-checkbox">
+                                            <input type="checkbox" name="bundle_services" value="maintenance">
+                                            <span class="checkmark"></span>
+                                            <div class="checkbox-content">
+                                                <i class="fas fa-tools"></i>
+                                                <span>Maintenance</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bundle Property Size (shown when transportation NOT selected) -->
+                                <div class="form-group bundle-property-size" id="bundlePropertySize">
+                                    <label>Property Size *</label>
+                                    <div class="size-selector">
+                                        <button type="button" class="size-option" data-size="small">
+                                            <i class="fas fa-home"></i>
+                                            <span>Small</span>
+                                            <small>&lt; 5,000 sq ft</small>
+                                        </button>
+                                        <button type="button" class="size-option" data-size="medium">
+                                            <i class="fas fa-building"></i>
+                                            <span>Medium</span>
+                                            <small>5,000 - 20,000</small>
+                                        </button>
+                                        <button type="button" class="size-option" data-size="large">
+                                            <i class="fas fa-city"></i>
+                                            <span>Large</span>
+                                            <small>&gt; 20,000 sq ft</small>
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="bundleSizeValue" name="bundle_property_size">
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="click-hint">
-                        <i class="fas fa-hand-pointer"></i> Click for Quote
+                    
+                    <!-- Step 2: Contact Information -->
+                    <div class="form-step" data-step="2">
+                        <h4>Step 2: Your Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="quoteFirstName">First Name *</label>
+                                <input type="text" id="quoteFirstName" name="first_name" placeholder="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteLastName">Last Name *</label>
+                                <input type="text" id="quoteLastName" name="last_name" placeholder="Doe" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quoteEmail">Email Address *</label>
+                            <input type="email" id="quoteEmail" name="email" placeholder="john@company.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quotePhone">Phone Number *</label>
+                            <input type="tel" id="quotePhone" name="phone" placeholder="(281) 555-0123" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quoteCompany">Company/School Name</label>
+                            <input type="text" id="quoteCompany" name="company" placeholder="Acme Corporation">
+                        </div>
                     </div>
+                    
+                    <!-- Step 3: Additional Details -->
+                    <div class="form-step" data-step="3">
+                        <h4>Step 3: Additional Details</h4>
+                        
+                        <div class="form-group">
+                            <label for="quoteMessage">Tell us about your needs</label>
+                            <textarea id="quoteMessage" name="message" rows="4" placeholder="Any specific requirements, preferred schedule, or questions..."></textarea>
+                        </div>
+                        
+                        <div class="estimate-preview">
+                            <div class="estimate-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="estimate-text">
+                                <strong>AI Estimate Ready</strong>
+                                <span>Based on your selections, we'll prepare a custom quote within 2 hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="drawer-footer">
+                <button type="button" class="btn-prev-step" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    Back
+                </button>
+                <div class="step-indicator">
+                    <span class="step-dot active"></span>
+                    <span class="step-dot"></span>
+                    <span class="step-dot"></span>
                 </div>
-                <div class="service-content">
-                    <h3>Maintenance</h3>
-                    <p>Comprehensive property maintenance and repairs. Keep your facilities running smoothly 24/7.</p>
-                    <ul>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> General Repairs</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> HVAC Maintenance</li>
-                        <li><i class="fas fa-check" aria-hidden="true"></i> Preventive Care</li>
-                    </ul>
-                </div>
-            </article>
+                <button type="button" class="btn-next-step">
+                    Next Step
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button type="submit" class="btn-submit-quote" form="quickQuoteForm" style="display: none;">
+                    <i class="fas fa-paper-plane"></i>
+                    Get My Quote
+                </button>
+            </div>
         </div>
     </div>
-</section>
 
     <!-- About Section -->
  <section id="about" class="why-crystal-section" aria-labelledby="about-heading">
@@ -393,7 +978,7 @@
                 <i class="fas fa-info-circle" aria-hidden="true"></i>
                 About Us
             </span>
-            <h2 id="about-heading">Why Choose <span class="gradient-text">Crystal?</span></h2>
+            <h2 id="about-heading">Why Choose <br/> <span class="gradient-text">Crystal Facility Solutions?</span></h2>
             <p class="section-subtitle">Transforming facilities into exceptional spaces since 2010</p>
         </div>
 
@@ -524,6 +1109,61 @@
                     </div>
                 </div>
             </article>
+        </div>
+                <!-- Facility Types We Serve -->
+        <div class="facility-types-header">
+            <span class="header-eyebrow">Our Expertise</span>
+            <h3 class="facility-types-title">Facility Types We Serve</h3>
+            <p class="facility-types-subtitle">Specialized cleaning solutions for every industry</p>
+        </div>
+
+        <!-- Client Logos Marquee with Navigation -->
+        <div class="clients-marquee-container">
+            <button type="button" class="marquee-nav-btn marquee-prev" aria-label="Scroll left">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="clients-marquee" id="clientMarquee">
+                <div class="marquee-track" id="marqueeTrack">
+                    <div class="marquee-content">
+                        <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
+                        <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
+                        <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
+                        <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
+                        <button type="button" class="client-logo" tabindex="0">Gyms</button>
+                        <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
+                        <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
+                        <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
+                        <button type="button" class="client-logo" tabindex="0">Event Venues</button>
+                        <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
+                        <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
+                        <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
+                        <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
+                        <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="marquee-content" aria-hidden="true">
+                        <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
+                        <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
+                        <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
+                        <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
+                        <button type="button" class="client-logo" tabindex="0">Gyms</button>
+                        <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
+                        <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
+                        <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
+                        <button type="button" class="client-logo" tabindex="0">Event Venues</button>
+                        <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
+                        <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
+                        <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
+                        <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
+                        <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="marquee-nav-btn marquee-next" aria-label="Scroll right">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
 
         <!-- Interactive Timeline -->
@@ -968,62 +1608,6 @@
                 </button>
             </div>
         </div>
-        
-        <!-- Facility Types We Serve -->
-        <div class="facility-types-header">
-            <span class="header-eyebrow">Our Expertise</span>
-            <h3 class="facility-types-title">Facility Types We Serve</h3>
-            <p class="facility-types-subtitle">Specialized cleaning solutions for every industry</p>
-        </div>
-
-<!-- Client Logos Marquee with Navigation -->
-<div class="clients-marquee-container">
-    <button type="button" class="marquee-nav-btn marquee-prev" aria-label="Scroll left">
-        <i class="fas fa-chevron-left"></i>
-    </button>
-
-    <div class="clients-marquee" id="clientMarquee">
-        <div class="marquee-track" id="marqueeTrack">
-            <div class="marquee-content">
-                <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
-                <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
-                <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
-                <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
-                <button type="button" class="client-logo" tabindex="0">Gyms</button>
-                <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
-                <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
-                <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
-                <button type="button" class="client-logo" tabindex="0">Event Venues</button>
-                <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
-                <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
-                <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
-                <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
-                <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
-            </div>
-            <!-- Duplicate for seamless loop -->
-            <div class="marquee-content" aria-hidden="true">
-                <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
-                <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
-                <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
-                <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
-                <button type="button" class="client-logo" tabindex="0">Gyms</button>
-                <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
-                <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
-                <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
-                <button type="button" class="client-logo" tabindex="0">Event Venues</button>
-                <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
-                <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
-                <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
-                <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
-                <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
-            </div>
-        </div>
-    </div>
-
-    <button type="button" class="marquee-nav-btn marquee-next" aria-label="Scroll right">
-        <i class="fas fa-chevron-right"></i>
-    </button>
-</div>
         
     </div>
 </section> 
@@ -1521,7 +2105,6 @@
 <script src="js/modules/navigation.js" defer></script>
 <script src="js/modules/hero.js" defer></script>  <!-- ADD THIS LINE -->
 <script src="js/modules/services.js" defer></script>
-<script src="js/modules/services-modal.js" defer></script>
 <script src="js/modules/forms.js" defer></script>
 <script src="js/modules/testimonials.js" defer></script>
 <script src="js/modules/chat.js" defer></script>
