@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO & Social -->
     <title>Crystal Facility Solutions | Houston's Premier Facility Management</title>
-    <meta name="description" content="Premium cleaning, transportation, landscaping, and maintenance services for schools and businesses in Houston since 2010.">
+    <meta name="description"
+        content="Premium cleaning, transportation, landscaping, and maintenance services for schools and businesses in Houston since 2010.">
     <meta property="og:title" content="Crystal Facility Solutions | Houston's Premier Facility Management">
     <meta property="og:description" content="Premium facility management services for schools and businesses.">
     <meta property="og:type" content="website">
-    
+
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://images.unsplash.com">
-    
+
     <!-- Preload Critical CSS -->
     <link rel="preload" href="css/variables.css" as="style">
     <link rel="preload" href="css/layout.css" as="style">
-    
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/variables.css">
@@ -30,120 +32,20 @@
     <link rel="stylesheet" href="css/services.css">
     <!-- <link rel="stylesheet" href="css/modal.css"> -->
     <link rel="stylesheet" href="css/responsive.css">
-<style>
-/* Facility Types Header */
-.facility-types-header {
-    text-align: center;
-    margin: 4rem 0 2rem;
-    padding: 2rem 0;
-    position: relative;
-}
-
-.facility-types-header .header-eyebrow {
-    display: inline-block;
-    padding: 0.5rem 1.5rem;
-    background: rgba(124, 179, 66, 0.15);
-    border: 1px solid rgba(124, 179, 66, 0.3);
-    border-radius: 50px;
-    color: #7cb342;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 1rem;
-}
-
-.facility-types-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
-}
-
-.facility-types-subtitle {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-    .facility-types-header {
-        margin: 3rem 0 1.5rem;
-        padding: 1.5rem 0;
-    }
-}
-
-/* Industry tooltip */
-.industry-tooltip {
-    position: fixed;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.98), rgba(40, 40, 40, 0.98));
-    border: 1px solid rgba(124, 179, 66, 0.3);
-    border-radius: 16px;
-    padding: 1.5rem;
-    width: 320px;
-    max-width: 90vw;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 179, 66, 0.1);
-    backdrop-filter: blur(10px);
-    pointer-events: none;
-}
-
-.industry-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 10px solid transparent;
-    border-top-color: rgba(124, 179, 66, 0.3);
-}
-
-/* Client logo buttons - transparent like original */
-.client-logo {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.5);
-    white-space: nowrap;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    background: transparent !important;
-    border: none !important;
-    font-family: inherit;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    box-shadow: none !important;
-}
-
-.client-logo:hover,
-.client-logo:focus {
-    color: #7cb342;
-    background: transparent !important;
-    text-shadow: 0 0 20px rgba(124, 179, 66, 0.3);
-    transform: translateY(-2px);
-    outline: none;
-    box-shadow: none !important;
-}
-</style><base target="_blank">
 </head>
+
 <body>
     <!-- Skip Link for Accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
+
     <!-- Navigation -->
     <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-content">
             <a href="#home" class="logo" data-scroll="home">
-                <img src="./images/CFSlogo.png" alt="Crystal Facility Solutions Logo" width="80" height="80" loading="eager">
+                <img src="./images/CFSlogo.png" alt="Crystal Facility Solutions Logo" width="80" height="80"
+                    loading="eager">
             </a>
-            
+
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="#home" class="active" role="menuitem" data-scroll="home">Home</a></li>
                 <li role="none"><a href="#services" role="menuitem" data-scroll="services">Services</a></li>
@@ -151,13 +53,14 @@
                 <li role="none"><a href="#testimonials" role="menuitem" data-scroll="testimonials">Reviews</a></li>
                 <li role="none"><a href="#contact" role="menuitem" data-scroll="contact">Contact</a></li>
             </ul>
-            
+
             <!-- Mobile Menu Button -->
-            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
+            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"
+                aria-expanded="false" aria-controls="mobileNav">
                 <span class="hamburger"></span>
             </button>
         </div>
-        
+
         <!-- Mobile Navigation Menu -->
         <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
             <a href="#home" data-scroll="home">Home</a>
@@ -172,18 +75,21 @@
     <!-- Hero Section -->
     <section class="hero" id="home" role="banner">
         <a id="main-content" class="sr-only">Main content</a>
-        
+
         <!-- Video Background -->
         <div class="hero-video-container">
-            <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-11-large.mp4" type="video/mp4">
+            <video autoplay muted loop playsinline
+                poster="images/heroSection.jpeg">
+                <source
+                    src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-11-large.mp4"
+                    type="video/mp4">
             </video>
             <div class="hero-video-overlay"></div>
         </div>
-        
+
         <!-- Animated Particle Canvas -->
         <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
-        
+
         <!-- Floating Decorative Elements -->
         <div class="hero-shapes">
             <div class="shape shape-1"></div>
@@ -191,10 +97,10 @@
             <div class="shape shape-3"></div>
             <div class="shape shape-4"></div>
         </div>
-        
+
         <!-- Mouse Follower Glow -->
         <div class="mouse-glow" id="mouseGlow"></div>
-        
+
         <!-- Main Content -->
         <div class="hero-content">
             <div class="hero-badge-wrapper">
@@ -204,7 +110,7 @@
                     <span class="badge-pulse"></span>
                 </span>
             </div>
-            
+
             <h1 class="hero-title">
                 <span class="title-line title-line-1">
                     <span class="char-wrap">Facility</span>
@@ -217,12 +123,12 @@
                     <span class="typing-cursor">|</span>
                 </span>
             </h1>
-            
+
             <p class="hero-description">
                 <span class="desc-line">Premium cleaning, transportation, landscaping,</span>
                 <span class="desc-line">and maintenance services for schools and businesses.</span>
             </p>
-            
+
             <div class="hero-buttons">
                 <button type="button" class="btn btn-primary btn-hero-primary" data-scroll="services">
                     <span class="btn-text">Explore Services</span>
@@ -238,7 +144,7 @@
                     </span>
                 </button>
             </div>
-            
+
             <!-- Trust Indicators -->
             <div class="trust-indicators">
                 <div class="trust-item">
@@ -272,7 +178,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Scroll Indicator -->
         <div class="scroll-indicator" aria-hidden="true">
             <div class="scroll-mouse">
@@ -280,7 +186,7 @@
             </div>
             <span class="scroll-text">Scroll to explore</span>
         </div>
-        
+
         <!-- Ambient Glow Effects -->
         <div class="ambient-glow ambient-glow-1"></div>
         <div class="ambient-glow ambient-glow-2"></div>
@@ -296,7 +202,7 @@
             <div class="bg-gradient-orb orb-3"></div>
             <canvas id="servicesParticleCanvas" class="services-particles-canvas"></canvas>
         </div>
-        
+
         <div class="container services-container">
             <!-- Section Header -->
             <div class="services-header">
@@ -311,7 +217,7 @@
                 <p class="header-subtitle">
                     Comprehensive facility management solutions, reimagined through innovation and excellence
                 </p>
-                
+
                 <!-- Service Filter Tabs -->
                 <div class="service-filters" role="tablist" aria-label="Service categories">
                     <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
@@ -331,7 +237,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <!-- 3D Services Stage -->
             <div class="services-stage">
                 <div class="stage-perspective">
@@ -369,7 +275,7 @@
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </div>
-                            
+
                             <div class="card-back">
                                 <div class="back-content">
                                     <h4>What's Included</h4>
@@ -420,9 +326,10 @@
                             </div>
                         </div>
                     </article>
-                    
+
                     <!-- Service Card 2: Transportation -->
-                    <article class="service-card-3d" data-category="mobility" data-service="transportation" tabindex="0">
+                    <article class="service-card-3d" data-category="mobility" data-service="transportation"
+                        tabindex="0">
                         <div class="card-3d-inner">
                             <div class="card-front">
                                 <div class="card-media">
@@ -455,7 +362,7 @@
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </div>
-                            
+
                             <div class="card-back">
                                 <div class="back-content">
                                     <h4>Transport Solutions</h4>
@@ -506,7 +413,7 @@
                             </div>
                         </div>
                     </article>
-                    
+
                     <!-- Service Card 3: Landscaping -->
                     <article class="service-card-3d" data-category="outdoor" data-service="landscaping" tabindex="0">
                         <div class="card-3d-inner">
@@ -541,7 +448,7 @@
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </div>
-                            
+
                             <div class="card-back">
                                 <div class="back-content">
                                     <h4>Outdoor Services</h4>
@@ -592,14 +499,15 @@
                             </div>
                         </div>
                     </article>
-                    
+
                     <!-- Service Card 4: Maintenance -->
                     <article class="service-card-3d" data-category="indoor" data-service="maintenance" tabindex="0">
                         <div class="card-3d-inner">
                             <div class="card-front">
                                 <div class="card-media">
                                     <div class="media-overlay"></div>
-                                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600" alt="Maintenance services" loading="lazy">
+                                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600"
+                                        alt="Maintenance services" loading="lazy">
                                     <div class="card-badge badge-24h">
                                         <i class="fas fa-clock"></i>
                                         <span>24/7 Response</span>
@@ -614,12 +522,11 @@
                                     <div class="card-meta">
                                         <span class="meta-item">
                                             <i class="fas fa-wrench"></i>
-                                            < 2hr Response
-                                        </span>
-                                        <span class="meta-item">
-                                            <i class="fas fa-clipboard-check"></i>
-                                            Certified Techs
-                                        </span>
+                                            < 2hr Response </span>
+                                                <span class="meta-item">
+                                                    <i class="fas fa-clipboard-check"></i>
+                                                    Certified Techs
+                                                </span>
                                     </div>
                                 </div>
                                 <div class="card-cta">
@@ -627,7 +534,7 @@
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </div>
-                            
+
                             <div class="card-back">
                                 <div class="back-content">
                                     <h4>Maintenance Coverage</h4>
@@ -680,7 +587,7 @@
                     </article>
                 </div>
             </div>
-            
+
             <!-- Bottom CTA - Build Custom Package -->
             <div class="services-cta" id="custom-bundle-section">
                 <div class="cta-content">
@@ -731,7 +638,7 @@
                     <!-- Step 1: Service Selection -->
                     <div class="form-step active" data-step="1">
                         <h4>Step 1: Service Details</h4>
-                        
+
                         <div class="form-group">
                             <label for="quoteServiceType">Service Type *</label>
                             <select id="quoteServiceType" name="service_type" required>
@@ -746,7 +653,7 @@
 
                         <!-- DYNAMIC FIELDS CONTAINER -->
                         <div id="dynamicFieldsContainer">
-                            
+
                             <!-- Default Property Size (shown for cleaning, landscaping, maintenance) -->
                             <div class="form-group property-size-group" id="propertySizeGroup">
                                 <label>Property Size *</label>
@@ -775,14 +682,16 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="numBuses"># of Buses *</label>
-                                        <input type="number" id="numBuses" name="num_buses" min="1" placeholder="e.g., 2">
+                                        <input type="number" id="numBuses" name="num_buses" min="1"
+                                            placeholder="e.g., 2">
                                     </div>
                                     <div class="form-group">
                                         <label for="numPassengers"># of Passengers *</label>
-                                        <input type="number" id="numPassengers" name="num_passengers" min="1" placeholder="e.g., 50">
+                                        <input type="number" id="numPassengers" name="num_passengers" min="1"
+                                            placeholder="e.g., 50">
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="pickupDate">Pick-Up Date *</label>
@@ -793,7 +702,7 @@
                                         <input type="time" id="pickupTime" name="pickup_time">
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="dropoffTime">Drop-Off Time *</label>
@@ -811,20 +720,23 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="pickupLocation">Pick-Up Location *</label>
-                                    <textarea id="pickupLocation" name="pickup_location" rows="2" placeholder="Full address with zip code..."></textarea>
+                                    <textarea id="pickupLocation" name="pickup_location" rows="2"
+                                        placeholder="Full address with zip code..."></textarea>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="destinationAddress">Destination Address *</label>
-                                    <textarea id="destinationAddress" name="destination_address" rows="2" placeholder="Full address with zip code..."></textarea>
+                                    <textarea id="destinationAddress" name="destination_address" rows="2"
+                                        placeholder="Full address with zip code..."></textarea>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="transportExtras">Extra Needs or Comments</label>
-                                    <textarea id="transportExtras" name="transport_extras" rows="2" placeholder="e.g., seat belts, A/C, wheelchair access, extra drop-offs..."></textarea>
+                                    <textarea id="transportExtras" name="transport_extras" rows="2"
+                                        placeholder="e.g., seat belts, A/C, wheelchair access, extra drop-offs..."></textarea>
                                 </div>
                             </div>
 
@@ -867,7 +779,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Bundle Property Size (shown when transportation NOT selected) -->
                                 <div class="form-group bundle-property-size" id="bundlePropertySize">
                                     <label>Property Size *</label>
@@ -894,11 +806,11 @@
 
                         </div>
                     </div>
-                    
+
                     <!-- Step 2: Contact Information -->
                     <div class="form-step" data-step="2">
                         <h4>Step 2: Your Information</h4>
-                        
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="quoteFirstName">First Name *</label>
@@ -909,32 +821,33 @@
                                 <input type="text" id="quoteLastName" name="last_name" placeholder="Doe" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="quoteEmail">Email Address *</label>
                             <input type="email" id="quoteEmail" name="email" placeholder="john@company.com" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="quotePhone">Phone Number *</label>
                             <input type="tel" id="quotePhone" name="phone" placeholder="(281) 555-0123" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="quoteCompany">Company/School Name</label>
                             <input type="text" id="quoteCompany" name="company" placeholder="Acme Corporation">
                         </div>
                     </div>
-                    
+
                     <!-- Step 3: Additional Details -->
                     <div class="form-step" data-step="3">
                         <h4>Step 3: Additional Details</h4>
-                        
+
                         <div class="form-group">
                             <label for="quoteMessage">Tell us about your needs</label>
-                            <textarea id="quoteMessage" name="message" rows="4" placeholder="Any specific requirements, preferred schedule, or questions..."></textarea>
+                            <textarea id="quoteMessage" name="message" rows="4"
+                                placeholder="Any specific requirements, preferred schedule, or questions..."></textarea>
                         </div>
-                        
+
                         <div class="estimate-preview">
                             <div class="estimate-icon">
                                 <i class="fas fa-robot"></i>
@@ -970,1038 +883,1071 @@
     </div>
 
     <!-- About Section -->
- <section id="about" class="why-crystal-section" aria-labelledby="about-heading">
-    <div class="container">
-        <!-- Section Header -->
-        <div class="section-header">
-            <span class="section-tag">
-                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                About Us
-            </span>
+    <section id="about" class="why-crystal-section" aria-labelledby="about-heading">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <span class="section-tag">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    About Us
+                </span>
             <h2 id="about-heading">Why Choose <br/> <span class="gradient-text">Crystal Facility Solutions?</span></h2>
-            <p class="section-subtitle">Transforming facilities into exceptional spaces since 2010</p>
-        </div>
+                <p class="section-subtitle">Transforming facilities into exceptional spaces since 2010</p>
+            </div>
 
-        <!-- Main Content Grid -->
-        <div class="about-content-grid">
-            <!-- Left: Story Card -->
-            <article class="story-card" tabindex="0">
-                <div class="story-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <h3>Our Story</h3>
+            <!-- Main Content Grid -->
+            <div class="about-content-grid">
+                <!-- Left: Story Card -->
+                <article class="story-card" tabindex="0">
+                    <div class="story-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3>Our Story</h3>
                 <p>Since 2010, we've been Houston's trusted partner in facility management. Our cloud-based systems and mobile app ensure real-time tracking and quality control.</p>
                 <p class="story-highlight">We don't just clean buildings – we build lasting partnerships with schools and businesses across Texas.</p>
-                <div class="story-features">
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle" aria-hidden="true"></i>
-                        <span>Cloud-Based Management</span>
+                    <div class="story-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                            <span>Cloud-Based Management</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                            <span>Real-Time Quality Control</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                            <span>Mobile App Integration</span>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle" aria-hidden="true"></i>
-                        <span>Real-Time Quality Control</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle" aria-hidden="true"></i>
-                        <span>Mobile App Integration</span>
-                    </div>
-                </div>
-            </article>
+                </article>
 
-            <!-- Center: Animated Stats -->
-            <div class="stats-container">
-                <div class="stat-card" data-target="15">
-                    <div class="stat-icon">
+                <!-- Center: Animated Stats -->
+                <div class="stats-container">
+                    <div class="stat-card" data-target="15">
+                        <div class="stat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
-                        </svg>
+                            </svg>
+                        </div>
+                        <div class="stat-number">
+                            <span class="counter">0</span>+
+                        </div>
+                        <div class="stat-label">Years Experience</div>
+                        <div class="stat-progress-ring">
+                            <div class="stat-progress"></div>
+                        </div>
                     </div>
-                    <div class="stat-number">
-                        <span class="counter">0</span>+
-                    </div>
-                    <div class="stat-label">Years Experience</div>
-                    <div class="stat-progress-ring">
-                        <div class="stat-progress"></div>
-                    </div>
-                </div>
 
-                <div class="stat-card" data-target="500">
-                    <div class="stat-icon">
+                    <div class="stat-card" data-target="500">
+                        <div class="stat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
+                            </svg>
+                        </div>
+                        <div class="stat-number">
+                            <span class="counter">0</span>+
+                        </div>
+                        <div class="stat-label">Happy Clients</div>
+                        <div class="stat-progress-ring">
+                            <div class="stat-progress"></div>
+                        </div>
                     </div>
-                    <div class="stat-number">
-                        <span class="counter">0</span>+
-                    </div>
-                    <div class="stat-label">Happy Clients</div>
-                    <div class="stat-progress-ring">
-                        <div class="stat-progress"></div>
-                    </div>
-                </div>
 
-                <div class="stat-card" data-target="50">
-                    <div class="stat-icon">
+                    <div class="stat-card" data-target="50">
+                        <div class="stat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                        </svg>
+                            </svg>
+                        </div>
+                        <div class="stat-number">
+                            <span class="counter">0</span>+
+                        </div>
+                        <div class="stat-label">Expert Staff</div>
+                        <div class="stat-progress-ring">
+                            <div class="stat-progress"></div>
+                        </div>
                     </div>
-                    <div class="stat-number">
-                        <span class="counter">0</span>+
-                    </div>
-                    <div class="stat-label">Expert Staff</div>
-                    <div class="stat-progress-ring">
-                        <div class="stat-progress"></div>
-                    </div>
-                </div>
 
-                <div class="stat-card highlight" data-target="99">
-                    <div class="stat-icon">
+                    <div class="stat-card highlight" data-target="99">
+                        <div class="stat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
-                        </svg>
-                    </div>
-                    <div class="stat-number">
-                        <span class="counter">0</span>%
-                    </div>
-                    <div class="stat-label">Satisfaction Rate</div>
-                    <div class="stat-progress-ring">
-                        <div class="stat-progress"></div>
+                            </svg>
+                        </div>
+                        <div class="stat-number">
+                            <span class="counter">0</span>%
+                        </div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                        <div class="stat-progress-ring">
+                            <div class="stat-progress"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Right: Excellence Card -->
-            <article class="excellence-card" tabindex="0">
-                <div class="excellence-badge">
-                    <i class="fas fa-award" aria-hidden="true"></i>
-                    <span>Excellence</span>
-                </div>
-                <h3>Excellence in Every Detail</h3>
+                <!-- Right: Excellence Card -->
+                <article class="excellence-card" tabindex="0">
+                    <div class="excellence-badge">
+                        <i class="fas fa-award" aria-hidden="true"></i>
+                        <span>Excellence</span>
+                    </div>
+                    <h3>Excellence in Every Detail</h3>
                 <p>Our commitment to quality has earned us recognition as Houston's premier facility management partner.</p>
-                
-                <div class="excellence-metrics">
-                    <div class="metric">
-                        <span class="metric-value">24/7</span>
-                        <span class="metric-desc">Support Available</span>
+
+                    <div class="excellence-metrics">
+                        <div class="metric">
+                            <span class="metric-value">24/7</span>
+                            <span class="metric-desc">Support Available</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">&lt;2hr</span>
+                            <span class="metric-desc">Response Time</span>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-value">&lt;2hr</span>
-                        <span class="metric-desc">Response Time</span>
+
+                    <div class="certifications">
+                        <div class="cert-badge" title="ISO Certified" tabindex="0" aria-label="ISO Certified">
+                            <i class="fas fa-certificate" aria-hidden="true"></i>
+                        </div>
+                        <div class="cert-badge" title="Green Cleaning" tabindex="0" aria-label="Green Cleaning">
+                            <i class="fas fa-leaf" aria-hidden="true"></i>
+                        </div>
+                        <div class="cert-badge" title="Safety Certified" tabindex="0" aria-label="Safety Certified">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <!-- Facility Types We Serve -->
+            <div class="facility-types-header">
+                <span class="header-eyebrow">Our Expertise</span>
+                <h3 class="facility-types-title">Facility Types We Serve</h3>
+                <p class="facility-types-subtitle">Specialized cleaning solutions for every industry</p>
+            </div>
+
+            <!-- Client Logos Marquee with Navigation -->
+            <div class="clients-marquee-container">
+                <button type="button" class="marquee-nav-btn marquee-prev" aria-label="Scroll left">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="clients-marquee" id="clientMarquee">
+                    <div class="marquee-track" id="marqueeTrack">
+                        <div class="marquee-content">
+                            <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
+                            <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
+                            <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
+                            <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
+                            <button type="button" class="client-logo" tabindex="0">Gyms</button>
+                            <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
+                            <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
+                            <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
+                            <button type="button" class="client-logo" tabindex="0">Event Venues</button>
+                        <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
+                            <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
+                            <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
+                            <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
+                        <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
+                        </div>
+                        <!-- Duplicate for seamless loop -->
+                        <div class="marquee-content" aria-hidden="true">
+                            <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
+                            <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
+                            <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
+                            <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
+                            <button type="button" class="client-logo" tabindex="0">Gyms</button>
+                            <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
+                            <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
+                            <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
+                            <button type="button" class="client-logo" tabindex="0">Event Venues</button>
+                        <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
+                            <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
+                            <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
+                            <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
+                        <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="certifications">
-                    <div class="cert-badge" title="ISO Certified" tabindex="0" aria-label="ISO Certified">
-                        <i class="fas fa-certificate" aria-hidden="true"></i>
-                    </div>
-                    <div class="cert-badge" title="Green Cleaning" tabindex="0" aria-label="Green Cleaning">
-                        <i class="fas fa-leaf" aria-hidden="true"></i>
-                    </div>
-                    <div class="cert-badge" title="Safety Certified" tabindex="0" aria-label="Safety Certified">
-                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </article>
-        </div>
-                <!-- Facility Types We Serve -->
-        <div class="facility-types-header">
-            <span class="header-eyebrow">Our Expertise</span>
-            <h3 class="facility-types-title">Facility Types We Serve</h3>
-            <p class="facility-types-subtitle">Specialized cleaning solutions for every industry</p>
-        </div>
+                <button type="button" class="marquee-nav-btn marquee-next" aria-label="Scroll right">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
 
-        <!-- Client Logos Marquee with Navigation -->
-        <div class="clients-marquee-container">
-            <button type="button" class="marquee-nav-btn marquee-prev" aria-label="Scroll left">
-                <i class="fas fa-chevron-left"></i>
-            </button>
+            <!-- Interactive Timeline -->
+            <div class="timeline-section">
+                <h3>Our Journey</h3>
+                <div class="timeline" role="list" aria-label="Company timeline">
+                    <div class="timeline-progress"></div>
 
-            <div class="clients-marquee" id="clientMarquee">
-                <div class="marquee-track" id="marqueeTrack">
-                    <div class="marquee-content">
-                        <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
-                        <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
-                        <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
-                        <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
-                        <button type="button" class="client-logo" tabindex="0">Gyms</button>
-                        <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
-                        <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
-                        <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
-                        <button type="button" class="client-logo" tabindex="0">Event Venues</button>
-                        <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
-                        <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
-                        <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
-                        <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
-                        <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
+                    <div class="timeline-item" data-year="2010" role="listitem" tabindex="0">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="year">2010</span>
+                            <p>Founded in Houston</p>
+                        </div>
                     </div>
-                    <!-- Duplicate for seamless loop -->
-                    <div class="marquee-content" aria-hidden="true">
-                        <button type="button" class="client-logo" tabindex="0">Education Facilities</button>
-                        <button type="button" class="client-logo" tabindex="0">Corporate Offices</button>
-                        <button type="button" class="client-logo" tabindex="0">Apartment Complex</button>
-                        <button type="button" class="client-logo" tabindex="0">Car Dealerships</button>
-                        <button type="button" class="client-logo" tabindex="0">Gyms</button>
-                        <button type="button" class="client-logo" tabindex="0">Retail Stores</button>
-                        <button type="button" class="client-logo" tabindex="0">Industrial Facilities</button>
-                        <button type="button" class="client-logo" tabindex="0">Hotels & Hospitality</button>
-                        <button type="button" class="client-logo" tabindex="0">Event Venues</button>
-                        <button type="button" class="client-logo" tabindex="0">Recreation And Shopping Areas</button>
-                        <button type="button" class="client-logo" tabindex="0">Healthcare Facilities</button>
-                        <button type="button" class="client-logo" tabindex="0">Places of Worship</button>
-                        <button type="button" class="client-logo" tabindex="0">Government Buildings</button>
-                        <button type="button" class="client-logo" tabindex="0">Banks And Financial Institutions</button>
+
+                    <div class="timeline-item" data-year="2015" role="listitem" tabindex="0">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="year">2015</span>
+                            <p>Expanded to 100+ clients</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-year="2018" role="listitem" tabindex="0">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="year">2018</span>
+                            <p>Launched mobile app</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item active" data-year="2026" role="listitem" tabindex="0">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="year">2026</span>
+                            <p>500+ clients & growing</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <button type="button" class="marquee-nav-btn marquee-next" aria-label="Scroll right">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+
+    <!-- Our Core Values Section -->
+    <section id="core-values" class="core-values-section" aria-labelledby="core-values-heading">
+        <!-- Floating Decorative Elements -->
+        <div class="values-decoration">
+            <div class="value-orb orb-1"></div>
+            <div class="value-orb orb-2"></div>
+            <div class="value-orb orb-3"></div>
         </div>
 
-        <!-- Interactive Timeline -->
-        <div class="timeline-section">
-            <h3>Our Journey</h3>
-            <div class="timeline" role="list" aria-label="Company timeline">
-                <div class="timeline-progress"></div>
-                
-                <div class="timeline-item" data-year="2010" role="listitem" tabindex="0">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="year">2010</span>
-                        <p>Founded in Houston</p>
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <span class="section-label">
+                    <i class="fas fa-gem" aria-hidden="true"></i>
+                    What We Stand For
+                </span>
+                <h2 id="core-values-heading">Our Core Values</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <!-- Values Container -->
+            <div class="values-container">
+                <!-- Value 1: Quality -->
+                <article class="value-card" data-value="quality" tabindex="0" role="button" aria-expanded="false">
+                    <div class="value-card-inner">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="value-content">
+                            <h3>Quality</h3>
+                            <p class="value-short">Outstanding service through teamwork and innovation</p>
+                            <div class="value-expanded">
+                                <p>We provide outstanding service through teamwork, experience, accountability and
+                                    innovation – all of which is reflected in the quality of our results. Every project
+                                    meets our rigorous standards.</p>
+                                <ul class="value-points">
+                                    <li>Certified cleaning protocols</li>
+                                    <li>Quality assurance inspections</li>
+                                    <li>Continuous improvement</li>
+                                </ul>
+                            </div>
+                            <button class="value-toggle" aria-expanded="false">
+                                <span>Learn More</span>
+                                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="value-number" aria-hidden="true">01</div>
                     </div>
-                </div>
-                
-                <div class="timeline-item" data-year="2015" role="listitem" tabindex="0">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="year">2015</span>
-                        <p>Expanded to 100+ clients</p>
+                </article>
+
+                <!-- Value 2: Customer Satisfaction -->
+                <article class="value-card" data-value="satisfaction" tabindex="0" role="button" aria-expanded="false">
+                    <div class="value-card-inner">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="value-content">
+                            <h3>Customer Satisfaction</h3>
+                            <p class="value-short">Identifying goals and visualizing innovative solutions</p>
+                            <div class="value-expanded">
+                                <p>We identify our clients' goals and visualize innovative solutions, using careful
+                                    planning and proactive communication to achieve unparalleled results.</p>
+                                <ul class="value-points">
+                                    <li>24/7 responsive support</li>
+                                    <li>Customized service plans</li>
+                                    <li>Proactive communication</li>
+                                </ul>
+                            </div>
+                            <button class="value-toggle" aria-expanded="false">
+                                <span>Learn More</span>
+                                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="value-number" aria-hidden="true">02</div>
                     </div>
-                </div>
-                
-                <div class="timeline-item" data-year="2018" role="listitem" tabindex="0">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="year">2018</span>
-                        <p>Launched mobile app</p>
+                </article>
+
+                <!-- Value 3: Innovation -->
+                <article class="value-card" data-value="innovation" tabindex="0" role="button" aria-expanded="false">
+                    <div class="value-card-inner">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="value-content">
+                            <h3>Innovation</h3>
+                            <p class="value-short">Seeking new ways to exceed expectations</p>
+                            <div class="value-expanded">
+                                <p>We continually seek new and enterprising ways, whether technology- or process-based,
+                                    to meet our customers' needs and exceed their expectations.</p>
+                                <ul class="value-points">
+                                    <li>Eco-friendly technologies</li>
+                                    <li>Smart building solutions</li>
+                                    <li>Process automation</li>
+                                </ul>
+                            </div>
+                            <button class="value-toggle" aria-expanded="false">
+                                <span>Learn More</span>
+                                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="value-number" aria-hidden="true">03</div>
                     </div>
-                </div>
-                
-                <div class="timeline-item active" data-year="2024" role="listitem" tabindex="0">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="year">2024</span>
-                        <p>500+ clients & growing</p>
+                </article>
+
+                <!-- Value 4: Operational Excellence -->
+                <article class="value-card" data-value="excellence" tabindex="0" role="button" aria-expanded="false">
+                    <div class="value-card-inner">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="value-content">
+                            <h3>Operational Excellence</h3>
+                            <p class="value-short">Best value through refined processes</p>
+                            <div class="value-expanded">
+                                <p>We provide the best value to our customers by continuously refining our processes and
+                                    cost structure without compromising quality.</p>
+                                <ul class="value-points">
+                                    <li>Lean operational model</li>
+                                    <li>Cost-effective solutions</li>
+                                    <li>Performance metrics</li>
+                                </ul>
+                            </div>
+                            <button class="value-toggle" aria-expanded="false">
+                                <span>Learn More</span>
+                                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="value-number" aria-hidden="true">04</div>
                     </div>
-                </div>
+                </article>
+
+                <!-- Value 5: Teamwork -->
+                <article class="value-card" data-value="teamwork" tabindex="0" role="button" aria-expanded="false">
+                    <div class="value-card-inner">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="value-content">
+                            <h3>Teamwork</h3>
+                            <p class="value-short">Our people are our success</p>
+                            <div class="value-expanded">
+                                <p>Our people is our success by delivering customer solutions. We strive continually to
+                                    attract and retain talented professionals who share our values.</p>
+                                <ul class="value-points">
+                                    <li>Collaborative culture</li>
+                                    <li>Ongoing training programs</li>
+                                    <li>Employee development</li>
+                                </ul>
+                            </div>
+                            <button class="value-toggle" aria-expanded="false">
+                                <span>Learn More</span>
+                                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="value-number" aria-hidden="true">05</div>
+                    </div>
+                </article>
+
+                <!-- Value 6: Safety -->
+                <article class="value-card" data-value="safety" tabindex="0" role="button" aria-expanded="false">
+                    <div class="value-card-inner">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <div class="icon-bg"></div>
+                        </div>
+                        <div class="value-content">
+                            <h3>Safety</h3>
+                            <p class="value-short">Highest standards for workers and public</p>
+                            <div class="value-expanded">
+                                <p>We focus on consistently upholding the highest standards of safety, ensuring that all
+                                    workers and the public go home every day.</p>
+                                <ul class="value-points">
+                                    <li>OSHA compliance</li>
+                                    <li>Regular safety training</li>
+                                    <li>Risk assessment protocols</li>
+                                </ul>
+                            </div>
+                            <button class="value-toggle" aria-expanded="false">
+                                <span>Learn More</span>
+                                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="value-number" aria-hidden="true">06</div>
+                    </div>
+                </article>
             </div>
         </div>
-    </div>
-</section>
-
-
-     <!-- Our Core Values Section -->
-<section id="core-values" class="core-values-section" aria-labelledby="core-values-heading">
-    <!-- Floating Decorative Elements -->
-    <div class="values-decoration">
-        <div class="value-orb orb-1"></div>
-        <div class="value-orb orb-2"></div>
-        <div class="value-orb orb-3"></div>
-    </div>
-    
-    <div class="container">
-        <!-- Section Header -->
-        <div class="section-header">
-            <span class="section-label">
-                <i class="fas fa-gem" aria-hidden="true"></i>
-                What We Stand For
-            </span>
-            <h2 id="core-values-heading">Our Core Values</h2>
-            <div class="section-line"></div>
-        </div>
-        
-        <!-- Values Container -->
-        <div class="values-container">
-            <!-- Value 1: Quality -->
-            <article class="value-card" data-value="quality" tabindex="0" role="button" aria-expanded="false">
-                <div class="value-card-inner">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        <div class="icon-bg"></div>
-                    </div>
-                    <div class="value-content">
-                        <h3>Quality</h3>
-                        <p class="value-short">Outstanding service through teamwork and innovation</p>
-                        <div class="value-expanded">
-                            <p>We provide outstanding service through teamwork, experience, accountability and innovation – all of which is reflected in the quality of our results. Every project meets our rigorous standards.</p>
-                            <ul class="value-points">
-                                <li>Certified cleaning protocols</li>
-                                <li>Quality assurance inspections</li>
-                                <li>Continuous improvement</li>
-                            </ul>
-                        </div>
-                        <button class="value-toggle" aria-expanded="false">
-                            <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="value-number" aria-hidden="true">01</div>
-                </div>
-            </article>
-
-            <!-- Value 2: Customer Satisfaction -->
-            <article class="value-card" data-value="satisfaction" tabindex="0" role="button" aria-expanded="false">
-                <div class="value-card-inner">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        <div class="icon-bg"></div>
-                    </div>
-                    <div class="value-content">
-                        <h3>Customer Satisfaction</h3>
-                        <p class="value-short">Identifying goals and visualizing innovative solutions</p>
-                        <div class="value-expanded">
-                            <p>We identify our clients' goals and visualize innovative solutions, using careful planning and proactive communication to achieve unparalleled results.</p>
-                            <ul class="value-points">
-                                <li>24/7 responsive support</li>
-                                <li>Customized service plans</li>
-                                <li>Proactive communication</li>
-                            </ul>
-                        </div>
-                        <button class="value-toggle" aria-expanded="false">
-                            <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="value-number" aria-hidden="true">02</div>
-                </div>
-            </article>
-
-            <!-- Value 3: Innovation -->
-            <article class="value-card" data-value="innovation" tabindex="0" role="button" aria-expanded="false">
-                <div class="value-card-inner">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                            <polyline points="2 17 12 22 22 17"></polyline>
-                            <polyline points="2 12 12 17 22 12"></polyline>
-                        </svg>
-                        <div class="icon-bg"></div>
-                    </div>
-                    <div class="value-content">
-                        <h3>Innovation</h3>
-                        <p class="value-short">Seeking new ways to exceed expectations</p>
-                        <div class="value-expanded">
-                            <p>We continually seek new and enterprising ways, whether technology- or process-based, to meet our customers' needs and exceed their expectations.</p>
-                            <ul class="value-points">
-                                <li>Eco-friendly technologies</li>
-                                <li>Smart building solutions</li>
-                                <li>Process automation</li>
-                            </ul>
-                        </div>
-                        <button class="value-toggle" aria-expanded="false">
-                            <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="value-number" aria-hidden="true">03</div>
-                </div>
-            </article>
-
-            <!-- Value 4: Operational Excellence -->
-            <article class="value-card" data-value="excellence" tabindex="0" role="button" aria-expanded="false">
-                <div class="value-card-inner">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <div class="icon-bg"></div>
-                    </div>
-                    <div class="value-content">
-                        <h3>Operational Excellence</h3>
-                        <p class="value-short">Best value through refined processes</p>
-                        <div class="value-expanded">
-                            <p>We provide the best value to our customers by continuously refining our processes and cost structure without compromising quality.</p>
-                            <ul class="value-points">
-                                <li>Lean operational model</li>
-                                <li>Cost-effective solutions</li>
-                                <li>Performance metrics</li>
-                            </ul>
-                        </div>
-                        <button class="value-toggle" aria-expanded="false">
-                            <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="value-number" aria-hidden="true">04</div>
-                </div>
-            </article>
-
-            <!-- Value 5: Teamwork -->
-            <article class="value-card" data-value="teamwork" tabindex="0" role="button" aria-expanded="false">
-                <div class="value-card-inner">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        <div class="icon-bg"></div>
-                    </div>
-                    <div class="value-content">
-                        <h3>Teamwork</h3>
-                        <p class="value-short">Our people are our success</p>
-                        <div class="value-expanded">
-                            <p>Our people is our success by delivering customer solutions. We strive continually to attract and retain talented professionals who share our values.</p>
-                            <ul class="value-points">
-                                <li>Collaborative culture</li>
-                                <li>Ongoing training programs</li>
-                                <li>Employee development</li>
-                            </ul>
-                        </div>
-                        <button class="value-toggle" aria-expanded="false">
-                            <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="value-number" aria-hidden="true">05</div>
-                </div>
-            </article>
-
-            <!-- Value 6: Safety -->
-            <article class="value-card" data-value="safety" tabindex="0" role="button" aria-expanded="false">
-                <div class="value-card-inner">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                        <div class="icon-bg"></div>
-                    </div>
-                    <div class="value-content">
-                        <h3>Safety</h3>
-                        <p class="value-short">Highest standards for workers and public</p>
-                        <div class="value-expanded">
-                            <p>We focus on consistently upholding the highest standards of safety, ensuring that all workers and the public go home every day.</p>
-                            <ul class="value-points">
-                                <li>OSHA compliance</li>
-                                <li>Regular safety training</li>
-                                <li>Risk assessment protocols</li>
-                            </ul>
-                        </div>
-                        <button class="value-toggle" aria-expanded="false">
-                            <span>Learn More</span>
-                            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="value-number" aria-hidden="true">06</div>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
-<!-- ============================================
+    </section>
+    <!-- ============================================
    CINEMATIC TESTIMONIALS SECTION
    ============================================ -->
-<section id="testimonials" class="testimonials-cinematic" aria-labelledby="testimonials-heading">
-    <!-- Dynamic Background -->
-    <div class="testimonials-bg">
-        <div class="bg-gradient-mesh"></div>
-        <div class="bg-noise"></div>
-        <div class="bg-glow bg-glow-1"></div>
-        <div class="bg-glow bg-glow-2"></div>
-        <div class="bg-glow bg-glow-3"></div>
-    </div>
-    
-    <!-- Floating Quote Marks -->
-    <div class="floating-quotes">
-        <span class="quote-mark mark-1">"</span>
-        <span class="quote-mark mark-2">"</span>
-        <span class="quote-mark mark-3">"</span>
-        <span class="quote-mark mark-4">"</span>
-    </div>
-    
-    <div class="container testimonials-container">
-        <!-- Section Header -->
-        <div class="testimonials-header">
-            <span class="header-eyebrow">Client Stories</span>
-            <h2 id="testimonials-heading" class="header-title">
-                <span class="title-word">Trusted</span>
-                <span class="title-word highlight">By Many</span>
-            </h2>
-            <p class="header-subtitle">Hear from the schools and businesses we've had the privilege to serve</p>
-            <div class="trust-score">
-                <div class="score-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <span class="score-text">4.9/5 from 500+ reviews</span>
-            </div>
-        </div>
+    <section id="testimonials" class="testimonials-cinematic" aria-labelledby="testimonials-heading">
         
-        <!-- 3D Carousel -->
-        <div class="testimonials-carousel">
-            <div class="carousel-stage">
-                <!-- Testimonial Cards -->
-                <div class="testimonial-card active" data-index="0">
-                    <div class="card-glow"></div>
-                    <div class="card-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">Crystal Facility Solutions transformed our school campus. Their attention to detail and consistent quality have made them an invaluable partner. The team is professional, responsive, and truly cares about our needs.</p>
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <span>SM</span>
-                            <div class="avatar-ring"></div>
-                        </div>
-                        <div class="author-info">
-                            <h4>Sarah Mitchell</h4>
-                            <p>Principal, Houston ISD</p>
-                            <span class="author-badge">
-                                <i class="fas fa-check-circle"></i> Verified Client
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card" data-index="1">
-                    <div class="card-glow"></div>
-                    <div class="card-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">We've been using CFS for 3 years. Their transportation service is punctual and safe. Parents love the real-time tracking app. Highly recommend for any facility needs.</p>
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <span>RJ</span>
-                            <div class="avatar-ring"></div>
-                        </div>
-                        <div class="author-info">
-                            <h4>Robert Johnson</h4>
-                            <p>Facilities Director, TechCorp</p>
-                            <span class="author-badge">
-                                <i class="fas fa-check-circle"></i> Verified Client
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card" data-index="2">
-                    <div class="card-glow"></div>
-                    <div class="card-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">The landscaping team is exceptional. They transformed our corporate grounds into a beautiful, welcoming space. Their eco-friendly approach aligns perfectly with our company values.</p>
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <span>EP</span>
-                            <div class="avatar-ring"></div>
-                        </div>
-                        <div class="author-info">
-                            <h4>Emily Parker</h4>
-                            <p>CEO, GreenSpace Industries</p>
-                            <span class="author-badge">
-                                <i class="fas fa-check-circle"></i> Verified Client
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Navigation -->
-            <div class="carousel-nav">
-                <button class="nav-btn nav-prev" aria-label="Previous testimonial">
-                    <i class="fas fa-chevron-left"></i>
-                    <div class="btn-glow"></div>
-                </button>
-                
-                <div class="nav-dots">
-                    <button class="dot active" data-index="0" aria-label="Go to testimonial 1"></button>
-                    <button class="dot" data-index="1" aria-label="Go to testimonial 2"></button>
-                    <button class="dot" data-index="2" aria-label="Go to testimonial 3"></button>
-                </div>
-                
-                <button class="nav-btn nav-next" aria-label="Next testimonial">
-                    <i class="fas fa-chevron-right"></i>
-                    <div class="btn-glow"></div>
-                </button>
-            </div>
-            
-            <!-- Progress Bar -->
-            <div class="carousel-progress">
-                <div class="progress-bar"></div>
-            </div>
+        <!-- Dynamic Background -->
+        <div class="testimonials-bg">
+            <div class="bg-gradient-mesh"></div>
+            <div class="bg-noise"></div>
+            <div class="bg-glow bg-glow-1"></div>
+            <div class="bg-glow bg-glow-2"></div>
+            <div class="bg-glow bg-glow-3"></div>
         </div>
-                <!-- CTA -->
-        <div class="testimonials-cta">
-            <div class="cta-card">
-                <div class="cta-icon">
-                    <i class="fas fa-microphone"></i>
-                    <div class="icon-pulse"></div>
-                </div>
-                <h3>Share Your Experience</h3>
-                <p>Your feedback helps us improve and serve you better</p>
-                <button class="btn-cta" data-scroll="contact">
-                    <span>Leave a Review</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
+
+        <!-- Floating Quote Marks -->
+        <div class="floating-quotes">
+            <span class="quote-mark mark-1">"</span>
+            <span class="quote-mark mark-2">"</span>
+            <span class="quote-mark mark-3">"</span>
+            <span class="quote-mark mark-4">"</span>
         </div>
-        
-    </div>
-</section> 
-<!-- ============================================
+
+        <div class="container testimonials-container">
+            <!-- Section Header -->
+            <div class="testimonials-header">
+                <span class="header-eyebrow">Client Stories</span>
+                <h2 id="testimonials-heading" class="header-title">
+                    <span class="title-word">Trusted</span>
+                    <span class="title-word highlight">By Many</span>
+                </h2>
+                <p class="header-subtitle">Hear from the schools and businesses we've had the privilege to serve</p>
+                <div class="trust-score">
+                    <div class="score-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="score-text">4.9/5 from 500+ reviews</span>
+                </div>
+            </div>
+
+            <!-- 3D Carousel -->
+            <div class="testimonials-carousel">
+                <div class="carousel-stage">
+                    <!-- Testimonial Cards -->
+                    <div class="testimonial-card active" data-index="0">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="testimonial-text">Crystal Facility Solutions transformed our school campus. Their
+                                attention to detail and consistent quality have made them an invaluable partner. The
+                                team is professional, responsive, and truly cares about our needs.</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <span>SM</span>
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="author-info">
+                                <h4>Sarah Mitchell</h4>
+                                <p>Principal, Houston ISD</p>
+                                <span class="author-badge">
+                                    <i class="fas fa-check-circle"></i> Verified Client
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card" data-index="1">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="testimonial-text">We've been using CFS for 3 years. Their transportation service
+                                is punctual and safe. Parents love the real-time tracking app. Highly recommend for any
+                                facility needs.</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <span>RJ</span>
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="author-info">
+                                <h4>Robert Johnson</h4>
+                                <p>Facilities Director, TechCorp</p>
+                                <span class="author-badge">
+                                    <i class="fas fa-check-circle"></i> Verified Client
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card" data-index="2">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="testimonial-text">The landscaping team is exceptional. They transformed our
+                                corporate grounds into a beautiful, welcoming space. Their eco-friendly approach aligns
+                                perfectly with our company values.</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <span>EP</span>
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="author-info">
+                                <h4>Emily Parker</h4>
+                                <p>CEO, GreenSpace Industries</p>
+                                <span class="author-badge">
+                                    <i class="fas fa-check-circle"></i> Verified Client
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="carousel-nav">
+                    <button class="nav-btn nav-prev" aria-label="Previous testimonial">
+                        <i class="fas fa-chevron-left"></i>
+                        <div class="btn-glow"></div>
+                    </button>
+
+                    <div class="nav-dots">
+                        <button class="dot active" data-index="0" aria-label="Go to testimonial 1"></button>
+                        <button class="dot" data-index="1" aria-label="Go to testimonial 2"></button>
+                        <button class="dot" data-index="2" aria-label="Go to testimonial 3"></button>
+                    </div>
+
+                    <button class="nav-btn nav-next" aria-label="Next testimonial">
+                        <i class="fas fa-chevron-right"></i>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="carousel-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+            <!-- CTA -->
+            <div class="testimonials-cta">
+                <div class="cta-card">
+                    <div class="cta-icon">
+                        <i class="fas fa-microphone"></i>
+                        <div class="icon-pulse"></div>
+                    </div>
+                    <h3>Share Your Experience</h3>
+                    <p>Your feedback helps us improve and serve you better</p>
+                    <button class="btn-cta" data-scroll="contact">
+                        <span>Leave a Review</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ============================================
    CINEMATIC CONTACT SECTION
    ============================================ -->
-<section id="contact" class="contact-cinematic" aria-labelledby="contact-heading">
-    <!-- Video Background -->
-    <div class="contact-video-bg">
-        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-11-large.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-    </div>
-    
-    <!-- Animated Particles -->
-    <canvas id="contactParticles" class="contact-particles"></canvas>
-    
-    <!-- Light Beams -->
-    <div class="light-beam beam-1"></div>
-    <div class="light-beam beam-2"></div>
-    <div class="light-beam beam-3"></div>
-    
-    <!-- Floating Orbs -->
-    <div class="floating-orb orb-1"></div>
-    <div class="floating-orb orb-2"></div>
-    <div class="floating-orb orb-3"></div>
-    
-    <div class="container contact-cinematic-container">
-        <!-- Header -->
-        <div class="cinematic-header">
-            <span class="header-eyebrow">Let's Connect</span>
-            <h2 id="contact-heading" class="header-title">
-                <span class="title-line">Ready to Transform</span>
-                <span class="title-line highlight">Your Facility?</span>
-            </h2>
-            <p class="header-subtitle">Experience the Crystal difference. Reach out and discover how we can elevate your space.</p>
+    <section id="contact" class="contact-cinematic" aria-labelledby="contact-heading">
+        <!-- Video Background -->
+        <div class="contact-video-bg">
+            <video autoplay muted loop playsinline
+                poster="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920">
+                <source
+                    src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-11-large.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
         </div>
-        
-        <!-- Main Content Grid -->
-        <div class="contact-showcase">
-            <!-- Left: Immersive Contact Experience -->
-            <div class="contact-experience">
-                <!-- 3D Card Stack -->
-                <div class="card-stack">
-                    <div class="stack-card stack-card-3" style="--delay: 0.2s">
-                        <i class="fas fa-clock"></i>
-                        <span>24/7 Available</span>
+
+        <!-- Animated Particles -->
+        <canvas id="contactParticles" class="contact-particles"></canvas>
+
+        <!-- Light Beams -->
+        <div class="light-beam beam-1"></div>
+        <div class="light-beam beam-2"></div>
+        <div class="light-beam beam-3"></div>
+
+        <!-- Floating Orbs -->
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+
+        <div class="container contact-cinematic-container">
+            <!-- Header -->
+            <div class="cinematic-header">
+                <span class="header-eyebrow">Let's Connect</span>
+                <h2 id="contact-heading" class="header-title">
+                    <span class="title-line">Ready to Transform</span>
+                    <span class="title-line highlight">Your Facility?</span>
+                </h2>
+                <p class="header-subtitle">Experience the Crystal difference. Reach out and discover how we can elevate
+                    your space.</p>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="contact-showcase">
+                <!-- Left: Immersive Contact Experience -->
+                <div class="contact-experience">
+                    <!-- 3D Card Stack -->
+                    <div class="card-stack">
+                        <div class="stack-card stack-card-3" style="--delay: 0.2s">
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 Available</span>
+                        </div>
+                        <div class="stack-card stack-card-2" style="--delay: 0.1s">
+                            <i class="fas fa-bolt"></i>
+                            <span>15min Response</span>
+                        </div>
+                        <div class="stack-card stack-card-1" style="--delay: 0s">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>99% Satisfaction</span>
+                        </div>
                     </div>
-                    <div class="stack-card stack-card-2" style="--delay: 0.1s">
-                        <i class="fas fa-bolt"></i>
-                        <span>15min Response</span>
+
+                    <!-- Interactive Contact Methods -->
+                    <div class="contact-methods">
+                        <a href="tel:281-506-8826" class="method-card method-phone">
+                            <div class="method-icon">
+                                <div class="icon-ring ring-1"></div>
+                                <div class="icon-ring ring-2"></div>
+                                <div class="icon-ring ring-3"></div>
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-label">Call Now</span>
+                                <span class="method-value">281-506-8826</span>
+                            </div>
+                            <div class="method-wave"></div>
+                        </a>
+
+                        <a href="mailto:info@cfshouston.com" class="method-card method-email">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-label">Email Us</span>
+                                <span class="method-value">info@cfshouston.com</span>
+                            </div>
+                        </a>
+
+                        <div class="method-card method-location">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-label">Visit Us</span>
+                                <span class="method-value">Stafford, TX</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stack-card stack-card-1" style="--delay: 0s">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>99% Satisfaction</span>
+
+                    <!-- Live Status -->
+                    <div class="live-status">
+                        <div class="status-indicator">
+                            <span class="status-pulse"></span>
+                            <span class="status-dot"></span>
+                        </div>
+                        <span class="status-text">We're online now</span>
+                        <span class="status-time">Avg. response: 2 min</span>
                     </div>
                 </div>
-                
-                <!-- Interactive Contact Methods -->
-                <div class="contact-methods">
-                    <a href="tel:281-506-8826" class="method-card method-phone">
-                        <div class="method-icon">
-                            <div class="icon-ring ring-1"></div>
-                            <div class="icon-ring ring-2"></div>
-                            <div class="icon-ring ring-3"></div>
-                            <i class="fas fa-phone-alt"></i>
+
+                <!-- Right: Floating Form -->
+                <div class="form-floating-container">
+                    <div class="form-glass">
+                        <div class="form-reflection"></div>
+
+                        <div class="form-header-glass">
+                            <h3>Send a Message</h3>
+                            <p>We'll get back to you very soon...</p>
                         </div>
-                        <div class="method-info">
-                            <span class="method-label">Call Now</span>
-                            <span class="method-value">281-506-8826</span>
+
+                        <form class="form-cinematic" id="cinematicForm" novalidate>
+                            <div class="input-glass-group">
+                                <div class="input-glass">
+                                    <input type="text" id="cineName" placeholder=" " required>
+                                    <label for="cineName">Your Name</label>
+                                    <i class="fas fa-user"></i>
+                                    <div class="input-glow"></div>
+                                </div>
+
+                                <div class="input-glass">
+                                    <input type="email" id="cineEmail" placeholder=" " required>
+                                    <label for="cineEmail">Email Address</label>
+                                    <i class="fas fa-envelope"></i>
+                                    <div class="input-glow"></div>
+                                </div>
+                            </div>
+
+                            <div class="input-glass">
+                                <select id="cineService" required>
+                                    <option value="" disabled selected>Select Service</option>
+                                    <option value="cleaning">Cleaning Services</option>
+                                    <option value="transportation">Transportation</option>
+                                    <option value="landscaping">Landscaping</option>
+                                    <option value="maintenance">Maintenance</option>
+                                </select>
+                                <label for="cineService" class="select-label">Interested In</label>
+                                <i class="fas fa-briefcase"></i>
+                                <div class="input-glow"></div>
+                            </div>
+
+                            <div class="input-glass textarea-glass">
+                                <textarea id="cineMessage" placeholder=" " rows="3" required></textarea>
+                                <label for="cineMessage">Your Message</label>
+                                <i class="fas fa-comment"></i>
+                                <div class="input-glow"></div>
+                                <span class="char-counter">0/300</span>
+                            </div>
+
+                            <button type="submit" class="btn-cinematic">
+                                <span class="btn-text">Start Conversation</span>
+                                <span class="btn-icon">
+                                    <i class="fas fa-paper-plane"></i>
+                                </span>
+                                <div class="btn-particles"></div>
+                            </button>
+                        </form>
+
+                        <!-- Trust Badges -->
+                        <div class="trust-mini">
+                            <div class="trust-item">
+                                <i class="fas fa-lock"></i>
+                                <span>Secure</span>
+                            </div>
+                            <div class="trust-item">
+                                <i class="fas fa-bolt"></i>
+                                <span>Fast</span>
+                            </div>
+                            <div class="trust-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Trusted</span>
+                            </div>
                         </div>
-                        <div class="method-wave"></div>
-                    </a>
-                    
-                    <a href="mailto:info@cfshouston.com" class="method-card method-email">
-                        <div class="method-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="method-info">
-                            <span class="method-label">Email Us</span>
-                            <span class="method-value">info@cfshouston.com</span>
-                        </div>
-                    </a>
-                    
-                    <div class="method-card method-location">
-                        <div class="method-icon">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom: Map Teaser -->
+            <div class="map-teaser">
+                <div class="map-card">
+                    <div class="map-visual">
+                        <div class="map-pin">
+                            <div class="pin-pulse"></div>
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <div class="method-info">
-                            <span class="method-label">Visit Us</span>
-                            <span class="method-value">Stafford, TX</span>
+                        <div class="map-rings">
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Live Status -->
-                <div class="live-status">
-                    <div class="status-indicator">
-                        <span class="status-pulse"></span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <span class="status-text">We're online now</span>
-                    <span class="status-time">Avg. response: 2 min</span>
-                </div>
-            </div>
-            
-            <!-- Right: Floating Form -->
-            <div class="form-floating-container">
-                <div class="form-glass">
-                    <div class="form-reflection"></div>
-                    
-                    <div class="form-header-glass">
-                        <h3>Send a Message</h3>
-                        <p>We'll get back to you very soon...</p>
-                    </div>
-                    
-                    <form class="form-cinematic" id="cinematicForm" novalidate>
-                        <div class="input-glass-group">
-                            <div class="input-glass">
-                                <input type="text" id="cineName" placeholder=" " required>
-                                <label for="cineName">Your Name</label>
-                                <i class="fas fa-user"></i>
-                                <div class="input-glow"></div>
-                            </div>
-                            
-                            <div class="input-glass">
-                                <input type="email" id="cineEmail" placeholder=" " required>
-                                <label for="cineEmail">Email Address</label>
-                                <i class="fas fa-envelope"></i>
-                                <div class="input-glow"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="input-glass">
-                            <select id="cineService" required>
-                                <option value="" disabled selected>Select Service</option>
-                                <option value="cleaning">Cleaning Services</option>
-                                <option value="transportation">Transportation</option>
-                                <option value="landscaping">Landscaping</option>
-                                <option value="maintenance">Maintenance</option>
-                            </select>
-                            <label for="cineService" class="select-label">Interested In</label>
-                            <i class="fas fa-briefcase"></i>
-                            <div class="input-glow"></div>
-                        </div>
-                        
-                        <div class="input-glass textarea-glass">
-                            <textarea id="cineMessage" placeholder=" " rows="3" required></textarea>
-                            <label for="cineMessage">Your Message</label>
-                            <i class="fas fa-comment"></i>
-                            <div class="input-glow"></div>
-                            <span class="char-counter">0/300</span>
-                        </div>
-                        
-                        <button type="submit" class="btn-cinematic">
-                            <span class="btn-text">Start Conversation</span>
-                            <span class="btn-icon">
-                                <i class="fas fa-paper-plane"></i>
-                            </span>
-                            <div class="btn-particles"></div>
-                        </button>
-                    </form>
-                    
-                    <!-- Trust Badges -->
-                    <div class="trust-mini">
-                        <div class="trust-item">
-                            <i class="fas fa-lock"></i>
-                            <span>Secure</span>
-                        </div>
-                        <div class="trust-item">
-                            <i class="fas fa-bolt"></i>
-                            <span>Fast</span>
-                        </div>
-                        <div class="trust-item">
-                            <i class="fas fa-heart"></i>
-                            <span>Trusted</span>
-                        </div>
+                    <div class="map-info">
+                        <h4>Houston Headquarters</h4>
+                        <p>4807 Sugar Grove Blvd Suite 101<br>Stafford, TX 77477</p>
+                        <a href="https://maps.google.com" target="_blank" class="map-link">
+                            <span>Get Directions</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Bottom: Map Teaser -->
-        <div class="map-teaser">
-            <div class="map-card">
-                <div class="map-visual">
-                    <div class="map-pin">
-                        <div class="pin-pulse"></div>
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="map-rings">
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                    </div>
-                </div>
-                <div class="map-info">
-                    <h4>Houston Headquarters</h4>
-                    <p>4807 Sugar Grove Blvd Suite 101<br>Stafford, TX 77477</p>
-                    <a href="https://maps.google.com" target="_blank" class="map-link">
-                        <span>Get Directions</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ============================================
+    </section>
+    <!-- ============================================
    ENHANCED FOOTER SECTION
    ============================================ -->
-<footer class="footer" role="contentinfo">
-    <!-- Animated Background -->
-    <div class="footer-bg">
-        <div class="footer-gradient"></div>
-        <div class="footer-grid-pattern"></div>
-        <div class="footer-glow footer-glow-1"></div>
-        <div class="footer-glow footer-glow-2"></div>
-    </div>
-    
-    <!-- Particle Canvas for Footer -->
-    <canvas id="footerParticleCanvas" class="footer-particles" aria-hidden="true"></canvas>
-    
-    <div class="container footer-container">
-        <!-- Main Footer Content -->
-        <div class="footer-main">
-            <!-- Brand Column -->
-            <div class="footer-brand">
-                <div class="footer-logo-wrapper">
-                    <img src="./images/crystal_white_logo.png" alt="Crystal Facility Solutions" class="footer-logo-img" loading="lazy">
-                    <div class="logo-glow"></div>
+    <footer class="footer" role="contentinfo">
+        <!-- Animated Background -->
+        <div class="footer-bg">
+            <div class="footer-gradient"></div>
+            <div class="footer-grid-pattern"></div>
+            <div class="footer-glow footer-glow-1"></div>
+            <div class="footer-glow footer-glow-2"></div>
+        </div>
+
+        <!-- Particle Canvas for Footer -->
+        <canvas id="footerParticleCanvas" class="footer-particles" aria-hidden="true"></canvas>
+
+        <div class="container footer-container">
+            <!-- Main Footer Content -->
+            <div class="footer-main">
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <div class="footer-logo-wrapper">
+                        <img src="./images/crystal_white_logo.png" alt="Crystal Facility Solutions"
+                            class="footer-logo-img" loading="lazy">
+                        <div class="logo-glow"></div>
+                    </div>
+                    <p class="footer-tagline">Making your facility management easy since 2010</p>
+                    <p class="footer-description">Houston's premier facility management partner, delivering excellence
+                        in cleaning, transportation, landscaping, and maintenance services.</p>
+
+                    <!-- Social Links -->
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                            <div class="social-ripple"></div>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                            <div class="social-ripple"></div>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                            <div class="social-ripple"></div>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                            <div class="social-ripple"></div>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                            <div class="social-ripple"></div>
+                        </a>
+                    </div>
                 </div>
-                <p class="footer-tagline">Making your facility management easy since 2010</p>
-                <p class="footer-description">Houston's premier facility management partner, delivering excellence in cleaning, transportation, landscaping, and maintenance services.</p>
-                
-                <!-- Social Links -->
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                        <div class="social-ripple"></div>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Instagram">
-                        <i class="fab fa-instagram" aria-hidden="true"></i>
-                        <div class="social-ripple"></div>
-                    </a>
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-                        <div class="social-ripple"></div>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <i class="fab fa-twitter" aria-hidden="true"></i>
-                        <div class="social-ripple"></div>
-                    </a>
-                    <a href="#" class="social-link" aria-label="YouTube">
-                        <i class="fab fa-youtube" aria-hidden="true"></i>
-                        <div class="social-ripple"></div>
-                    </a>
+
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">
+                        <span class="heading-text">Quick Links</span>
+                        <span class="heading-line"></span>
+                    </h4>
+                    <nav class="footer-nav" aria-label="Footer navigation">
+                        <a href="#home" class="footer-link" data-scroll="home">
+                            <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
+                            <span class="link-text">Home</span>
+                        </a>
+                        <a href="#services" class="footer-link" data-scroll="services">
+                            <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
+                            <span class="link-text">Services</span>
+                        </a>
+                        <a href="#about" class="footer-link" data-scroll="about">
+                            <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
+                            <span class="link-text">About Us</span>
+                        </a>
+                        <a href="#core-values" class="footer-link" data-scroll="core-values">
+                            <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
+                            <span class="link-text">Core Values</span>
+                        </a>
+                        <a href="#testimonials" class="footer-link" data-scroll="testimonials">
+                            <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
+                            <span class="link-text">Reviews</span>
+                        </a>
+                        <a href="#contact" class="footer-link" data-scroll="contact">
+                            <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
+                            <span class="link-text">Contact</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">
+                        <span class="heading-text">Our Services</span>
+                        <span class="heading-line"></span>
+                    </h4>
+                    <nav class="footer-nav" aria-label="Services navigation">
+                        <a href="#services" class="footer-link" data-scroll="services">
+                            <span class="link-icon"><i class="fas fa-broom"></i></span>
+                            <span class="link-text">Cleaning Services</span>
+                        </a>
+                        <a href="#services" class="footer-link" data-scroll="services">
+                            <span class="link-icon"><i class="fas fa-bus"></i></span>
+                            <span class="link-text">Transportation</span>
+                        </a>
+                        <a href="#services" class="footer-link" data-scroll="services">
+                            <span class="link-icon"><i class="fas fa-leaf"></i></span>
+                            <span class="link-text">Landscaping</span>
+                        </a>
+                        <a href="#services" class="footer-link" data-scroll="services">
+                            <span class="link-icon"><i class="fas fa-tools"></i></span>
+                            <span class="link-text">Maintenance</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">
+                        <span class="heading-text">Get In Touch</span>
+                        <span class="heading-line"></span>
+                    </h4>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Address</span>
+                                <address>4807 Sugar Grove Blvd Suite 101, Stafford, TX 77477</address>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Phone</span>
+                                <a href="tel:281-506-8826" class="contact-value">281-506-8826</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <a href="mailto:info@cfshouston.com" class="contact-value">info@cfshouston.com</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Hours</span>
+                                <span class="contact-value">24/7 Emergency Support</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Quick Links -->
-            <div class="footer-column">
-                <h4 class="footer-heading">
-                    <span class="heading-text">Quick Links</span>
-                    <span class="heading-line"></span>
-                </h4>
-                <nav class="footer-nav" aria-label="Footer navigation">
-                    <a href="#home" class="footer-link" data-scroll="home">
-                        <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="link-text">Home</span>
-                    </a>
-                    <a href="#services" class="footer-link" data-scroll="services">
-                        <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="link-text">Services</span>
-                    </a>
-                    <a href="#about" class="footer-link" data-scroll="about">
-                        <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="link-text">About Us</span>
-                    </a>
-                    <a href="#core-values" class="footer-link" data-scroll="core-values">
-                        <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="link-text">Core Values</span>
-                    </a>
-                    <a href="#testimonials" class="footer-link" data-scroll="testimonials">
-                        <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="link-text">Reviews</span>
-                    </a>
-                    <a href="#contact" class="footer-link" data-scroll="contact">
-                        <span class="link-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="link-text">Contact</span>
-                    </a>
-                </nav>
-            </div>
-            
-            <!-- Services -->
-            <div class="footer-column">
-                <h4 class="footer-heading">
-                    <span class="heading-text">Our Services</span>
-                    <span class="heading-line"></span>
-                </h4>
-                <nav class="footer-nav" aria-label="Services navigation">
-                    <a href="#services" class="footer-link" data-scroll="services">
-                        <span class="link-icon"><i class="fas fa-broom"></i></span>
-                        <span class="link-text">Cleaning Services</span>
-                    </a>
-                    <a href="#services" class="footer-link" data-scroll="services">
-                        <span class="link-icon"><i class="fas fa-bus"></i></span>
-                        <span class="link-text">Transportation</span>
-                    </a>
-                    <a href="#services" class="footer-link" data-scroll="services">
-                        <span class="link-icon"><i class="fas fa-leaf"></i></span>
-                        <span class="link-text">Landscaping</span>
-                    </a>
-                    <a href="#services" class="footer-link" data-scroll="services">
-                        <span class="link-icon"><i class="fas fa-tools"></i></span>
-                        <span class="link-text">Maintenance</span>
-                    </a>
-                </nav>
-            </div>
-            
-            <!-- Contact Info -->
-            <div class="footer-column">
-                <h4 class="footer-heading">
-                    <span class="heading-text">Get In Touch</span>
-                    <span class="heading-line"></span>
-                </h4>
-                <div class="footer-contact">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <span class="contact-label">Address</span>
-                            <address>4807 Sugar Grove Blvd Suite 101, Stafford, TX 77477</address>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <span class="contact-label">Phone</span>
-                            <a href="tel:281-506-8826" class="contact-value">281-506-8826</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <span class="contact-label">Email</span>
-                            <a href="mailto:info@cfshouston.com" class="contact-value">info@cfshouston.com</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="contact-details">
-                            <span class="contact-label">Hours</span>
-                            <span class="contact-value">24/7 Emergency Support</span>
-                        </div>
-                    </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <div class="bottom-content">
+                    <p class="copyright">
+                        <span class="copy-icon">&copy;</span>
+                        <span class="copy-year">2026</span>
+                        <span class="copy-brand">Crystal Facility Solutions</span>.
+                        <span class="copy-tag">All rights reserved.</span>
+                    </p>
                 </div>
             </div>
         </div>
-        
-        <!-- Bottom Bar -->
-        <div class="footer-bottom">
-            <div class="bottom-content">
-                <p class="copyright">
-                    <span class="copy-icon">&copy;</span> 
-                    <span class="copy-year">2026</span> 
-                    <span class="copy-brand">Crystal Facility Solutions</span>. 
-                    <span class="copy-tag">All rights reserved.</span>
-                </p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Back to Top Button -->
-    <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
-        <div class="top-arrow"></div>
-        <div class="top-pulse"></div>
-    </button>
-</footer>
+
+        <!-- Back to Top Button -->
+        <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
+            <div class="top-arrow"></div>
+            <div class="top-pulse"></div>
+        </button>
+    </footer>
 
     <!-- Chat Widget -->
     <div class="chat-widget" role="complementary" aria-label="Live chat">
-        <div class="chat-window" id="chatWindow" role="dialog" aria-label="Chat with Crystal Support" aria-hidden="true">
+        <div class="chat-window" id="chatWindow" role="dialog" aria-label="Chat with Crystal Support"
+            aria-hidden="true">
             <div class="chat-header">
                 <div class="chat-title">
                     <div class="chat-avatar" aria-hidden="true">CFS</div>
@@ -2010,30 +1956,35 @@
                         <small>Online now</small>
                     </div>
                 </div>
-                <button type="button" class="chat-minimize" id="chatMinimizeBtn" aria-label="Minimize chat" title="Minimize chat">−</button>
-                <button type="button" class="chat-close" id="chatCloseBtn" aria-label="Close chat" title="Close chat">&times;</button>
+                <button type="button" class="chat-minimize" id="chatMinimizeBtn" aria-label="Minimize chat"
+                    title="Minimize chat">−</button>
+                <button type="button" class="chat-close" id="chatCloseBtn" aria-label="Close chat"
+                    title="Close chat">&times;</button>
             </div>
             <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-atomic="false"></div>
             <div class="chat-input">
                 <input type="text" id="chatInput" placeholder="Type a message..." aria-label="Type your message">
-                <button type="button" id="chatSendBtn" aria-label="Send message"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                <button type="button" id="chatSendBtn" aria-label="Send message"><i class="fas fa-paper-plane"
+                        aria-hidden="true"></i></button>
             </div>
         </div>
-        <button type="button" class="chat-button" id="chatToggleBtn" aria-label="Open chat" aria-expanded="false" aria-controls="chatWindow">
+        <button type="button" class="chat-button" id="chatToggleBtn" aria-label="Open chat" aria-expanded="false"
+            aria-controls="chatWindow">
             <i class="fas fa-comments" aria-hidden="true"></i>
         </button>
     </div>
 
-<!-- JavaScript Modules -->
-<script src="js/modules/navigation.js" defer></script>
-<script src="js/modules/hero.js" defer></script>  <!-- ADD THIS LINE -->
-<script src="js/modules/services.js" defer></script>
-<script src="js/modules/forms.js" defer></script>
-<script src="js/modules/testimonials.js" defer></script>
-<script src="js/modules/chat.js" defer></script>
-<script src="js/modules/values.js" defer></script>
-<script src="js/modules/about.js" defer></script>
-<script src="js/modules/contact.js" defer></script>
-<script src="js/main.js" defer></script>
+    <!-- JavaScript Modules -->
+    <script src="js/modules/navigation.js" defer></script>
+    <script src="js/modules/hero.js" defer></script> <!-- ADD THIS LINE -->
+    <script src="js/modules/services.js" defer></script>
+    <script src="js/modules/forms.js" defer></script>
+    <script src="js/modules/testimonials.js" defer></script>
+    <script src="js/modules/chat.js" defer></script>
+    <script src="js/modules/values.js" defer></script>
+    <script src="js/modules/about.js" defer></script>
+    <script src="js/modules/contact.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
+
 </html>
