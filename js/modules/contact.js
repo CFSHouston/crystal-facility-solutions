@@ -1,11 +1,67 @@
 /* ============================================
-   CINEMATIC CONTACT MODULE (FIXED v5 - NO ICONS)
+   CINEMATIC CONTACT MODULE (v6 - EMAILJS ROUTING)
    ============================================ */
 
 (function() {
     'use strict';
 
-    // Particles
+    // ============================================
+    // EMAIL CONFIGURATION - UPDATE THESE VALUES
+    // ============================================
+    
+    const EMAIL_CONFIG = {
+        // EmailJS Configuration - Replace with your actual credentials
+        publicKey: 'F2TtT04bpqE_Lew1Q',      // Your EmailJS public key
+        serviceId: 'service_jd5lns8',       // Your EmailJS service ID
+        templateId: 'template_jvn3yzi',     // Your EmailJS template ID
+        
+        // Email Routing Rules
+        routes: {
+            transportation: {
+                to_email: 'transportation@cfshouston.com',
+                department: 'Transportation Team'
+            },
+            cleaning: {
+                to_email: 'cleaning@cfshouston.com', 
+                department: 'Cleaning Team'
+            },
+            landscaping: {
+                to_email: 'cleaning@cfshouston.com',
+                department: 'Landscaping Team'
+            },
+            maintenance: {
+                to_email: 'cleaning@cfshouston.com',
+                department: 'Maintenance Team'
+            },
+            maintenance: {
+                to_email: 'info@cfshouston.com',
+                department: 'Contact Team'
+            }
+        },
+        
+        // Fallback for any other service
+        defaultRoute: {
+            to_email: 'info@cfshouston.com',
+            department: 'General Inquiries'
+        }
+    };
+
+    // ============================================
+    // INITIALIZE EMAILJS
+    // ============================================
+    
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init({
+            publicKey: EMAIL_CONFIG.publicKey,
+        });
+    } else {
+        console.warn('EmailJS SDK not loaded');
+    }
+
+    // ============================================
+    // PARTICLES ANIMATION
+    // ============================================
+
     function initParticles() {
         const canvas = document.getElementById('contactParticles');
         if (!canvas) return;
@@ -68,7 +124,10 @@
         animate();
     }
 
-    // Mouse tracking for method cards
+    // ============================================
+    // MOUSE TRACKING FOR METHOD CARDS
+    // ============================================
+
     function initMethodCards() {
         document.querySelectorAll('.method-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -81,7 +140,10 @@
         });
     }
 
-    // Button ripple
+    // ============================================
+    // BUTTON RIPPLE EFFECT
+    // ============================================
+
     function initButton() {
         const btn = document.querySelector('.btn-cinematic');
         if (!btn) return;
@@ -95,7 +157,10 @@
         });
     }
 
-    // Character count
+    // ============================================
+    // CHARACTER COUNTER
+    // ============================================
+
     function initCharCount() {
         const textarea = document.getElementById('cineMessage');
         const counter = document.querySelector('.char-counter');
@@ -109,7 +174,7 @@
     }
 
     // ============================================
-    // INLINE FORM VALIDATION (FIXED v5 - NO ICONS)
+    // FORM VALIDATION
     // ============================================
 
     function initValidation() {
@@ -153,19 +218,19 @@
             if (existingIcon) existingIcon.remove();
             if (existingError) existingError.remove();
 
-            // Create validation icon for INSIDE the input (checkmark/X) - KEEP THIS ONE
+            // Create validation icon
             const iconDiv = document.createElement('div');
             iconDiv.className = 'validation-icon';
             iconDiv.innerHTML = '<i class="fas fa-check-circle"></i>';
             input.insertAdjacentElement('afterend', iconDiv);
 
-            // Create error element - NO ICON, just text
+            // Create error element
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message-inline';
-            errorDiv.innerHTML = '<span></span>'; // Just text, no icon
+            errorDiv.innerHTML = '<span></span>';
             wrapper.appendChild(errorDiv);
 
-            // Stop ALL events on error message
+            // Stop events on error message
             ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown', 'pointerup'].forEach(eventType => {
                 errorDiv.addEventListener(eventType, function(e) {
                     e.preventDefault();
@@ -194,11 +259,10 @@
                 }
             });
 
-            // For select
+            // For select dropdown
             if (input.tagName === 'SELECT') {
                 input.addEventListener('change', function() {
                     validateField(input);
-                    // Reset button on change
                     if (submitBtn.classList.contains('error-state')) {
                         submitBtn.classList.remove('error-state');
                         submitBtn.innerHTML = '<span class="btn-text">Start Conversation</span><span class="btn-icon"><i class="fas fa-paper-plane"></i></span><div class="btn-particles"></div>';
@@ -278,7 +342,7 @@
             }
         }
 
-        // Character counter
+        // Character counter update
         function updateCharCounter(input) {
             if (input.id !== 'cineMessage') return;
             const counter = input.parentElement.querySelector('.char-counter');
@@ -291,14 +355,24 @@
             if (current <= 250) counter.style.color = 'rgba(255,255,255,0.4)';
         }
 
-        // Form submission
+        // ============================================
+        // FORM SUBMISSION WITH EMAILJS ROUTING
+        // ============================================
+
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
+            // Check if EmailJS is loaded
+            if (typeof emailjs === 'undefined') {
+                alert('Email service not available. Please contact us directly.');
+                return;
+            }
+
             let isValid = true;
             let firstError = null;
 
+            // Validate all fields
             formInputs.forEach(input => {
                 if (!validateField(input)) {
                     isValid = false;
@@ -307,49 +381,120 @@
             });
 
             if (isValid) {
-                // Success - show overlay
-                const overlay = document.createElement('div');
-                overlay.className = 'form-success-overlay';
-                overlay.innerHTML = `
-                    <div class="success-content">
-                        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                        <h3>Message Sent!</h3>
-                        <p>We'll get back to you very soon.</p>
-                    </div>
-                `;
-                const formGlass = contactForm.closest('.form-glass');
-                formGlass.style.position = 'relative';
-                formGlass.appendChild(overlay);
+                // Get form values
+                const name = document.getElementById('cineName').value.trim();
+                const email = document.getElementById('cineEmail').value.trim();
+                const service = document.getElementById('cineService').value;
+                const message = document.getElementById('cineMessage').value.trim();
 
-                setTimeout(() => {
-                    contactForm.reset();
-                    formInputs.forEach(i => {
-                        i.classList.remove('valid', 'invalid');
-                        const icon = i.closest('.input-glass').querySelector('.validation-icon');
-                        if (icon) icon.style.opacity = '0';
+                // Determine routing based on service
+                const route = EMAIL_CONFIG.routes[service] || EMAIL_CONFIG.defaultRoute;
+                const serviceLabel = service.charAt(0).toUpperCase() + service.slice(1);
+
+                // Prepare template parameters for EmailJS
+                const templateParams = {
+                    to_email: route.to_email,
+                    to_name: route.department,
+                    from_name: name,
+                    from_email: email,
+                    service: serviceLabel,
+                    message: message,
+                    time: new Date().toLocaleString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        timeZoneName: 'short'
+                    }),
+                    reply_to: email
+                };
+
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="btn-text">Sending...</span><span class="btn-icon"><i class="fas fa-spinner fa-spin"></i></span>';
+
+                // Send via EmailJS
+                emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        
+                        // Success overlay
+                        const overlay = document.createElement('div');
+                        overlay.className = 'form-success-overlay';
+                        overlay.innerHTML = `
+                            <div class="success-content">
+                                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                                <h3>Message Sent!</h3>
+                                <p>We've received your inquiry.</p>
+                                <small style="opacity: 0.7; margin-top: 0.5rem; display: block;">
+                                    Routed to: ${route.department}
+                                </small>
+                            </div>
+                        `;
+                        const formGlass = contactForm.closest('.form-glass');
+                        formGlass.style.position = 'relative';
+                        formGlass.appendChild(overlay);
+
+                        // Reset form after 3 seconds
+                        setTimeout(() => {
+                            contactForm.reset();
+                            formInputs.forEach(i => {
+                                i.classList.remove('valid', 'invalid');
+                                const icon = i.closest('.input-glass').querySelector('.validation-icon');
+                                if (icon) icon.style.opacity = '0';
+                            });
+                            overlay.remove();
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<span class="btn-text">Start Conversation</span><span class="btn-icon"><i class="fas fa-paper-plane"></i></span><div class="btn-particles"></div>';
+                        }, 3000);
+
+                    }, function(error) {
+                        console.error('FAILED...', error);
+                        
+                        // Show error state
+                        submitBtn.disabled = false;
+                        submitBtn.classList.add('error-state');
+                        submitBtn.innerHTML = '<span class="btn-text">Failed to Send</span><span class="btn-icon"><i class="fas fa-exclamation-triangle"></i></span>';
+
+                        // Show error summary
+                        const existing = contactForm.querySelector('.form-summary-error');
+                        if (existing) existing.remove();
+
+                        const summary = document.createElement('div');
+                        summary.className = 'form-summary-error';
+                        summary.innerHTML = '<span>Failed to send message. Please email us directly at ' + route.to_email + '</span>';
+                        contactForm.insertBefore(summary, contactForm.firstChild);
+
+                        ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown', 'pointerup'].forEach(eventType => {
+                            summary.addEventListener(eventType, function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                e.stopImmediatePropagation();
+                                return false;
+                            }, true);
+                        });
+
+                        requestAnimationFrame(() => summary.classList.add('visible'));
                     });
-                    overlay.remove();
-                    submitBtn.classList.remove('error-state');
-                    submitBtn.innerHTML = '<span class="btn-text">Start Conversation</span><span class="btn-icon"><i class="fas fa-paper-plane"></i></span><div class="btn-particles"></div>';
-                }, 3000);
 
             } else {
-                // Error - scroll to first error
+                // Validation Error - scroll to first error
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     firstError.focus();
                 }
 
-                // Show summary - NO ICON
+                // Show error summary
                 const existing = contactForm.querySelector('.form-summary-error');
                 if (existing) existing.remove();
 
                 const summary = document.createElement('div');
                 summary.className = 'form-summary-error';
-                summary.innerHTML = '<span>Please correct the errors below.</span>'; // No icon
+                summary.innerHTML = '<span>Please correct the errors below.</span>';
                 contactForm.insertBefore(summary, contactForm.firstChild);
 
-                // Stop ALL events on summary
                 ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown', 'pointerup'].forEach(eventType => {
                     summary.addEventListener(eventType, function(e) {
                         e.preventDefault();
@@ -366,13 +511,13 @@
                     setTimeout(() => summary.remove(), 300);
                 }, 5000);
 
-                // Update button
+                // Update button to error state
                 submitBtn.classList.add('error-state');
                 submitBtn.innerHTML = '<span class="btn-text">Please Fix Errors</span><span class="btn-icon"><i class="fas fa-exclamation-triangle"></i></span>';
             }
         });
 
-        // Global capture on form to stop any click propagation from error elements
+        // Global capture on form to stop click propagation from error elements
         contactForm.addEventListener('click', function(e) {
             if (e.target.closest('.error-message-inline') || e.target.closest('.form-summary-error')) {
                 e.preventDefault();
@@ -383,7 +528,10 @@
         }, true);
     }
 
-    // 3D tilt for form
+    // ============================================
+    // 3D TILT EFFECT FOR FORM
+    // ============================================
+
     function initTilt() {
         const form = document.querySelector('.form-glass');
         if (!form || window.matchMedia('(pointer: coarse)').matches) return;
@@ -408,6 +556,10 @@
         });
     }
 
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+
     function init() {
         initParticles();
         initMethodCards();
@@ -417,7 +569,11 @@
         initTilt();
     }
 
-    document.readyState === 'loading' 
-        ? document.addEventListener('DOMContentLoaded', init)
-        : init();
+    // Start when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
 })();

@@ -32,6 +32,15 @@
     <link rel="stylesheet" href="css/services.css">
     <!-- <link rel="stylesheet" href="css/modal.css"> -->
     <link rel="stylesheet" href="css/responsive.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "F2TtT04bpqE_Lew1Q",
+            });
+        })();
+    </script>
 </head>
 
 <body>
@@ -1692,8 +1701,9 @@
                                     <option value="transportation">Transportation</option>
                                     <option value="landscaping">Landscaping</option>
                                     <option value="maintenance">Maintenance</option>
+                                    <option value="other">Other</option>
                                 </select>
-                                <label for="cineService" class="select-label">Interested In</label>
+                                <label for="cineService" class="select-label">Reason For Contact</label>
                                 <i class="fas fa-briefcase"></i>
                                 <div class="input-glow"></div>
                             </div>
