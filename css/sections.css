@@ -3968,7 +3968,9 @@
 .footer-logo-img {
     height: 80px;
     width: auto;
-    filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(124, 179, 66, 0.3));
+    display: block;
+    /* Remove the invert filter to show your real logo colors */
+    filter: drop-shadow(0 0 20px rgba(124, 179, 66, 0.3));
     transition: all 0.3s ease;
 }
 
