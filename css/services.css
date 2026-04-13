@@ -2445,3 +2445,154 @@ input[type="number"]::-webkit-outer-spin-button {
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
+/* ============================================
+   TRANSPORTATION FORM - PROFESSIONAL STYLING
+   ============================================ */
+
+/* Field hint text */
+.field-hint {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.375rem;
+    font-style: italic;
+}
+
+/* Enhanced select dropdowns */
+.input-with-icon select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237cb342' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem !important;
+}
+
+/* Select hover state */
+.input-with-icon select:hover {
+    border-color: rgba(124, 179, 66, 0.5);
+}
+
+/* Select option styling */
+.input-with-icon select option {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+/* Date and time inputs - professional styling */
+.input-with-icon input[type="date"],
+.input-with-icon input[type="time"] {
+    font-family: inherit;
+    color-scheme: dark;
+}
+
+/* Calendar and time picker icons */
+.input-with-icon input[type="date"]::-webkit-calendar-picker-indicator,
+.input-with-icon input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.input-with-icon input[type="date"]::-webkit-calendar-picker-indicator:hover,
+.input-with-icon input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    filter: invert(0.8);
+}
+
+/* Number input styling */
+.input-with-icon input[type="number"] {
+    appearance: textfield;
+}
+
+.input-with-icon input[type="number"]::-webkit-inner-spin-button,
+.input-with-icon input[type="number"]::-webkit-outer-spin-button {
+    appearance: auto;
+    margin-left: 0.5rem;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+/* Focus states for all transportation inputs */
+.transportation-fields .form-group input:focus,
+.transportation-fields .form-group select:focus,
+.transportation-fields .form-group textarea:focus {
+    border-color: var(--cfs-green, #7cb342) !important;
+    box-shadow: 0 0 0 3px rgba(124, 179, 66, 0.15) !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Error state with animation */
+.transportation-fields .form-group input.error,
+.transportation-fields .form-group select.error,
+.transportation-fields .form-group textarea.error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* Valid state */
+.transportation-fields .form-group input.valid,
+.transportation-fields .form-group select.valid,
+.transportation-fields .form-group textarea.valid {
+    border-color: #10b981 !important;
+}
+
+/* Real-time validation feedback icon */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.input-with-icon.valid::after {
+    content: '✓';
+    display: flex;
+    background: #10b981;
+    color: white;
+}
+
+.input-with-icon.error::after {
+    content: '!';
+    display: flex;
+    background: #ef4444;
+    color: white;
+}
+
+/* Textarea specific */
+.input-with-icon.textarea-icon::after {
+    top: 1rem;
+    transform: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .transportation-fields .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .field-hint {
+        font-size: 0.7rem;
+    }
+}

@@ -685,31 +685,53 @@
 
                             <!-- TRANSPORTATION SPECIFIC FIELDS -->
                             <div class="transportation-fields" id="transportationFields" style="display: none;">
+                                <!-- Bus Type Selection -->
+                                <div class="form-group">
+                                    <label for="busType">Bus Type <span class="required">*</span></label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-bus"></i>
+                                        <select id="busType" name="bus_type" required>
+                                            <option value="">Select bus type...</option>
+                                            <option value="coach">Coach Bus (Luxury, 50-55 seats)</option>
+                                            <option value="yellow">Yellow School Bus (48-72 seats)</option>
+                                            <option value="minibus">Minibus (15-30 seats)</option>
+                                            <option value="party">Party Bus (20-40 seats)</option>
+                                            <option value="shuttle">Shuttle Bus (20-35 seats)</option>
+                                            <option value="van">Passenger Van (10-15 seats)</option>
+                                        </select>
+                                    </div>
+                                    <span class="field-error" id="busTypeError"></span>
+                                </div>
+
+                                <!-- Number of Buses & Passengers -->
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="numBuses">Number of Buses <span class="required">*</span></label>
                                         <div class="input-with-icon">
-                                            <i class="fas fa-bus"></i>
-                                            <input type="number" id="numBuses" name="num_buses" min="1" max="50" placeholder="e.g., 2">
+                                            <i class="fas fa-shuttle-van"></i>
+                                            <input type="number" id="numBuses" name="num_buses" min="1" max="25" placeholder="1-25" required>
                                         </div>
+                                        <span class="field-hint">Maximum 25 buses</span>
                                         <span class="field-error" id="numBusesError"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="numPassengers">Number of Passengers <span class="required">*</span></label>
                                         <div class="input-with-icon">
                                             <i class="fas fa-users"></i>
-                                            <input type="number" id="numPassengers" name="num_passengers" min="1" max="1000" placeholder="e.g., 50">
+                                            <input type="number" id="numPassengers" name="num_passengers" min="1" max="1000" placeholder="1-1000" required>
                                         </div>
+                                        <span class="field-hint">Maximum 1000 passengers</span>
                                         <span class="field-error" id="numPassengersError"></span>
                                     </div>
                                 </div>
 
+                                <!-- Pick-up Date & Time -->
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="pickupDate">Pick-Up Date <span class="required">*</span></label>
                                         <div class="input-with-icon">
-                                            <i class="fas fa-calendar"></i>
-                                            <input type="date" id="pickupDate" name="pickup_date">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <input type="date" id="pickupDate" name="pickup_date" required>
                                         </div>
                                         <span class="field-error" id="pickupDateError"></span>
                                     </div>
@@ -717,44 +739,81 @@
                                         <label for="pickupTime">Pick-Up Time <span class="required">*</span></label>
                                         <div class="input-with-icon">
                                             <i class="fas fa-clock"></i>
-                                            <input type="time" id="pickupTime" name="pickup_time">
+                                            <input type="time" id="pickupTime" name="pickup_time" required>
                                         </div>
                                         <span class="field-error" id="pickupTimeError"></span>
                                     </div>
                                 </div>
 
+                                <!-- Drop-off Date & Time -->
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="dropoffDate">Drop-Off Date <span class="required">*</span></label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-calendar-check"></i>
+                                            <input type="date" id="dropoffDate" name="dropoff_date" required>
+                                        </div>
+                                        <span class="field-hint">Can be same as pick-up date</span>
+                                        <span class="field-error" id="dropoffDateError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dropoffTime">Drop-Off Time <span class="required">*</span></label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-hourglass-end"></i>
+                                            <input type="time" id="dropoffTime" name="dropoff_time" required>
+                                        </div>
+                                        <span class="field-hint">Estimated drop-off time</span>
+                                        <span class="field-error" id="dropoffTimeError"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Trip Type -->
                                 <div class="form-group">
                                     <label for="tripType">Trip Type <span class="required">*</span></label>
                                     <div class="input-with-icon">
                                         <i class="fas fa-route"></i>
-                                        <select id="tripType" name="trip_type">
+                                        <select id="tripType" name="trip_type" required>
                                             <option value="">Select trip type...</option>
                                             <option value="school_daily">School Daily Route</option>
-                                            <option value="field_trip">Field Trip</option>
+                                            <option value="field_trip">Field Trip / Excursion</option>
                                             <option value="corporate">Corporate Shuttle</option>
-                                            <option value="event">Special Event</option>
+                                            <option value="event">Special Event / Wedding</option>
                                             <option value="airport">Airport Transfer</option>
+                                            <option value="sports">Sports Team Transport</option>
+                                            <option value="church">Church / Religious Event</option>
+                                            <option value="other">Other (specify in notes)</option>
                                         </select>
                                     </div>
                                     <span class="field-error" id="tripTypeError"></span>
                                 </div>
 
+                                <!-- Pick-up Location -->
                                 <div class="form-group">
                                     <label for="pickupLocation">Pick-Up Location <span class="required">*</span></label>
                                     <div class="input-with-icon textarea-icon">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <textarea id="pickupLocation" name="pickup_location" rows="2" placeholder="Full address with zip code..."></textarea>
+                                        <textarea id="pickupLocation" name="pickup_location" rows="2" placeholder="Full address with city, state, and zip code..." required></textarea>
                                     </div>
                                     <span class="field-error" id="pickupLocationError"></span>
                                 </div>
 
+                                <!-- Drop-off Location -->
                                 <div class="form-group">
-                                    <label for="destinationAddress">Destination Address <span class="required">*</span></label>
+                                    <label for="dropoffLocation">Drop-Off Location <span class="required">*</span></label>
                                     <div class="input-with-icon textarea-icon">
                                         <i class="fas fa-flag-checkered"></i>
-                                        <textarea id="destinationAddress" name="destination_address" rows="2" placeholder="Full address with zip code..."></textarea>
+                                        <textarea id="dropoffLocation" name="dropoff_location" rows="2" placeholder="Full address with city, state, and zip code..." required></textarea>
                                     </div>
-                                    <span class="field-error" id="destinationAddressError"></span>
+                                    <span class="field-error" id="dropoffLocationError"></span>
+                                </div>
+
+                                <!-- Additional Needs -->
+                                <div class="form-group">
+                                    <label for="transportExtras">Special Requirements</label>
+                                    <div class="input-with-icon textarea-icon">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        <textarea id="transportExtras" name="transport_extras" rows="2" placeholder="Wheelchair accessibility, luggage space, A/C requirements, multiple stops, etc."></textarea>
+                                    </div>
                                 </div>
                             </div>
 
