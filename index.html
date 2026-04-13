@@ -48,11 +48,14 @@
     <!-- ============================================
     NAVIGATION SECTION
     ============================================ -->
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Main Navigation -->
     <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-content">
             <a href="#home" class="logo" data-scroll="home">
-                <img src="./images/crystal_white_logo.png" alt="Crystal Facility Solutions Logo" width="80" height="80"
-                    loading="eager">
+                <img src="./images/crystal_white_logo.png" alt="Crystal Facility Solutions Logo" width="80" height="80" loading="eager">
             </a>
 
             <ul class="nav-links" role="menubar">
@@ -63,24 +66,21 @@
                 <li role="none"><a href="#contact" role="menuitem" data-scroll="contact">Contact</a></li>
             </ul>
 
-            <!-- Mobile Menu Button -->
-            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"
-                aria-expanded="false" aria-controls="mobileNav">
+            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
                 <span class="hamburger"></span>
             </button>
         </div>
-
-        <!-- Mobile Navigation Menu -->
-        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
-            <a href="#home" data-scroll="home">Home</a>
-            <a href="#services" data-scroll="services">Services</a>
-            <a href="#about" data-scroll="about">About</a>
-            <a href="#testimonials" data-scroll="testimonials">Reviews</a>
-            <a href="#contact" data-scroll="contact">Contact</a>
-            <button type="button" class="btn btn-primary" data-scroll="contact">Get Quote</button>
-        </nav>
     </nav>
 
+    <!-- Mobile Navigation Dropdown - MUST BE OUTSIDE main nav -->
+    <div class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
+        <a href="#home" data-scroll="home" class="active">Home</a>
+        <a href="#services" data-scroll="services">Services</a>
+        <a href="#about" data-scroll="about">About</a>
+        <a href="#testimonials" data-scroll="testimonials">Reviews</a>
+        <a href="#contact" data-scroll="contact">Contact</a>
+        <button type="button" class="btn btn-primary" data-scroll="contact">Get Quote</button>
+    </div>
     <!-- ============================================
     HERO SECTION
     ============================================ -->
