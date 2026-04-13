@@ -628,6 +628,10 @@
             </div>
         </div>
     </section>
+
+    <!-- ============================================
+    QUICK QUOTE DRAWER
+    ============================================ -->
     <div class="quick-quote-drawer" id="quickQuoteDrawer" aria-hidden="true">
         <div class="drawer-backdrop"></div>
         <div class="drawer-panel">
@@ -644,84 +648,87 @@
                 </button>
             </div>
             <div class="drawer-body">
-                <form id="quickQuoteForm" class="quote-form-compact">
-                    <!-- Step 1: Service Selection -->
-                    <div class="form-step active" data-step="1">
-                        <h4>Step 1: Service Details</h4>
+                <form id="quickQuoteForm" class="quote-form-compact" novalidate>
+                    <!-- Hidden service type -->
+                    <input type="hidden" id="quoteServiceType" name="service_type" value="">
 
-                        <div class="form-group">
-                            <label for="quoteServiceType">Service Type *</label>
-                            <select id="quoteServiceType" name="service_type" required>
-                                <option value="">Select service...</option>
-                                <option value="cleaning">Cleaning Services</option>
-                                <option value="transportation">Transportation</option>
-                                <option value="landscaping">Landscaping</option>
-                                <option value="maintenance">Maintenance</option>
-                                <option value="bundle">Custom Bundle (Multiple Services)</option>
-                            </select>
-                        </div>
+                    <!-- Step 1: Service Details (Dynamic based on service) -->
+                    <div class="form-step active" data-step="1">
+                        <h4 id="step1Title">Service Details</h4>
 
                         <!-- DYNAMIC FIELDS CONTAINER -->
                         <div id="dynamicFieldsContainer">
-
-                            <!-- Default Property Size (shown for cleaning, landscaping, maintenance) -->
+                            
+                            <!-- Cleaning/Landscaping/Maintenance: Property Size -->
                             <div class="form-group property-size-group" id="propertySizeGroup">
-                                <label>Property Size *</label>
-                                <div class="size-selector">
-                                    <button type="button" class="size-option" data-size="small">
+                                <label>Property Size <span class="required">*</span></label>
+                                <div class="size-selector" role="radiogroup" aria-label="Select property size">
+                                    <button type="button" class="size-option" data-size="small" role="radio" aria-checked="false" tabindex="0">
                                         <i class="fas fa-home"></i>
                                         <span>Small</span>
                                         <small>&lt; 5,000 sq ft</small>
                                     </button>
-                                    <button type="button" class="size-option" data-size="medium">
+                                    <button type="button" class="size-option" data-size="medium" role="radio" aria-checked="false" tabindex="0">
                                         <i class="fas fa-building"></i>
                                         <span>Medium</span>
                                         <small>5,000 - 20,000</small>
                                     </button>
-                                    <button type="button" class="size-option" data-size="large">
+                                    <button type="button" class="size-option" data-size="large" role="radio" aria-checked="false" tabindex="0">
                                         <i class="fas fa-city"></i>
                                         <span>Large</span>
                                         <small>&gt; 20,000 sq ft</small>
                                     </button>
                                 </div>
-                                <input type="hidden" id="quoteSizeValue" name="property_size">
+                                <input type="hidden" id="quoteSizeValue" name="property_size" required>
+                                <span class="field-error" id="sizeError"></span>
                             </div>
 
                             <!-- TRANSPORTATION SPECIFIC FIELDS -->
                             <div class="transportation-fields" id="transportationFields" style="display: none;">
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="numBuses"># of Buses *</label>
-                                        <input type="number" id="numBuses" name="num_buses" min="1"
-                                            placeholder="e.g., 2">
+                                        <label for="numBuses">Number of Buses <span class="required">*</span></label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-bus"></i>
+                                            <input type="number" id="numBuses" name="num_buses" min="1" max="50" placeholder="e.g., 2">
+                                        </div>
+                                        <span class="field-error" id="numBusesError"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="numPassengers"># of Passengers *</label>
-                                        <input type="number" id="numPassengers" name="num_passengers" min="1"
-                                            placeholder="e.g., 50">
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="pickupDate">Pick-Up Date *</label>
-                                        <input type="date" id="pickupDate" name="pickup_date">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pickupTime">Pick-Up Time *</label>
-                                        <input type="time" id="pickupTime" name="pickup_time">
+                                        <label for="numPassengers">Number of Passengers <span class="required">*</span></label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-users"></i>
+                                            <input type="number" id="numPassengers" name="num_passengers" min="1" max="1000" placeholder="e.g., 50">
+                                        </div>
+                                        <span class="field-error" id="numPassengersError"></span>
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="dropoffTime">Drop-Off Time *</label>
-                                        <input type="time" id="dropoffTime" name="dropoff_time">
+                                        <label for="pickupDate">Pick-Up Date <span class="required">*</span></label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-calendar"></i>
+                                            <input type="date" id="pickupDate" name="pickup_date">
+                                        </div>
+                                        <span class="field-error" id="pickupDateError"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tripType">Trip Type *</label>
+                                        <label for="pickupTime">Pick-Up Time <span class="required">*</span></label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-clock"></i>
+                                            <input type="time" id="pickupTime" name="pickup_time">
+                                        </div>
+                                        <span class="field-error" id="pickupTimeError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tripType">Trip Type <span class="required">*</span></label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-route"></i>
                                         <select id="tripType" name="trip_type">
-                                            <option value="">Select type...</option>
+                                            <option value="">Select trip type...</option>
                                             <option value="school_daily">School Daily Route</option>
                                             <option value="field_trip">Field Trip</option>
                                             <option value="corporate">Corporate Shuttle</option>
@@ -729,38 +736,39 @@
                                             <option value="airport">Airport Transfer</option>
                                         </select>
                                     </div>
+                                    <span class="field-error" id="tripTypeError"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="pickupLocation">Pick-Up Location *</label>
-                                    <textarea id="pickupLocation" name="pickup_location" rows="2"
-                                        placeholder="Full address with zip code..."></textarea>
+                                    <label for="pickupLocation">Pick-Up Location <span class="required">*</span></label>
+                                    <div class="input-with-icon textarea-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <textarea id="pickupLocation" name="pickup_location" rows="2" placeholder="Full address with zip code..."></textarea>
+                                    </div>
+                                    <span class="field-error" id="pickupLocationError"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="destinationAddress">Destination Address *</label>
-                                    <textarea id="destinationAddress" name="destination_address" rows="2"
-                                        placeholder="Full address with zip code..."></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="transportExtras">Extra Needs or Comments</label>
-                                    <textarea id="transportExtras" name="transport_extras" rows="2"
-                                        placeholder="e.g., seat belts, A/C, wheelchair access, extra drop-offs..."></textarea>
+                                    <label for="destinationAddress">Destination Address <span class="required">*</span></label>
+                                    <div class="input-with-icon textarea-icon">
+                                        <i class="fas fa-flag-checkered"></i>
+                                        <textarea id="destinationAddress" name="destination_address" rows="2" placeholder="Full address with zip code..."></textarea>
+                                    </div>
+                                    <span class="field-error" id="destinationAddressError"></span>
                                 </div>
                             </div>
 
                             <!-- BUNDLE SPECIFIC FIELDS -->
                             <div class="bundle-fields" id="bundleFields" style="display: none;">
                                 <div class="form-group">
-                                    <label>Select Services for Your Bundle *</label>
-                                    <div class="bundle-checkboxes">
+                                    <label>Select Services for Your Bundle <span class="required">*</span></label>
+                                    <div class="bundle-checkboxes" role="group" aria-label="Select services for bundle">
                                         <label class="bundle-checkbox">
                                             <input type="checkbox" name="bundle_services" value="cleaning">
                                             <span class="checkmark"></span>
                                             <div class="checkbox-content">
                                                 <i class="fas fa-broom"></i>
-                                                <span>Cleaning Services</span>
+                                                <span>Cleaning</span>
                                             </div>
                                         </label>
                                         <label class="bundle-checkbox">
@@ -788,29 +796,31 @@
                                             </div>
                                         </label>
                                     </div>
+                                    <span class="field-error" id="bundleServicesError"></span>
                                 </div>
 
                                 <!-- Bundle Property Size (shown when transportation NOT selected) -->
-                                <div class="form-group bundle-property-size" id="bundlePropertySize">
-                                    <label>Property Size *</label>
-                                    <div class="size-selector">
-                                        <button type="button" class="size-option" data-size="small">
+                                <div class="form-group bundle-property-size" id="bundlePropertySize" style="display: none;">
+                                    <label>Property Size <span class="required">*</span></label>
+                                    <div class="size-selector" role="radiogroup" aria-label="Select property size">
+                                        <button type="button" class="size-option" data-size="small" role="radio" aria-checked="false" tabindex="0">
                                             <i class="fas fa-home"></i>
                                             <span>Small</span>
                                             <small>&lt; 5,000 sq ft</small>
                                         </button>
-                                        <button type="button" class="size-option" data-size="medium">
+                                        <button type="button" class="size-option" data-size="medium" role="radio" aria-checked="false" tabindex="0">
                                             <i class="fas fa-building"></i>
                                             <span>Medium</span>
                                             <small>5,000 - 20,000</small>
                                         </button>
-                                        <button type="button" class="size-option" data-size="large">
+                                        <button type="button" class="size-option" data-size="large" role="radio" aria-checked="false" tabindex="0">
                                             <i class="fas fa-city"></i>
                                             <span>Large</span>
                                             <small>&gt; 20,000 sq ft</small>
                                         </button>
                                     </div>
                                     <input type="hidden" id="bundleSizeValue" name="bundle_property_size">
+                                    <span class="field-error" id="bundleSizeError"></span>
                                 </div>
                             </div>
 
@@ -819,52 +829,74 @@
 
                     <!-- Step 2: Contact Information -->
                     <div class="form-step" data-step="2">
-                        <h4>Step 2: Your Information</h4>
+                        <h4>Your Information</h4>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="quoteFirstName">First Name *</label>
-                                <input type="text" id="quoteFirstName" name="first_name" placeholder="John" required>
+                                <label for="quoteFirstName">First Name <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="quoteFirstName" name="first_name" placeholder="John" required autocomplete="given-name">
+                                </div>
+                                <span class="field-error" id="firstNameError"></span>
                             </div>
                             <div class="form-group">
-                                <label for="quoteLastName">Last Name *</label>
-                                <input type="text" id="quoteLastName" name="last_name" placeholder="Doe" required>
+                                <label for="quoteLastName">Last Name <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="quoteLastName" name="last_name" placeholder="Doe" required autocomplete="family-name">
+                                </div>
+                                <span class="field-error" id="lastNameError"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="quoteEmail">Email Address *</label>
-                            <input type="email" id="quoteEmail" name="email" placeholder="john@company.com" required>
+                            <label for="quoteEmail">Email Address <span class="required">*</span></label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="quoteEmail" name="email" placeholder="john@company.com" required autocomplete="email">
+                            </div>
+                            <span class="field-error" id="emailError"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="quotePhone">Phone Number *</label>
-                            <input type="tel" id="quotePhone" name="phone" placeholder="(281) 555-0123" required>
+                            <label for="quotePhone">Phone Number <span class="required">*</span></label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone-alt"></i>
+                                <input type="tel" id="quotePhone" name="phone" placeholder="(281) 555-0123" required autocomplete="tel">
+                            </div>
+                            <span class="field-error" id="phoneError"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="quoteCompany">Company/School Name</label>
-                            <input type="text" id="quoteCompany" name="company" placeholder="Acme Corporation">
+                            <div class="input-with-icon">
+                                <i class="fas fa-building"></i>
+                                <input type="text" id="quoteCompany" name="company" placeholder="Acme Corporation" autocomplete="organization">
+                            </div>
+                            <span class="field-error" id="companyError"></span>
                         </div>
                     </div>
 
                     <!-- Step 3: Additional Details -->
                     <div class="form-step" data-step="3">
-                        <h4>Step 3: Additional Details</h4>
+                        <h4>Additional Details</h4>
 
                         <div class="form-group">
                             <label for="quoteMessage">Tell us about your needs</label>
-                            <textarea id="quoteMessage" name="message" rows="4"
-                                placeholder="Any specific requirements, preferred schedule, or questions..."></textarea>
+                            <div class="input-with-icon textarea-icon">
+                                <i class="fas fa-comment-alt"></i>
+                                <textarea id="quoteMessage" name="message" rows="4" placeholder="Any specific requirements, preferred schedule, or questions..."></textarea>
+                            </div>
                         </div>
 
                         <div class="estimate-preview">
                             <div class="estimate-icon">
-                                <i class="fas fa-robot"></i>
+                                <i class="fas fa-headset"></i>
                             </div>
                             <div class="estimate-text">
-                                <strong>AI Estimate Ready</strong>
-                                <span>Based on your selections, we'll prepare a custom quote within 2 hours</span>
+                                <strong>Fast Response Guaranteed</strong>
+                                <span>Our team will review your request and send a detailed quote within 2 hours during business hours</span>
                             </div>
                         </div>
                     </div>
