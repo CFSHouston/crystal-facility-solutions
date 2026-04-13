@@ -462,13 +462,19 @@
 /* ============================================
    CHAT WIDGET COMPONENT
    ============================================ */
+
+/* Container - highest z-index */
 .chat-widget {
     position: fixed;
     bottom: var(--spacing-6);
     right: var(--spacing-6);
-    z-index: var(--z-chat);
+    z-index: 2147483647;
+    isolation: isolate;
+    /* Prevent any background bleed */
+    background: transparent;
 }
 
+/* Chat button */
 .chat-button {
     width: var(--chat-button-size);
     height: var(--chat-button-size);
@@ -484,11 +490,14 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    /* Ensure no flash on button itself */
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .chat-button:hover {
     background: var(--cfs-dark-green);
-    transform: scale(1.1);
+    transform: scale(1.1) translateZ(0);
     box-shadow: var(--shadow-green-lg);
 }
 
@@ -511,25 +520,56 @@
     animation: pulse 2s infinite;
 }
 
+/* Chat Window - CRITICAL FIXES HERE */
 .chat-window {
     position: absolute;
     bottom: calc(var(--chat-button-size) + var(--spacing-4));
     right: 0;
     width: var(--chat-window-width);
     height: var(--chat-window-height);
+    
+    /* CRITICAL: Match your site's background color exactly */
     background: var(--white);
     border-radius: var(--border-radius-2xl);
     box-shadow: var(--shadow-hover);
-    display: none;
+    
+    /* Use flex but control visibility with opacity - no display:none */
+    display: flex;
     flex-direction: column;
     overflow: hidden;
+    
+    /* Start completely hidden - no flash possible */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    
+    /* Start position for animation */
+    transform: translateY(20px) scale(0.95) translateZ(0);
+    
+    /* Smooth transition for all properties */
+    transition: 
+        opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Hardware acceleration to prevent rendering artifacts */
+    will-change: opacity, visibility, transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    
+    /* Ensure it creates its own stacking context */
+    isolation: isolate;
 }
 
+/* Active state - visible */
 .chat-window.active {
-    display: flex;
-    animation: slideUp var(--duration-normal);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1) translateZ(0);
 }
 
+/* Header */
 .chat-header {
     background: var(--bg-gradient-header);
     color: var(--white);
@@ -538,6 +578,8 @@
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    /* Ensure header renders immediately with window */
+    opacity: 1;
 }
 
 .chat-title {
@@ -559,6 +601,7 @@
     font-size: var(--font-size-sm);
 }
 
+/* Header buttons */
 .chat-header button {
     background: rgba(255,255,255,0.2);
     border: none;
@@ -579,16 +622,21 @@
     transform: rotate(90deg);
 }
 
+/* Chat body - match your site background */
 .chat-body {
     flex: 1;
     padding: var(--spacing-4);
     overflow-y: auto;
+    /* CRITICAL: Use your site's light gray, not white */
     background: var(--light-gray);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-3);
+    /* Ensure body renders immediately */
+    opacity: 1;
 }
 
+/* Messages */
 .message {
     padding: var(--spacing-3) var(--spacing-4);
     border-radius: var(--border-radius-xl);
@@ -611,12 +659,14 @@
     align-self: flex-end;
 }
 
+/* Chat input area */
 .chat-input {
     padding: var(--spacing-4);
     border-top: 1px solid var(--gray-pale);
     display: flex;
     gap: var(--spacing-3);
     flex-shrink: 0;
+    background: var(--white);
 }
 
 .chat-input input {
@@ -654,11 +704,11 @@
     background: var(--cfs-dark-green);
     transform: scale(1.1);
 }
+
 /* ============================================
    CHAT WIDGET - MINIMIZE BUTTON
    ============================================ */
 
-/* Minimize button styling */
 .chat-minimize {
     background: none;
     border: none;
@@ -677,15 +727,7 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Update chat-header to accommodate both buttons */
-.chat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-}
-
-/* Minimized state indicator on floating button */
+/* Minimized state indicator */
 .chat-button.has-pending-chat {
     position: relative;
 }
@@ -706,6 +748,40 @@
 @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE - NO FLASH
+   ============================================ */
+
+@media (max-width: 768px) {
+    .chat-widget {
+        bottom: var(--spacing-4);
+        right: var(--spacing-4);
+        z-index: 2147483647;
+    }
+    
+    .chat-window {
+        /* CRITICAL: Fixed position on mobile to escape any parent containers */
+        position: fixed;
+        bottom: calc(var(--chat-button-size) + var(--spacing-4) + 60px);
+        right: var(--spacing-4);
+        left: var(--spacing-4);
+        width: auto;
+        max-width: none;
+        height: var(--chat-window-height-mobile);
+        border-radius: var(--border-radius-xl);
+        z-index: 2147483647;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-window {
+        bottom: calc(var(--chat-button-size) + var(--spacing-4) + 40px);
+        left: var(--spacing-2);
+        right: var(--spacing-2);
+        border-radius: var(--border-radius-lg);
+    }
 }
 /* ============================================
    INFO ITEMS COMPONENT (Contact Page)
@@ -895,6 +971,7 @@
     .chat-widget {
         bottom: var(--spacing-4);
         right: var(--spacing-4);
+        z-index: 2147483647;
     }
     
     .chat-window {

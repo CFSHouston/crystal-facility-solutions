@@ -1881,6 +1881,84 @@
         border-width: 2px;
     }
 }
+@media (max-width: 768px) {
+    .why-crystal-section {
+        padding: 4rem 0;
+    }
+    
+    .why-crystal-section .section-header h2 {
+        font-size: 1.75rem;
+    }
+    
+    .about-content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .excellence-card {
+        grid-column: span 1;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    /* Timeline Mobile - Centered Layout */
+    .timeline {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0;
+        align-items: center; /* Center items horizontally */
+    }
+    
+    .timeline::before,
+    .timeline-progress {
+        display: none;
+    }
+    
+    .timeline-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center horizontally */
+        text-align: center;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        width: 100%; /* Full width */
+        max-width: 300px; /* Limit max width for better appearance */
+        margin: 0 auto; /* Center the item */
+    }
+    
+    .timeline-dot {
+        margin: 0 auto 1rem; /* Center dot */
+    }
+    
+    .timeline-content {
+        opacity: 1;
+        text-align: center; /* Center text */
+        width: 100%;
+    }
+    
+    .timeline-content p {
+        max-width: none;
+        text-align: center; /* Center paragraph */
+    }
+    
+    .clients-marquee-container {
+        padding: 0 2.5rem;
+    }
+}
 
 /* ============================================
    CINEMATIC TESTIMONIALS SECTION
