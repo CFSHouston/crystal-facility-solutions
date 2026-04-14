@@ -4069,6 +4069,33 @@
 .footer-logo-wrapper:hover .logo-glow {
     opacity: 1;
 }
+@media (min-width: 769px) {
+    /* Center the brand column */
+    .footer-brand {
+        align-items: center !important;
+        text-align: center !important;
+    }
+    
+    /* CHANGE THESE 2 PROPERTIES: */
+    .footer-logo-wrapper {
+        position: relative;
+        display: block !important;        /* Changed: inline-block → block */
+        width: fit-content;
+        margin: 0 auto !important;        /* Added: centers horizontally */
+    }
+    
+    /* Center text elements */
+    .footer-tagline,
+    .footer-description {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    
+    .social-links {
+        justify-content: center !important;
+    }
+}
 
 .footer-tagline {
     font-size: 1.1rem;
