@@ -18,21 +18,29 @@
     <link rel="preconnect" href="https://images.unsplash.com">
 
     <!-- Preload Critical CSS -->
-    <link rel="preload" href="css/variables.css" as="style">
-    <link rel="preload" href="css/layout.css" as="style">
+    <link rel="preload" href="css/1-variables.css" as="style">
+    <link rel="preload" href="css/2-reset.css" as="style">
+    <link rel="preload" href="css/4-layout.css" as="style">
 
-    <!-- Stylesheets -->
+    <!-- Stylesheets — Ordered by Dependency -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/navigation.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/forms.css">
-    <link rel="stylesheet" href="css/sections.css">
-    <link rel="stylesheet" href="css/services.css">
-    <!-- <link rel="stylesheet" href="css/modal.css"> -->
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/1-variables.css">
+    <link rel="stylesheet" href="css/2-reset.css">
+    <link rel="stylesheet" href="css/3-utilities.css">
+    <link rel="stylesheet" href="css/4-layout.css">
+    <link rel="stylesheet" href="css/5-navigation.css">
+    <link rel="stylesheet" href="css/6-hero.css">
+    <link rel="stylesheet" href="css/7-services.css">
+    <link rel="stylesheet" href="css/8-about.css">
+    <link rel="stylesheet" href="css/9-core-values.css">
+    <link rel="stylesheet" href="css/10-testimonials.css">
+    <link rel="stylesheet" href="css/11-contact.css">
+    <link rel="stylesheet" href="css/12-footer.css">
+    <link rel="stylesheet" href="css/13-forms.css">
+    <link rel="stylesheet" href="css/14-chat.css">
+    <link rel="stylesheet" href="css/15-responsive.css">
 
+    <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function(){
@@ -2081,11 +2089,11 @@
     <script src="js/modules/services.js" defer></script>
     <script src="js/modules/forms.js" defer></script>
     <script src="js/modules/testimonials.js" defer></script>
+    <script src="js/modules/footer.js" defer></script>
     <script src="js/modules/chat.js" defer></script>
     <script src="js/modules/values.js" defer></script>
     <script src="js/modules/about.js" defer></script>
     <script src="js/modules/contact.js" defer></script>
     <script src="js/main.js" defer></script>
 </body>
-
 </html>

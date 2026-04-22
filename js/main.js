@@ -1,22 +1,19 @@
 /* ============================================
-   CRYSTAL FACILITY SOLUTIONS - MAIN JS
-   Main Entry Point - No Window Globals
+   MAIN MODULE - PRODUCTION READY
+   Crystal Facility Solutions
    ============================================ */
 
 (function() {
     'use strict';
 
-    // ============================================
-    // PRIVATE STATE
-    // ============================================
+    // ─── Module State ───────────────────────────────────────────
     const state = {
+        isInitialized: false,
         observers: [],
-        isInitialized: false
+        boundHandlers: {}
     };
 
-    // ============================================
-    // UTILITY FUNCTIONS (Module Scope)
-    // ============================================
+    // ─── Utilities ──────────────────────────────────────────────
     const utils = {
         debounce(func, wait) {
             let timeout;
@@ -36,38 +33,25 @@
                 if (!inThrottle) {
                     func.apply(this, args);
                     inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
+                    setTimeout(() => { inThrottle = false; }, limit);
                 }
             };
-        },
-
-        formatPhoneNumber(phoneNumberString) {
-            const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-            if (match) {
-                return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-            }
-            return phoneNumberString;
         }
     };
 
-    // ============================================
-    // INITIALIZATION
-    // ============================================
+    // ─── Initialization ─────────────────────────────────────────
     function init() {
         if (state.isInitialized) return;
-        
+
         initScrollAnimations();
         initSmoothScrollPolyfill();
-        initPerformanceOptimizations();
-        
+        initLazyLoading();
+        initResourceHints();
+
         state.isInitialized = true;
-        console.log('✅ Crystal Facility Solutions - All systems initialized');
     }
 
-    // ============================================
-    // SCROLL ANIMATIONS (REVEAL ON SCROLL)
-    // ============================================
+    // ─── Scroll Animations ──────────────────────────────────────
     function initScrollAnimations() {
         const revealElements = document.querySelectorAll(
             '.service-card, .stat, .info-item, .section-title, .about-text, .visual-box'
@@ -81,11 +65,11 @@
             return;
         }
 
-        const revealObserver = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed');
-                    revealObserver.unobserve(entry.target);
+                    observer.unobserve(entry.target);
                 }
             });
         }, {
@@ -97,144 +81,126 @@
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            
-            revealObserver.observe(el);
+            observer.observe(el);
         });
 
-        state.observers.push(revealObserver);
+        state.observers.push(observer);
 
-        // Add CSS class for revealed state
-        const style = document.createElement('style');
-        style.textContent = `
-            .revealed {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // ============================================
-    // SMOOTH SCROLL POLYFILL
-    // ============================================
-    function initSmoothScrollPolyfill() {
-        if ('scrollBehavior' in document.documentElement.style) return;
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', handleSmoothScroll);
-        });
-    }
-
-    function handleSmoothScroll(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        // Add CSS for revealed state
+        if (!document.getElementById('main-reveal-styles')) {
+            const style = document.createElement('style');
+            style.id = 'main-reveal-styles';
+            style.textContent = '.revealed { opacity: 1 !important; transform: translateY(0) !important; }';
+            document.head.appendChild(style);
         }
     }
 
-    // ============================================
-    // PERFORMANCE OPTIMIZATIONS
-    // ============================================
-    function initPerformanceOptimizations() {
-        initLazyLoading();
-        initResourceHints();
+    // ─── Smooth Scroll Polyfill ─────────────────────────────────
+    function initSmoothScrollPolyfill() {
+        if ('scrollBehavior' in document.documentElement.style) return;
+
+        const anchors = document.querySelectorAll('a[href^="#"]');
+        const handlers = [];
+
+        anchors.forEach(anchor => {
+            const onClick = (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+            anchor.addEventListener('click', onClick);
+            handlers.push({ anchor, onClick });
+        });
+
+        state.boundHandlers.smoothScroll = handlers;
     }
 
+    // ─── Lazy Loading ───────────────────────────────────────────
     function initLazyLoading() {
         if (!('IntersectionObserver' in window)) return;
 
         const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-        
-        const imageObserver = new IntersectionObserver((entries) => {
+        if (!lazyImages.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.classList.add('loaded');
-                    imageObserver.unobserve(img);
+                    entry.target.classList.add('loaded');
+                    observer.unobserve(entry.target);
                 }
             });
         });
 
-        lazyImages.forEach(img => imageObserver.observe(img));
-        state.observers.push(imageObserver);
+        lazyImages.forEach(img => observer.observe(img));
+        state.observers.push(observer);
     }
 
+    // ─── Resource Hints ─────────────────────────────────────────
     function initResourceHints() {
         const forms = document.querySelectorAll('form[action*="salesforce"]');
-        
+        if (!forms.length) return;
+
+        const handlers = [];
         forms.forEach(form => {
-            form.addEventListener('focusin', handlePreconnect, { once: true });
+            const onFocus = () => {
+                if (!document.querySelector('link[href="https://webto.salesforce.com"]')) {
+                    const link = document.createElement('link');
+                    link.rel = 'preconnect';
+                    link.href = 'https://webto.salesforce.com';
+                    document.head.appendChild(link);
+                }
+            };
+            form.addEventListener('focusin', onFocus, { once: true });
+            handlers.push({ form, onFocus });
         });
+
+        state.boundHandlers.resourceHints = handlers;
     }
 
-    function handlePreconnect() {
-        const link = document.createElement('link');
-        link.rel = 'preconnect';
-        link.href = 'https://webto.salesforce.com';
-        document.head.appendChild(link);
-    }
-
-    // ============================================
-    // ERROR HANDLING
-    // ============================================
+    // ─── Error Handling ─────────────────────────────────────────
     function handleError(msg, url, lineNo, columnNo, error) {
-        console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo);
+        // Silent error handling in production
+        // Log to analytics service if available
         return false;
     }
 
-    // ============================================
-    // CLEANUP
-    // ============================================
+    // ─── Cleanup / Destroy ──────────────────────────────────────
     function destroy() {
-        // Disconnect all observers
+        if (!state.isInitialized) return;
+
+        // Disconnect observers
         state.observers.forEach(observer => observer.disconnect());
         state.observers = [];
 
-        // Remove event listeners
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.removeEventListener('click', handleSmoothScroll);
-        });
+        // Remove smooth scroll listeners
+        if (state.boundHandlers.smoothScroll) {
+            state.boundHandlers.smoothScroll.forEach(h => {
+                h.anchor.removeEventListener('click', h.onClick);
+            });
+        }
 
-        document.querySelectorAll('form[action*="salesforce"]').forEach(form => {
-            form.removeEventListener('focusin', handlePreconnect);
-        });
+        // Remove resource hint listeners
+        if (state.boundHandlers.resourceHints) {
+            state.boundHandlers.resourceHints.forEach(h => {
+                h.form.removeEventListener('focusin', h.onFocus);
+            });
+        }
 
+        // Remove error handler
         window.removeEventListener('error', handleError);
 
+        state.boundHandlers = {};
         state.isInitialized = false;
     }
 
-    // ============================================
-    // EXPOSE MINIMAL API (No Window Globals)
-    // ============================================
-    const api = {
-        init,
-        destroy,
-        utils: {
-            debounce: utils.debounce,
-            throttle: utils.throttle,
-            formatPhoneNumber: utils.formatPhoneNumber
-        }
-    };
-
-    // Register error handler
+    // ─── Bootstrap ──────────────────────────────────────────────
     window.addEventListener('error', handleError);
 
-    // Initialize on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
-
-    // Expose via CustomEvent
-    document.dispatchEvent(new CustomEvent('main:api-ready', {
-        detail: api,
-        bubbles: true
-    }));
-
 })();

@@ -1,0 +1,331 @@
+/* ============================================
+   CRYSTAL FACILITY SOLUTIONS - UTILITIES
+   Buttons, Badges, Helper Classes, Containers
+   ============================================ */
+
+/* ============================================
+   CONTAINERS
+   ============================================ */
+.container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+}
+
+.container-lg {
+    max-width: var(--container-max-width-lg);
+}
+
+.container-narrow {
+    max-width: 800px;
+}
+
+/* ============================================
+   SECTION BASE CLASSES
+   ============================================ */
+.section {
+    padding-block: var(--spacing-24);
+    padding-inline: var(--container-padding);
+    position: relative;
+}
+
+.section-sm {
+    padding-block: var(--spacing-16);
+}
+
+.section-lg {
+    padding-block: var(--spacing-24);
+}
+
+/* ============================================
+   GRID UTILITIES
+   ============================================ */
+.grid {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid-auto-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-auto-lg {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+/* ============================================
+   FLEX UTILITIES
+   ============================================ */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-4 {
+    gap: var(--spacing-4);
+}
+
+.gap-6 {
+    gap: var(--spacing-6);
+}
+
+.gap-8 {
+    gap: var(--spacing-8);
+}
+
+/* ============================================
+   TEXT UTILITIES
+   ============================================ */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--cfs-green) 0%, var(--cfs-light-green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   VISIBILITY UTILITIES
+   ============================================ */
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-6);
+    border-radius: var(--border-radius-full);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    text-decoration: none;
+    cursor: pointer;
+    border: var(--border-width-2) solid transparent;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    min-height: var(--btn-height-md);
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.btn:active {
+    transform: var(--active-scale);
+}
+
+/* Primary Button */
+.btn-primary {
+    background: var(--cfs-green);
+    color: var(--white);
+    box-shadow: var(--shadow-green-md);
+}
+
+.btn-primary:hover {
+    background: var(--cfs-dark-green);
+    transform: var(--hover-translate);
+    box-shadow: var(--shadow-green-lg);
+}
+
+/* Glass/Ghost Button */
+.btn-glass {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--cfs-green);
+    color: var(--cfs-green);
+}
+
+.btn-glass:hover {
+    background: var(--cfs-green);
+    color: var(--white);
+    transform: var(--hover-translate);
+}
+
+/* Full Width Button */
+.btn-full {
+    width: 100%;
+}
+
+/* Small Button */
+.btn-sm {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    min-height: var(--btn-height-sm);
+}
+
+/* Large Button */
+.btn-lg {
+    padding: var(--spacing-4) var(--spacing-8);
+    font-size: var(--font-size-lg);
+    min-height: var(--btn-height-lg);
+}
+
+/* Button Loading State */
+.btn-loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn-loader {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.btn-loader::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Button Text/Loader Toggle */
+.btn-text,
+.btn-loader {
+    transition: opacity var(--transition-fast);
+}
+
+.btn-loading .btn-text {
+    opacity: 0;
+    position: absolute;
+}
+
+.btn-loader {
+    opacity: 0;
+    position: absolute;
+}
+
+.btn-loading .btn-loader {
+    opacity: 1;
+    position: static;
+}
+
+/* ============================================
+   BADGE
+   ============================================ */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    background: var(--cfs-pale-green);
+    border: var(--border-width-2) solid var(--cfs-green);
+    border-radius: var(--border-radius-full);
+    color: var(--cfs-dark-green);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-6);
+    animation: fadeInUp var(--duration-slow) var(--ease-out);
+}
+
+/* ============================================
+   VISUAL BOX (Reusable gradient card)
+   ============================================ */
+.visual-box {
+    background: var(--bg-gradient-visual);
+    border-radius: var(--border-radius-2xl);
+    padding: var(--spacing-12);
+    text-align: center;
+    color: var(--white);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-green-xl);
+}
+
+.visual-box i {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-4);
+    opacity: 0.9;
+}
+
+.visual-box h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+@media (max-width: 768px) {
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .visual-box {
+        padding: var(--spacing-8);
+        min-height: 250px;
+    }
+
+    .visual-box i {
+        font-size: 3rem;
+    }
+}

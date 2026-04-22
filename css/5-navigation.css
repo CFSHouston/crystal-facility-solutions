@@ -1,40 +1,11 @@
 /* ============================================
-   NAVIGATION - PREMIUM GLASSMORPHIC (TRANSPARENT DROPDOWN)
+   CRYSTAL FACILITY SOLUTIONS - NAVIGATION
+   Premium Glassmorphic Nav with Transparent Mobile Dropdown
    ============================================ */
-
-:root {
-    --nav-height: 80px;
-    --nav-height-scrolled: 70px;
-    --cfs-green: #7cb342;
-    --cfs-dark-green: #558b2f;
-    --cfs-light-green: #9ccc65;
-}
-
-/* Skip Link */
-.skip-link {
-    position: absolute;
-    top: -100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--cfs-green);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 0 0 12px 12px;
-    font-weight: 600;
-    text-decoration: none;
-    z-index: 1001;
-    transition: top 0.3s ease;
-    box-shadow: 0 4px 20px rgba(124, 179, 66, 0.4);
-}
-
-.skip-link:focus {
-    top: 0;
-}
 
 /* ============================================
-   MAIN NAVIGATION
+   MAIN NAVIGATION BAR
    ============================================ */
-
 .nav {
     position: fixed;
     top: 0;
@@ -43,8 +14,8 @@
     height: var(--nav-height);
     background: transparent;
     backdrop-filter: blur(0px);
-    z-index: 1000;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: var(--z-nav);
+    transition: all var(--transition-slow) var(--ease-in-out);
     border-bottom: 1px solid transparent;
 }
 
@@ -54,17 +25,17 @@
     inset: 0;
     background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 100%);
     opacity: 1;
-    transition: opacity 0.5s ease;
+    transition: opacity var(--transition-slow) ease;
     pointer-events: none;
 }
 
 .nav.scrolled {
-    height: 70px;
+    height: var(--nav-height-scrolled);
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom-color: rgba(124, 179, 66, 0.2);
-    box-shadow: 
+    box-shadow:
         0 4px 30px rgba(0, 0, 0, 0.3),
         0 0 60px rgba(124, 179, 66, 0.15);
 }
@@ -74,10 +45,10 @@
 }
 
 .nav-content {
-    max-width: 1400px;
+    max-width: var(--container-max-width-lg);
     height: 100%;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--container-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -85,12 +56,15 @@
     z-index: 2;
 }
 
+/* ============================================
+   LOGO
+   ============================================ */
 .logo {
     display: flex;
     align-items: center;
     text-decoration: none;
     position: relative;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-fast) ease;
 }
 
 .logo:hover {
@@ -102,7 +76,7 @@
     width: auto;
     display: block;
     filter: drop-shadow(0 0 20px rgba(124, 179, 66, 0.3));
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast) ease;
 }
 
 .nav.scrolled .logo img {
@@ -116,7 +90,7 @@
     inset: -10px;
     background: radial-gradient(circle, rgba(124, 179, 66, 0.3) 0%, transparent 70%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--transition-fast) ease;
     z-index: -1;
     filter: blur(10px);
 }
@@ -125,6 +99,9 @@
     opacity: 1;
 }
 
+/* ============================================
+   DESKTOP NAV LINKS
+   ============================================ */
 .nav-links {
     display: flex;
     list-style: none;
@@ -137,11 +114,11 @@
 .nav-links a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.9);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     font-size: 0.95rem;
     padding: 0.6rem 1.2rem;
-    border-radius: 50px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--border-radius-full);
+    transition: all var(--transition-fast) var(--ease-in-out);
     position: relative;
     overflow: hidden;
     letter-spacing: 0.02em;
@@ -151,11 +128,11 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(124, 179, 66, 0.3) 0%, 
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(124, 179, 66, 0.3) 0%,
                 transparent 60%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--transition-fast) ease;
 }
 
 .nav-links a:hover::before {
@@ -170,14 +147,14 @@
     width: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--cfs-green), transparent);
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast) ease;
     transform: translateX(-50%);
     box-shadow: 0 0 10px var(--cfs-green);
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
-    color: #fff;
+    color: var(--white);
     transform: translateY(-2px);
     text-shadow: 0 0 20px rgba(124, 179, 66, 0.5);
 }
@@ -191,26 +168,29 @@
     background: rgba(124, 179, 66, 0.15);
     border: 1px solid rgba(124, 179, 66, 0.4);
     color: var(--cfs-green);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .nav-links a.active::after {
     display: none;
 }
 
+/* ============================================
+   NAV CTA BUTTON
+   ============================================ */
 .nav-cta {
-    margin-left: 1rem;
+    margin-left: var(--spacing-4);
     padding: 0.7rem 1.5rem;
     background: linear-gradient(135deg, var(--cfs-green), var(--cfs-dark-green));
     border: none;
-    border-radius: 50px;
-    color: white;
-    font-weight: 600;
+    border-radius: var(--border-radius-full);
+    color: var(--white);
+    font-weight: var(--font-weight-semibold);
     font-size: 0.9rem;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast) ease;
     box-shadow: 0 4px 15px rgba(124, 179, 66, 0.3);
 }
 
@@ -220,7 +200,7 @@
     inset: 0;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
     transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    transition: transform var(--transition-slow) ease;
 }
 
 .nav-cta:hover {
@@ -233,9 +213,8 @@
 }
 
 /* ============================================
-   MOBILE MENU BUTTON
+   MOBILE MENU BUTTON (HAMBURGER)
    ============================================ */
-
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -245,25 +224,29 @@
     padding: 0;
     cursor: pointer;
     position: relative;
-    z-index: 1002;
-    border-radius: 12px;
-    transition: all 0.3s ease;
+    z-index: calc(var(--z-nav) + 2);
+    border-radius: var(--border-radius-lg);
+    transition: all var(--transition-fast) ease;
 }
 
 .mobile-menu-btn:hover {
     background: rgba(124, 179, 66, 0.1);
 }
 
+.mobile-menu-btn:focus-visible {
+    box-shadow: var(--focus-ring);
+}
+
 .hamburger {
     display: block;
     width: 24px;
     height: 2px;
-    background: white;
+    background: var(--white);
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-fast) var(--ease-in-out);
     box-shadow: 0 0 10px rgba(124, 179, 66, 0.5);
 }
 
@@ -273,10 +256,10 @@
     position: absolute;
     width: 24px;
     height: 2px;
-    background: white;
+    background: var(--white);
     left: 50%;
     transform: translateX(-50%);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-fast) var(--ease-in-out);
     box-shadow: 0 0 10px rgba(124, 179, 66, 0.5);
 }
 
@@ -288,6 +271,7 @@
     top: 8px;
 }
 
+/* Hamburger → X Animation */
 .mobile-menu-btn[aria-expanded="true"] .hamburger {
     background: transparent;
     box-shadow: none;
@@ -305,71 +289,74 @@
 
 /* ============================================
    MOBILE NAVIGATION - TRANSPARENT DROPDOWN
+   ============================================
+   CRITICAL: Container uses pointer-events: none
+   so clicks pass through to page. Only children
+   (links/buttons) catch clicks via pointer-events: auto.
    ============================================ */
-
 .mobile-nav {
     position: fixed;
     top: var(--nav-height);
     left: 0;
     right: 0;
-    /* COMPLETELY TRANSPARENT - NO BACKGROUND */
     background: transparent;
-    z-index: 999;
+    z-index: calc(var(--z-nav) - 1);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    padding: 1.5rem 2rem 2rem;
-    /* CRITICAL: Let clicks pass through to page */
+    padding: 1.5rem var(--container-padding) 2rem;
+    /* Let clicks pass through empty space */
     pointer-events: none;
     /* Animation */
     transform: translateY(-20px);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast) ease;
 }
 
-/* When navbar is scrolled */
+/* Adjust position when nav is scrolled */
 .nav.scrolled ~ .mobile-nav {
-    top: 70px;
+    top: var(--nav-height-scrolled);
 }
 
+/* Open state */
 .mobile-nav.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
-    /* Container still doesn't catch clicks, only children do */
+    /* Container still doesn't catch clicks */
     pointer-events: none;
 }
 
-/* Mobile nav items - MORE TRANSPARENT watery effect */
+/* Mobile nav items - glassmorphic cards */
 .mobile-nav a,
 .mobile-nav .btn-primary {
-    /* CRITICAL: Items catch clicks */
+    /* Items DO catch clicks */
     pointer-events: auto;
     font-size: 1.1rem;
-    font-weight: 600;
-    color: #ffffff;
+    font-weight: var(--font-weight-semibold);
+    color: var(--white);
     text-decoration: none;
     padding: 1rem 3rem;
     width: 100%;
     max-width: 280px;
     text-align: center;
-    border-radius: 16px;
-    /* MORE TRANSPARENT background */
+    border-radius: var(--border-radius-xl);
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
+    box-shadow:
         0 4px 20px rgba(0, 0, 0, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast) ease;
     opacity: 0;
     transform: translateY(-10px);
     position: relative;
 }
 
+/* Staggered entrance animation */
 .mobile-nav.active a,
 .mobile-nav.active .btn-primary {
     opacity: 1;
@@ -382,20 +369,20 @@
 .mobile-nav a:nth-child(4) { transition-delay: 0.2s; }
 .mobile-nav a:nth-child(5) { transition-delay: 0.25s; }
 
-/* Hover effect - green glow */
+/* Hover / Active states */
 .mobile-nav a:hover,
 .mobile-nav a:focus,
 .mobile-nav a.active {
     color: var(--cfs-green);
     background: rgba(124, 179, 66, 0.12);
     border-color: rgba(124, 179, 66, 0.3);
-    box-shadow: 
+    box-shadow:
         0 8px 32px rgba(124, 179, 66, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
 }
 
-/* Left green accent */
+/* Left green accent bar */
 .mobile-nav a::before {
     content: '';
     position: absolute;
@@ -404,7 +391,7 @@
     width: 0;
     height: 50%;
     background: var(--cfs-green);
-    transition: width 0.3s ease;
+    transition: width var(--transition-fast) ease;
     transform: translateY(-50%);
     border-radius: 0 3px 3px 0;
     box-shadow: 0 0 10px var(--cfs-green);
@@ -416,16 +403,16 @@
     width: 4px;
 }
 
-/* CTA Button */
+/* Mobile CTA Button */
 .mobile-nav .btn-primary {
     margin-top: 0.5rem;
-    color: white;
+    color: var(--white);
     background: rgba(124, 179, 66, 0.12);
     border: 1px solid rgba(124, 179, 66, 0.25);
-    border-radius: 50px;
+    border-radius: var(--border-radius-full);
     cursor: pointer;
     transition-delay: 0.3s;
-    box-shadow: 
+    box-shadow:
         0 4px 20px rgba(124, 179, 66, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
@@ -433,50 +420,15 @@
 .mobile-nav .btn-primary:hover {
     background: rgba(124, 179, 66, 0.25);
     border-color: rgba(124, 179, 66, 0.4);
-    box-shadow: 
+    box-shadow:
         0 8px 32px rgba(124, 179, 66, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
 }
 
 /* ============================================
-   RESPONSIVE
+   SCROLL PROGRESS INDICATOR
    ============================================ */
-
-@media (max-width: 768px) {
-    .nav {
-        height: 70px;
-    }
-    
-    .nav-links,
-    .nav-cta {
-        display: none;
-    }
-    
-    .mobile-menu-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .logo img {
-        height: 45px;
-    }
-    
-    .mobile-nav {
-        top: 70px;
-        padding: 1.25rem 1.5rem 1.5rem;
-    }
-    
-    .mobile-nav a,
-    .mobile-nav .btn-primary {
-        font-size: 1rem;
-        padding: 0.875rem 2.5rem;
-        max-width: 260px;
-    }
-}
-
-/* Scroll Progress Indicator */
 .nav-progress {
     position: absolute;
     bottom: 0;
@@ -486,4 +438,86 @@
     width: 0%;
     transition: width 0.1s linear;
     box-shadow: 0 0 10px var(--cfs-green);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .nav {
+        height: var(--nav-height-scrolled);
+    }
+
+    .nav-links,
+    .nav-cta {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo img {
+        height: 45px;
+    }
+
+    .mobile-nav {
+        top: var(--nav-height-scrolled);
+        padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .mobile-nav a,
+    .mobile-nav .btn-primary {
+        font-size: var(--font-size-base);
+        padding: 0.875rem 2.5rem;
+        max-width: 260px;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .nav,
+    .nav::before,
+    .logo,
+    .logo img,
+    .nav-links a,
+    .nav-cta,
+    .hamburger,
+    .hamburger::before,
+    .hamburger::after,
+    .mobile-nav,
+    .mobile-nav a,
+    .mobile-nav .btn-primary {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .mobile-nav a,
+    .mobile-nav .btn-primary {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE
+   ============================================ */
+@media (prefers-contrast: high) {
+    .nav.scrolled {
+        background: var(--dark);
+        border-bottom-color: var(--cfs-green);
+    }
+
+    .mobile-nav a,
+    .mobile-nav .btn-primary {
+        border-width: 2px;
+    }
+
+    .nav-links a.active {
+        border-width: 2px;
+    }
 }

@@ -1,0 +1,139 @@
+/* ============================================
+   CRYSTAL FACILITY SOLUTIONS - RESET
+   Base Reset, Box-sizing, and Global Defaults
+   ============================================ */
+
+/* ============================================
+   BOX MODEL RESET
+   ============================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   HTML & BODY BASE
+   ============================================ */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scrollbar-gutter: stable;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--dark);
+    background: var(--bg-gradient-main);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    text-wrap: pretty;
+}
+
+/* ============================================
+   MEDIA ELEMENTS RESET
+   ============================================ */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   FORM ELEMENTS RESET
+   ============================================ */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* ============================================
+   TYPOGRAPHY RESET
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+}
+
+p {
+    overflow-wrap: break-word;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+/* ============================================
+   ACCESSIBILITY HELPERS
+   ============================================ */
+.sr-only,
+.skip-link {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link:focus {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 1rem 1.5rem;
+    margin: 0;
+    clip: auto;
+    white-space: normal;
+    z-index: calc(var(--chat-z-index) + 1);
+    background: var(--cfs-green);
+    color: var(--white);
+    font-weight: var(--font-weight-semibold);
+    border-radius: 0 0 var(--border-radius-lg) 0;
+}
+
+/* ============================================
+   FOCUS VISIBLE (Global)
+   ============================================ */
+:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+/* ============================================
+   SELECTION STYLING
+   ============================================ */
+::selection {
+    background: var(--cfs-green);
+    color: var(--white);
+}

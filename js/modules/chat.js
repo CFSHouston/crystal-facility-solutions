@@ -1,25 +1,39 @@
 /* ============================================
-   CRYSTAL FACILITY SOLUTIONS - CHAT MODULE
-   Fixed: aria-hidden warning, removed inert
+   CHAT MODULE - PRODUCTION READY
+   Crystal Facility Solutions
    ============================================ */
 
 (function() {
     'use strict';
 
-    const state = {
-        elements: {},
-        isOpen: false,
-        isMinimized: false
+    // ─── Configuration ──────────────────────────────────────────
+    const CONFIG = {
+        phone: '281-506-8826',
+        typingDelay: 1500,
+        closeAnimationDelay: 300,
+        focusDelay: 100
     };
 
+    // ─── Module State ───────────────────────────────────────────
+    const state = {
+        isInitialized: false,
+        elements: {},
+        isOpen: false,
+        isMinimized: false,
+        timeouts: [],
+        boundHandlers: {}
+    };
+
+    // ─── Initialization ─────────────────────────────────────────
     function init() {
+        if (state.isInitialized) return;
+
         cacheElements();
-        if (!validateElements()) {
-            console.warn('Chat: Elements not found');
-            return;
-        }
+        if (!validateElements()) return;
+
         bindEvents();
         setInitialState();
+        state.isInitialized = true;
     }
 
     function cacheElements() {
@@ -41,41 +55,42 @@
 
     function setInitialState() {
         const { chatWindow, chatCloseBtn, chatMinimizeBtn, chatInput, chatSendBtn } = state.elements;
-        
-        // Set initial closed state
+
         chatWindow.classList.remove('active');
-        // FIX: Set aria-hidden last, after ensuring no focus inside
         chatCloseBtn?.setAttribute('tabindex', '-1');
         chatMinimizeBtn?.setAttribute('tabindex', '-1');
         chatInput?.setAttribute('tabindex', '-1');
         chatSendBtn?.setAttribute('tabindex', '-1');
         chatWindow.setAttribute('aria-hidden', 'true');
-        
-        // Add greeting
-        addBotMessage('👋 Hi there! How can I help you today?');
+
+        addBotMessage('Hi there! How can I help you today?');
     }
 
     function bindEvents() {
         const { chatToggleBtn, chatInput, chatSendBtn, chatCloseBtn, chatMinimizeBtn } = state.elements;
 
-        chatToggleBtn?.addEventListener('click', handleToggle);
-        chatMinimizeBtn?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            minimizeChat();
-        });
-        chatCloseBtn?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeAndRefreshChat();
-        });
-        chatInput?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-        chatSendBtn?.addEventListener('click', sendMessage);
-        
-        // Escape key to minimize
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && state.isOpen) minimizeChat();
-        });
+        const onToggle = () => handleToggle();
+        const onMinimize = (e) => { e.stopPropagation(); minimizeChat(); };
+        const onClose = (e) => { e.stopPropagation(); closeAndRefreshChat(); };
+        const onKeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
+        const onSend = () => sendMessage();
+        const onEscape = (e) => { if (e.key === 'Escape' && state.isOpen) minimizeChat(); };
+
+        chatToggleBtn?.addEventListener('click', onToggle);
+        chatMinimizeBtn?.addEventListener('click', onMinimize);
+        chatCloseBtn?.addEventListener('click', onClose);
+        chatInput?.addEventListener('keypress', onKeypress);
+        chatSendBtn?.addEventListener('click', onSend);
+        document.addEventListener('keydown', onEscape);
+
+        state.boundHandlers = {
+            chatToggleBtn: { el: chatToggleBtn, onToggle },
+            chatMinimizeBtn: { el: chatMinimizeBtn, onMinimize },
+            chatCloseBtn: { el: chatCloseBtn, onClose },
+            chatInput: { el: chatInput, onKeypress },
+            chatSendBtn: { el: chatSendBtn, onSend },
+            document: { onEscape }
+        };
     }
 
     function handleToggle() {
@@ -86,52 +101,36 @@
 
     function openChat() {
         const { chatWindow, chatToggleBtn, chatInput, chatCloseBtn, chatMinimizeBtn, chatSendBtn } = state.elements;
-        
+
         state.isOpen = true;
         state.isMinimized = false;
 
-        // FIX: Remove aria-hidden FIRST, then enable focus, then add active class
         chatWindow.removeAttribute('aria-hidden');
-        
-        // Enable focus
         chatCloseBtn?.removeAttribute('tabindex');
         chatMinimizeBtn?.removeAttribute('tabindex');
         chatInput?.removeAttribute('tabindex');
         chatSendBtn?.removeAttribute('tabindex');
-        
-        // Now show the window
         chatWindow.classList.add('active');
-        
-        // Update toggle button
         chatToggleBtn.setAttribute('aria-expanded', 'true');
         chatToggleBtn.classList.remove('has-pending-chat');
-        
-        // Focus input after animation
-        setTimeout(() => chatInput?.focus(), 100);
+
+        const timeoutId = setTimeout(() => chatInput?.focus(), CONFIG.focusDelay);
+        state.timeouts.push(timeoutId);
     }
 
     function minimizeChat() {
         const { chatWindow, chatToggleBtn, chatCloseBtn, chatMinimizeBtn, chatInput, chatSendBtn } = state.elements;
-        
+
         state.isOpen = false;
         state.isMinimized = true;
 
-        // FIX: Move focus to toggle button BEFORE hiding
         chatToggleBtn?.focus();
-        
-        // Now hide the window
         chatWindow.classList.remove('active');
-        
-        // Disable focus via tabindex
         chatCloseBtn?.setAttribute('tabindex', '-1');
         chatMinimizeBtn?.setAttribute('tabindex', '-1');
         chatInput?.setAttribute('tabindex', '-1');
         chatSendBtn?.setAttribute('tabindex', '-1');
-        
-        // Set aria-hidden LAST (after focus is moved away)
         chatWindow.setAttribute('aria-hidden', 'true');
-        
-        // Update toggle button
         chatToggleBtn.setAttribute('aria-expanded', 'false');
         chatToggleBtn.classList.add('has-pending-chat');
         chatToggleBtn.setAttribute('aria-label', 'Restore chat');
@@ -139,34 +138,31 @@
 
     function closeAndRefreshChat() {
         const { chatWindow, chatBody, chatInput, chatToggleBtn, chatCloseBtn, chatMinimizeBtn, chatSendBtn } = state.elements;
-        
+
         state.isOpen = false;
         state.isMinimized = false;
 
-        // FIX: Move focus to toggle button BEFORE hiding
         chatToggleBtn?.focus();
-        
-        // Now hide the window
         chatWindow.classList.remove('active');
-        
-        // Disable focus via tabindex
         chatCloseBtn?.setAttribute('tabindex', '-1');
         chatMinimizeBtn?.setAttribute('tabindex', '-1');
         chatInput?.setAttribute('tabindex', '-1');
         chatSendBtn?.setAttribute('tabindex', '-1');
-        
-        // Set aria-hidden LAST (after focus is moved away)
         chatWindow.setAttribute('aria-hidden', 'true');
 
-        // Clear after animation
-        setTimeout(() => {
-            chatBody.innerHTML = '';
+        const timeoutId = setTimeout(() => {
+            // Clear messages safely
+            while (chatBody.firstChild) {
+                chatBody.removeChild(chatBody.firstChild);
+            }
             chatInput.value = '';
             chatToggleBtn.setAttribute('aria-expanded', 'false');
             chatToggleBtn.classList.remove('has-pending-chat');
             chatToggleBtn.setAttribute('aria-label', 'Open chat');
-            addBotMessage('👋 Hi there! How can I help you today?');
-        }, 300);
+            addBotMessage('Hi there! How can I help you today?');
+        }, CONFIG.closeAnimationDelay);
+        state.timeouts.push(timeoutId);
+        state.timeouts.push(timeoutId);
     }
 
     function sendMessage() {
@@ -178,12 +174,14 @@
         chatInput.value = '';
         showTyping();
 
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             hideTyping();
             const caseNum = Math.floor(10000 + Math.random() * 90000);
-            addBotMessage(`<strong>✓ Message received!</strong><br><br>Thanks for reaching out. I've created <strong>Case #${caseNum}</strong> in our system.<br><br>Our team will contact you shortly. For emergencies, please call <a href="tel:281-506-8826">281-506-8826</a>.`);
+            const message = 'Message received! Thanks for reaching out. I\'ve created Case #' + caseNum + ' in our system. Our team will contact you shortly. For emergencies, please call ' + CONFIG.phone + '.';
+            addBotMessage(message);
             scrollToBottom();
-        }, 1500);
+        }, CONFIG.typingDelay);
+        state.timeouts.push(timeoutId);
     }
 
     function addUserMessage(text) {
@@ -194,10 +192,10 @@
         scrollToBottom();
     }
 
-    function addBotMessage(html) {
+    function addBotMessage(text) {
         const div = document.createElement('div');
         div.className = 'message bot';
-        div.innerHTML = html;
+        div.textContent = text;
         state.elements.chatBody.appendChild(div);
     }
 
@@ -205,7 +203,12 @@
         const div = document.createElement('div');
         div.className = 'message bot typing-indicator';
         div.id = 'typingIndicator';
-        div.innerHTML = '<span></span><span></span><span></span>';
+
+        for (let i = 0; i < 3; i++) {
+            const span = document.createElement('span');
+            div.appendChild(span);
+        }
+
         state.elements.chatBody.appendChild(div);
         scrollToBottom();
     }
@@ -219,7 +222,39 @@
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    // Initialize
+    // ─── Cleanup / Destroy ──────────────────────────────────────
+    function destroy() {
+        if (!state.isInitialized) return;
+
+        // Clear timeouts
+        state.timeouts.forEach(id => clearTimeout(id));
+        state.timeouts = [];
+
+        // Remove event listeners
+        if (state.boundHandlers.chatToggleBtn) {
+            state.boundHandlers.chatToggleBtn.el?.removeEventListener('click', state.boundHandlers.chatToggleBtn.onToggle);
+        }
+        if (state.boundHandlers.chatMinimizeBtn) {
+            state.boundHandlers.chatMinimizeBtn.el?.removeEventListener('click', state.boundHandlers.chatMinimizeBtn.onMinimize);
+        }
+        if (state.boundHandlers.chatCloseBtn) {
+            state.boundHandlers.chatCloseBtn.el?.removeEventListener('click', state.boundHandlers.chatCloseBtn.onClose);
+        }
+        if (state.boundHandlers.chatInput) {
+            state.boundHandlers.chatInput.el?.removeEventListener('keypress', state.boundHandlers.chatInput.onKeypress);
+        }
+        if (state.boundHandlers.chatSendBtn) {
+            state.boundHandlers.chatSendBtn.el?.removeEventListener('click', state.boundHandlers.chatSendBtn.onSend);
+        }
+        if (state.boundHandlers.document) {
+            document.removeEventListener('keydown', state.boundHandlers.document.onEscape);
+        }
+
+        state.boundHandlers = {};
+        state.isInitialized = false;
+    }
+
+    // ─── Bootstrap ──────────────────────────────────────────────
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

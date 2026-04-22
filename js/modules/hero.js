@@ -1,33 +1,97 @@
 /* ============================================
-   CRYSTAL FACILITY SOLUTIONS - HERO MODULE
-   Interactive Hero Section with Particles & Effects
+   HERO MODULE - PRODUCTION READY
+   Crystal Facility Solutions
    ============================================ */
 
 (function() {
     'use strict';
 
-    // ============================================
-    // PARTICLE SYSTEM
-    // ============================================
+    // ─── Configuration ──────────────────────────────────────────
+    const CONFIG = {
+        particles: {
+            mobileCount: 25,
+            desktopCount: 50,
+            connectionDistance: 100,
+            connectionOpacity: 0.1,
+            mobileBreakpoint: 768
+        },
+        typing: {
+            typeSpeed: 150,
+            deleteSpeed: 100,
+            pauseBeforeDelete: 2000,
+            pauseBeforeType: 500,
+            startDelay: 2000
+        },
+        scroll: {
+            indicatorFadeThreshold: 100,
+            parallaxRate: 0.3,
+            throttleMs: 16
+        },
+        glow: {
+            lerpFactor: 0.1
+        }
+    };
+
+    // ─── Module State ───────────────────────────────────────────
+    const state = {
+        isInitialized: false,
+        prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        isTouchDevice: window.matchMedia('(pointer: coarse)').matches
+    };
+
+    // Store all cleanup functions
+    const cleanupRegistry = [];
+
+    function registerCleanup(fn) {
+        cleanupRegistry.push(fn);
+    }
+
+    function clearAllTimeouts() {
+        // Track highest timeout ID and clear all up to it
+        const highest = setTimeout(() => {}, 0);
+        for (let i = 0; i <= highest; i++) {
+            clearTimeout(i);
+        }
+    }
+
+    // ─── Initialization ─────────────────────────────────────────
+    function init() {
+        if (state.isInitialized) return;
+        if (!document.querySelector('.hero')) return;
+
+        initParticles();
+        initTypingAnimation();
+        initMouseGlow();
+        initButtonRipple();
+        initScrollIndicator();
+        initParallax();
+
+        state.isInitialized = true;
+    }
+
+    // ─── Particle System ────────────────────────────────────────
     function initParticles() {
         const canvas = document.getElementById('particleCanvas');
         if (!canvas) return;
-        
-        const ctx = canvas.getContext('2d');
+
+        const ctx = canvas.getContext('2d', { willReadFrequently: false });
         let particles = [];
-        let animationId;
-        let isActive = true;
-        
+        let animationId = null;
+        let isVisible = true;
+
+        const particleCount = window.innerWidth < CONFIG.particles.mobileBreakpoint
+            ? CONFIG.particles.mobileCount
+            : CONFIG.particles.desktopCount;
+
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        
+
         class Particle {
             constructor() {
                 this.reset();
             }
-            
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
@@ -37,15 +101,12 @@
                 this.opacity = Math.random() * 0.5 + 0.2;
                 this.color = Math.random() > 0.5 ? '124, 179, 66' : '156, 204, 101';
             }
-            
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
-            
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -53,223 +114,270 @@
                 ctx.fill();
             }
         }
-        
-        function init() {
-            resize();
-            const particleCount = window.innerWidth < 768 ? 25 : 50;
+
+        function createParticles() {
             particles = [];
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
         }
-        
-        function animate() {
-            if (!isActive) return;
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Update and draw particles
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            
-            // Draw connections
-            particles.forEach((p1, i) => {
-                particles.slice(i + 1).forEach(p2 => {
-                    const dx = p1.x - p2.x;
-                    const dy = p1.y - p2.y;
+
+        function drawConnections() {
+            const maxDist = CONFIG.particles.connectionDistance;
+            const maxOpacity = CONFIG.particles.connectionOpacity;
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
+
+                    if (distance < maxDist) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(124, 179, 66, ${0.1 * (1 - distance / 100)})`;
+                        ctx.strokeStyle = `rgba(124, 179, 66, ${maxOpacity * (1 - distance / maxDist)})`;
                         ctx.lineWidth = 0.5;
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
                     }
-                });
-            });
-            
+                }
+            }
+        }
+
+        function animate() {
+            if (!isVisible) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            drawConnections();
             animationId = requestAnimationFrame(animate);
         }
-        
-        // Visibility check
-        document.addEventListener('visibilitychange', () => {
-            isActive = !document.hidden;
-            if (isActive) animate();
-        });
-        
-        window.addEventListener('resize', () => {
+
+        function onVisibilityChange() {
+            isVisible = document.visibilityState === 'visible';
+            if (isVisible && !animationId) {
+                animate();
+            }
+        }
+
+        function onResize() {
             resize();
-            init();
-        });
-        
-        init();
+            createParticles();
+        }
+
+        resize();
+        createParticles();
         animate();
+
+        document.addEventListener('visibilitychange', onVisibilityChange);
+        window.addEventListener('resize', onResize);
+
+        registerCleanup(() => {
+            isVisible = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            window.removeEventListener('resize', onResize);
+        });
     }
 
-    // ============================================
-    // TYPING ANIMATION
-    // ============================================
+    // ─── Typing Animation ───────────────────────────────────────
     function initTypingAnimation() {
         const typingElement = document.querySelector('.typing-text');
         if (!typingElement) return;
-        
-        const text = typingElement.dataset.text;
+
+        const text = typingElement.dataset.text || '';
+        if (!text) return;
+
         let index = 0;
         let isDeleting = false;
-        
+        let timeoutId = null;
+        let isRunning = true;
+
         function type() {
+            if (!isRunning) return;
+
             if (!isDeleting && index <= text.length) {
                 typingElement.textContent = text.slice(0, index++);
-                setTimeout(type, 150);
+                timeoutId = setTimeout(type, CONFIG.typing.typeSpeed);
             } else if (isDeleting && index > 0) {
                 typingElement.textContent = text.slice(0, --index);
-                setTimeout(type, 100);
+                timeoutId = setTimeout(type, CONFIG.typing.deleteSpeed);
             } else {
                 isDeleting = !isDeleting;
-                setTimeout(type, isDeleting ? 2000 : 500);
+                timeoutId = setTimeout(type, isDeleting
+                    ? CONFIG.typing.pauseBeforeDelete
+                    : CONFIG.typing.pauseBeforeType);
             }
         }
-        
-        setTimeout(type, 2000);
+
+        timeoutId = setTimeout(type, CONFIG.typing.startDelay);
+
+        registerCleanup(() => {
+            isRunning = false;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+        });
     }
 
-    // ============================================
-    // MOUSE GLOW EFFECT
-    // ============================================
+    // ─── Mouse Glow Effect ──────────────────────────────────────
     function initMouseGlow() {
         const glow = document.getElementById('mouseGlow');
         const hero = document.querySelector('.hero');
-        if (!glow || !hero || window.matchMedia('(pointer: coarse)').matches) return;
-        
-        let rafId;
-        let mouseX = 0;
-        let mouseY = 0;
-        let currentX = 0;
-        let currentY = 0;
-        
-        hero.addEventListener('mousemove', (e) => {
+        if (!glow || !hero || state.isTouchDevice) return;
+
+        let rafId = null;
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+        let isActive = true;
+
+        function onMouseMove(e) {
             const rect = hero.getBoundingClientRect();
             mouseX = e.clientX - rect.left;
             mouseY = e.clientY - rect.top;
-        });
-        
+        }
+
+        function onMouseLeave() {
+            glow.style.opacity = '0';
+        }
+
+        function onMouseEnter() {
+            glow.style.opacity = '1';
+        }
+
         function animate() {
-            currentX += (mouseX - currentX) * 0.1;
-            currentY += (mouseY - currentY) * 0.1;
-            
+            if (!isActive) return;
+            currentX += (mouseX - currentX) * CONFIG.glow.lerpFactor;
+            currentY += (mouseY - currentY) * CONFIG.glow.lerpFactor;
             glow.style.left = currentX + 'px';
             glow.style.top = currentY + 'px';
-            
             rafId = requestAnimationFrame(animate);
         }
-        
-        animate();
-        
-        hero.addEventListener('mouseleave', () => {
-            glow.style.opacity = '0';
-        });
-        
-        hero.addEventListener('mouseenter', () => {
-            glow.style.opacity = '1';
+
+        hero.addEventListener('mousemove', onMouseMove);
+        hero.addEventListener('mouseleave', onMouseLeave);
+        hero.addEventListener('mouseenter', onMouseEnter);
+
+        if (!state.prefersReducedMotion) {
+            animate();
+        }
+
+        registerCleanup(() => {
+            isActive = false;
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            hero.removeEventListener('mousemove', onMouseMove);
+            hero.removeEventListener('mouseleave', onMouseLeave);
+            hero.removeEventListener('mouseenter', onMouseEnter);
         });
     }
 
-    // ============================================
-    // BUTTON RIPPLE EFFECT
-    // ============================================
+    // ─── Button Ripple Effect ───────────────────────────────────
     function initButtonRipple() {
         const btn = document.querySelector('.btn-hero-primary');
         if (!btn) return;
-        
+
         const ripple = btn.querySelector('.btn-ripple');
         if (!ripple) return;
-        
-        btn.addEventListener('mousemove', (e) => {
+
+        function onMouseMove(e) {
             const rect = btn.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
-            
             ripple.style.setProperty('--x', x + '%');
             ripple.style.setProperty('--y', y + '%');
+        }
+
+        btn.addEventListener('mousemove', onMouseMove);
+
+        registerCleanup(() => {
+            btn.removeEventListener('mousemove', onMouseMove);
         });
     }
 
-    // ============================================
-    // SCROLL INDICATOR
-    // ============================================
+    // ─── Scroll Indicator ───────────────────────────────────────
     function initScrollIndicator() {
         const indicator = document.querySelector('.scroll-indicator');
         if (!indicator) return;
-        
-        indicator.addEventListener('click', () => {
+
+        function onClick() {
             const services = document.getElementById('services');
             if (services) {
                 services.scrollIntoView({ behavior: 'smooth' });
             }
-        });
-        
+        }
+
         let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrolled = window.scrollY > 100;
-                    indicator.style.opacity = scrolled ? '0' : '1';
-                    indicator.style.pointerEvents = scrolled ? 'none' : 'auto';
-                    ticking = false;
-                });
-                ticking = true;
-            }
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                const scrolled = window.scrollY > CONFIG.scroll.indicatorFadeThreshold;
+                indicator.style.opacity = scrolled ? '0' : '1';
+                indicator.style.pointerEvents = scrolled ? 'none' : 'auto';
+                ticking = false;
+            });
+        }
+
+        indicator.addEventListener('click', onClick);
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        registerCleanup(() => {
+            indicator.removeEventListener('click', onClick);
+            window.removeEventListener('scroll', onScroll);
         });
     }
 
-    // ============================================
-    // PARALLAX EFFECT
-    // ============================================
+    // ─── Parallax Effect ────────────────────────────────────────
     function initParallax() {
         const shapes = document.querySelectorAll('.shape');
-        if (!shapes.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        
+        if (!shapes.length || state.prefersReducedMotion) return;
+
         let ticking = false;
-        
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrolled = window.pageYOffset;
-                    const rate = scrolled * 0.3;
-                    
-                    shapes.forEach((shape, index) => {
-                        const speed = (index + 1) * 0.1;
-                        shape.style.transform = `translateY(${rate * speed}px)`;
-                    });
-                    
-                    ticking = false;
+
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * CONFIG.scroll.parallaxRate;
+                shapes.forEach((shape, index) => {
+                    const speed = (index + 1) * 0.1;
+                    shape.style.transform = `translateY(${rate * speed}px)`;
                 });
-                ticking = true;
-            }
+                ticking = false;
+            });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        registerCleanup(() => {
+            window.removeEventListener('scroll', onScroll);
         });
     }
 
-    // ============================================
-    // INITIALIZATION
-    // ============================================
-    function init() {
-        setTimeout(() => {
-            initParticles();
-            initTypingAnimation();
-            initMouseGlow();
-            initButtonRipple();
-            initScrollIndicator();
-            initParallax();
-        }, 100);
+    // ─── Cleanup / Destroy ──────────────────────────────────────
+    function destroy() {
+        if (!state.isInitialized) return;
+
+        cleanupRegistry.forEach(fn => {
+            try { fn(); } catch (e) { /* ignore cleanup errors */ }
+        });
+        cleanupRegistry.length = 0;
+
+        state.isInitialized = false;
     }
 
+    // ─── Bootstrap ──────────────────────────────────────────────
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
+
 })();

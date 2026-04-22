@@ -1,0 +1,321 @@
+/* ============================================
+   CRYSTAL FACILITY SOLUTIONS - RESPONSIVE
+   Global Media Queries & Cross-Cutting Patterns
+   ============================================ */
+
+/* ============================================
+   LARGE SCREENS (1200px and below)
+   ============================================ */
+@media (max-width: 1200px) {
+    :root {
+        --container-padding: var(--spacing-6);
+    }
+}
+
+/* ============================================
+   TABLET (992px and below)
+   ============================================ */
+@media (max-width: 992px) {
+    .section {
+        padding-block: var(--spacing-16);
+    }
+
+    .section-header h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+/* ============================================
+   MOBILE (768px and below)
+   ============================================ */
+@media (max-width: 768px) {
+    :root {
+        --container-padding: var(--spacing-4);
+    }
+
+    .section {
+        padding-block: var(--spacing-12);
+    }
+
+    .section-header {
+        margin-bottom: var(--spacing-10);
+    }
+
+    .section-header h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .section-header p {
+        font-size: var(--font-size-base);
+    }
+
+    /* Grid collapse */
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Typography scale */
+    .font-size-3xl {
+        font-size: var(--font-size-2xl);
+    }
+
+    .font-size-4xl {
+        font-size: var(--font-size-3xl);
+    }
+
+    .font-size-5xl {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+/* ============================================
+   SMALL MOBILE (480px and below)
+   ============================================ */
+@media (max-width: 480px) {
+    .section {
+        padding-block: var(--spacing-10);
+    }
+
+    .section-header h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .section-header p {
+        font-size: var(--font-size-base);
+    }
+
+    /* Button full width */
+    .btn:not(.btn-sm):not(.btn-icon-only) {
+        width: 100%;
+    }
+
+    /* Form inputs prevent iOS zoom */
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+    /* Reduced spacing */
+    .gap-8 {
+        gap: var(--spacing-4);
+    }
+
+    .gap-6 {
+        gap: var(--spacing-3);
+    }
+}
+
+/* ============================================
+   VERY SMALL DEVICES (360px and below)
+   ============================================ */
+@media (max-width: 360px) {
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: var(--spacing-2) var(--spacing-4);
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .section {
+        padding-block: var(--spacing-8);
+    }
+
+    .hero {
+        min-height: auto;
+        padding-block: calc(var(--nav-height) + var(--spacing-4)) var(--spacing-8);
+    }
+
+    .chat-window {
+        height: 80vh;
+        max-height: 350px;
+    }
+}
+
+/* ============================================
+   HIGH RESOLUTION SCREENS (Retina/4K)
+   ============================================ */
+@media (min-width: 1920px) {
+    .container {
+        max-width: var(--container-max-width-lg);
+    }
+
+    .nav-content {
+        max-width: var(--container-max-width-lg);
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .nav,
+    .chat-widget,
+    .hero-buttons,
+    .mobile-menu-btn,
+    .mobile-nav,
+    .back-to-top,
+    .scroll-indicator,
+    .video-overlay,
+    .bg-gradient-mesh,
+    .bg-noise,
+    .bg-glow,
+    .floating-quotes,
+    .hero-shapes,
+    .services-bg-layers,
+    .about-shapes,
+    .values-decoration,
+    .values-shapes,
+    .footer-bg,
+    .footer-particles,
+    .contact-video-bg,
+    .contact-particles,
+    .light-beam,
+    .floating-orb,
+    .ambient-glow,
+    .mouse-glow,
+    .card-stack,
+    .bundle-preview,
+    .marquee-nav-btn {
+        display: none !important;
+    }
+
+    .section {
+        padding-block: var(--spacing-6);
+        page-break-inside: avoid;
+        background: var(--white) !important;
+        color: var(--dark) !important;
+    }
+
+    body {
+        background: var(--white) !important;
+        color: var(--dark) !important;
+    }
+
+    .hero {
+        min-height: auto;
+        padding-block: var(--spacing-8);
+        background: var(--white) !important;
+    }
+
+    .hero-title,
+    .hero-description,
+    .header-title,
+    .section-header h2 {
+        color: var(--dark) !important;
+        -webkit-text-fill-color: var(--dark) !important;
+    }
+
+    a {
+        text-decoration: none !important;
+        color: var(--dark) !important;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: var(--font-size-xs);
+        color: var(--gray);
+    }
+
+    .form-glass,
+    .contact-info,
+    .map-card {
+        box-shadow: none !important;
+        border: 1px solid var(--gray-pale) !important;
+        background: var(--white) !important;
+    }
+
+    .testimonial-card,
+    .service-card-3d,
+    .value-card,
+    .story-card,
+    .stat-card,
+    .excellence-card {
+        box-shadow: none !important;
+        border: 1px solid var(--gray-pale) !important;
+        break-inside: avoid;
+    }
+
+    .card-back,
+    .value-expanded,
+    .service-expanded {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION (Global)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .parallax,
+    .particle-canvas,
+    .services-particles-canvas,
+    .contact-particles,
+    .footer-particles {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE (Global)
+   ============================================ */
+@media (prefers-contrast: high) {
+    :root {
+        --focus-ring: 0 0 0 4px var(--cfs-green);
+        --shadow-sm: 0 2px 0 0 rgba(0,0,0,0.3);
+        --shadow-md: 0 4px 0 0 rgba(0,0,0,0.3);
+    }
+
+    .btn:focus-visible,
+    .modal-close:focus-visible,
+    .dot:focus-visible,
+    .chat-button:focus-visible,
+    .filter-btn:focus-visible,
+    .nav-btn:focus-visible,
+    .size-option:focus-visible,
+    .bundle-checkbox:focus-within {
+        outline: 3px solid currentColor;
+        outline-offset: 2px;
+        box-shadow: none;
+    }
+
+    .service-card-3d:focus-visible,
+    .value-card:focus-visible,
+    .story-card:focus-visible,
+    .stat-card:focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 4px;
+    }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Future-proofing)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    /* Uncomment when ready for full dark mode
+    img {
+        opacity: 0.9;
+    }
+    */
+}

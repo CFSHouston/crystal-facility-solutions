@@ -1,10 +1,12 @@
 /* ============================================
-   SERVICES MODULE - COMPLETE FILE
+   SERVICES MODULE - PRODUCTION READY
+   Crystal Facility Solutions
    ============================================ */
 
 (function() {
     'use strict';
 
+    // ─── Configuration ──────────────────────────────────────────
     const CONFIG = {
         tiltMaxAngle: 8,
         tiltPerspective: 1000,
@@ -14,9 +16,20 @@
         flipCooldown: 350,
         emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         phoneRegex: /^[\d\s\-\+\(\)]{10,}$/,
-        nameRegex: /^[a-zA-Z\s\-']{2,50}$/
+        nameRegex: /^[a-zA-Z\s\-'"]{2,50}$/,
+        emails: {
+            default: 'info@cfshouston.com',
+            cleaning: 'cleaning@cfshouston.com',
+            transportation: 'transportation@cfshouston.com'
+        },
+        phone: '281-506-8826',
+        emailjs: {
+            serviceId: 'default_service',
+            templateId: 'template_jvn3yzi'
+        }
     };
 
+    // ─── Utilities ──────────────────────────────────────────────
     const utils = {
         throttle: (func, limit) => {
             let inThrottle;
@@ -24,7 +37,7 @@
                 if (!inThrottle) {
                     func.apply(this, args);
                     inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
+                    setTimeout(() => { inThrottle = false; }, limit);
                 }
             };
         },
@@ -45,14 +58,32 @@
         prefersReducedMotion: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
     };
 
-    // Particle System
+    // ─── Input Sanitization ─────────────────────────────────────
+    function sanitizeInput(input) {
+        if (typeof input !== 'string') return '';
+        return input
+            .replace(/[<>]/g, '')
+            .replace(/javascript:/gi, '')
+            .replace(/on\w+=/gi, '')
+            .trim();
+    }
+
+    function sanitizeForDisplay(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ─── Particle System ────────────────────────────────────────
     class ParticleSystem {
         constructor(canvas) {
             this.canvas = canvas;
-            this.ctx = canvas.getContext('2d');
+            this.ctx = canvas.getContext('2d', { willReadFrequently: false });
             this.particles = [];
             this.animationId = null;
             this.isActive = true;
+            this.resizeHandler = null;
+            this.visibilityHandler = null;
             this.init();
         }
 
@@ -60,17 +91,23 @@
             this.resize();
             this.createParticles();
             this.animate();
-            window.addEventListener('resize', utils.debounce(() => this.resize(), 250));
-            document.addEventListener('visibilitychange', () => {
+
+            this.resizeHandler = utils.debounce(() => this.resize(), 250);
+            this.visibilityHandler = () => {
                 this.isActive = document.visibilityState === 'visible';
                 if (this.isActive) this.animate();
-            });
+            };
+
+            window.addEventListener('resize', this.resizeHandler);
+            document.addEventListener('visibilitychange', this.visibilityHandler);
         }
 
         resize() {
             const parent = this.canvas.parentElement;
-            this.canvas.width = parent.offsetWidth;
-            this.canvas.height = parent.offsetHeight;
+            if (parent) {
+                this.canvas.width = parent.offsetWidth;
+                this.canvas.height = parent.offsetHeight;
+            }
         }
 
         createParticles() {
@@ -130,11 +167,20 @@
 
         destroy() {
             this.isActive = false;
-            cancelAnimationFrame(this.animationId);
+            if (this.animationId) {
+                cancelAnimationFrame(this.animationId);
+                this.animationId = null;
+            }
+            if (this.resizeHandler) {
+                window.removeEventListener('resize', this.resizeHandler);
+            }
+            if (this.visibilityHandler) {
+                document.removeEventListener('visibilitychange', this.visibilityHandler);
+            }
         }
     }
 
-    // Validation Helper
+    // ─── Form Validator ─────────────────────────────────────────
     class FormValidator {
         static validateEmail(email) {
             return CONFIG.emailRegex.test(email);
@@ -153,21 +199,21 @@
             if (typeof digits !== 'string') {
                 digits = String(digits).replace(/\D/g, '');
             }
-            
+
             if (digits.length === 0) return '';
             if (digits.length <= 3) return digits;
             if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
             if (digits.length <= 10) return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-            
+
             if (digits.length === 11 && digits[0] === '1') {
                 return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
             }
-            
+
             if (digits.length > 11) {
                 digits = digits.slice(0, 10);
                 return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
             }
-            
+
             return digits;
         }
 
@@ -211,7 +257,7 @@
         }
     }
 
-    // Main Services Module
+    // ─── Services Theater ───────────────────────────────────────
     class ServicesTheater {
         constructor() {
             this.isTouch = utils.isTouchDevice();
@@ -224,6 +270,10 @@
             this.selectedService = null;
             this.flipCooldown = false;
             this.lastFlipTime = 0;
+            this.timeouts = [];
+            this.boundHandlers = {};
+            this.particleSystem = null;
+            this.observer = null;
 
             this.init();
         }
@@ -268,16 +318,23 @@
         setup3DTilt() {
             this.cards.forEach(card => {
                 const inner = card.querySelector('.card-3d-inner');
+                if (!inner) return;
 
-                card.addEventListener('mousemove', utils.throttle((e) => {
+                const onMouseMove = utils.throttle((e) => {
                     if (card.classList.contains('flipped')) return;
                     this.handleTilt(e, card, inner);
-                }, 16));
+                }, 16);
 
-                card.addEventListener('mouseleave', () => {
+                const onMouseLeave = () => {
                     if (card.classList.contains('flipped')) return;
                     this.resetTilt(card, inner);
-                });
+                };
+
+                card.addEventListener('mousemove', onMouseMove);
+                card.addEventListener('mouseleave', onMouseLeave);
+
+                if (!this.boundHandlers.tilt) this.boundHandlers.tilt = [];
+                this.boundHandlers.tilt.push({ card, onMouseMove, onMouseLeave });
             });
         }
 
@@ -285,20 +342,13 @@
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-
             const rotateX = ((y - centerY) / centerY) * -CONFIG.tiltMaxAngle;
             const rotateY = ((x - centerX) / centerX) * CONFIG.tiltMaxAngle;
 
             if (!card.classList.contains('flipped')) {
-                inner.style.transform = `
-                    perspective(${CONFIG.tiltPerspective}px)
-                    rotateX(${rotateX}deg)
-                    rotateY(${rotateY}deg)
-                    translateZ(20px)
-                `;
+                inner.style.transform = `perspective(${CONFIG.tiltPerspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
             }
         }
 
@@ -309,159 +359,221 @@
         }
 
         setupEventListeners() {
+            const self = this;
+
+            // Card click handlers
             this.cards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('.btn-quick-quote') || 
-                        e.target.closest('.btn-learn-more') || 
+                const onClick = (e) => {
+                    if (e.target.closest('.btn-quick-quote') ||
+                        e.target.closest('.btn-learn-more') ||
                         e.target.closest('.btn-close-back')) {
                         return;
                     }
-
                     const now = Date.now();
-                    if (this.flipCooldown || (now - this.lastFlipTime < CONFIG.flipCooldown)) {
-                        return;
-                    }
+                    if (self.flipCooldown || (now - self.lastFlipTime < CONFIG.flipCooldown)) return;
+                    self.handleCardClick(e, card);
+                    self.lastFlipTime = now;
+                };
 
-                    this.handleCardClick(e, card);
-                    this.lastFlipTime = now;
-                });
-
-                card.addEventListener('keydown', (e) => {
+                const onKeyDown = (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        this.handleCardClick(e, card);
+                        self.handleCardClick(e, card);
                     }
-                });
+                };
+
+                card.addEventListener('click', onClick);
+                card.addEventListener('keydown', onKeyDown);
+
+                if (!this.boundHandlers.cards) this.boundHandlers.cards = [];
+                this.boundHandlers.cards.push({ card, onClick, onKeyDown });
             });
 
+            // Filter buttons
             this.filters.forEach(btn => {
-                btn.addEventListener('click', () => this.handleFilter(btn));
+                const onClick = () => this.handleFilter(btn);
+                btn.addEventListener('click', onClick);
+                if (!this.boundHandlers.filters) this.boundHandlers.filters = [];
+                this.boundHandlers.filters.push({ btn, onClick });
             });
 
+            // Quick quote buttons
             document.querySelectorAll('.btn-quick-quote').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                const onClick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                     const service = btn.dataset.service;
-                    if (service) {
-                        this.openDrawer(service);
-                    }
-                }, true);
+                    if (service) this.openDrawer(service);
+                };
+                btn.addEventListener('click', onClick, true);
+                if (!this.boundHandlers.quoteBtns) this.boundHandlers.quoteBtns = [];
+                this.boundHandlers.quoteBtns.push({ btn, onClick });
             });
 
+            // Close back buttons
             document.querySelectorAll('.btn-close-back').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                const onClick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     const card = btn.closest('.service-card-3d');
                     this.flipCard(card, false);
-                });
+                };
+                btn.addEventListener('click', onClick);
+                if (!this.boundHandlers.closeBtns) this.boundHandlers.closeBtns = [];
+                this.boundHandlers.closeBtns.push({ btn, onClick });
             });
 
+            // Bundle button
             const bundleBtn = document.getElementById('btnOpenBundle');
             if (bundleBtn) {
-                bundleBtn.addEventListener('click', (e) => {
+                const onClick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     this.openDrawer('bundle');
-                });
+                };
+                bundleBtn.addEventListener('click', onClick);
+                this.boundHandlers.bundleBtn = { bundleBtn, onClick };
             }
 
+            // Drawer events
             if (this.drawer) {
-                const closeBtn = this.drawer.querySelector('.btn-close-drawer');
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => this.closeDrawer());
-                }
-
-                const backdrop = this.drawer.querySelector('.drawer-backdrop');
-                if (backdrop) {
-                    backdrop.addEventListener('click', () => this.closeDrawer());
-                }
-
-                const nextBtn = this.drawer.querySelector('.btn-next-step');
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', () => this.nextStep());
-                }
-
-                const prevBtn = this.drawer.querySelector('.btn-prev-step');
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', () => this.prevStep());
-                }
-
-                this.drawer.querySelectorAll('.size-option').forEach(option => {
-                    option.addEventListener('click', () => this.selectSize(option));
-                    option.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            this.selectSize(option);
-                        }
-                    });
-                });
-
-                const bundleCheckboxes = this.drawer.querySelectorAll('input[name="bundle_services"]');
-                bundleCheckboxes.forEach(cb => {
-                    cb.addEventListener('change', () => {
-                        this.updateBundlePropertySize();
-                    });
-                });
-
-                const form = this.drawer.querySelector('#quickQuoteForm');
-                if (form) {
-                    form.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        this.submitQuote();
-                    });
-                }
+                this.setupDrawerListeners();
             }
 
-            document.addEventListener('keydown', (e) => {
+            // Global Escape key
+            const onEscape = (e) => {
                 if (e.key === 'Escape') {
                     if (this.drawer?.classList.contains('active')) {
                         this.closeDrawer();
                     }
                     this.cards.forEach(c => this.flipCard(c, false));
                 }
-            });
+            };
+            document.addEventListener('keydown', onEscape);
+            this.boundHandlers.escape = onEscape;
 
+            // Learn more buttons
             document.querySelectorAll('.btn-learn-more').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                const onClick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {
                         contactSection.scrollIntoView({ behavior: 'smooth' });
                     }
-                });
+                };
+                btn.addEventListener('click', onClick);
+                if (!this.boundHandlers.learnMore) this.boundHandlers.learnMore = [];
+                this.boundHandlers.learnMore.push({ btn, onClick });
             });
         }
 
-        setupValidationListeners() {
-            const emailField = document.getElementById('quoteEmail');
-            if (emailField) {
-                emailField.addEventListener('blur', () => {
-                    const value = emailField.value.trim();
-                    if (value && !FormValidator.validateEmail(value)) {
-                        FormValidator.showError('email', 'Please enter a valid email address');
-                    } else if (value) {
-                        FormValidator.clearError('email');
-                    }
-                });
-                emailField.addEventListener('input', () => FormValidator.clearError('email'));
+        setupDrawerListeners() {
+            const closeBtn = this.drawer.querySelector('.btn-close-drawer');
+            if (closeBtn) {
+                const onClick = () => this.closeDrawer();
+                closeBtn.addEventListener('click', onClick);
+                if (!this.boundHandlers.drawer) this.boundHandlers.drawer = [];
+                this.boundHandlers.drawer.push({ el: closeBtn, onClick });
             }
 
+            const backdrop = this.drawer.querySelector('.drawer-backdrop');
+            if (backdrop) {
+                const onClick = () => this.closeDrawer();
+                backdrop.addEventListener('click', onClick);
+                this.boundHandlers.drawer.push({ el: backdrop, onClick });
+            }
+
+            const nextBtn = this.drawer.querySelector('.btn-next-step');
+            if (nextBtn) {
+                const onClick = () => this.nextStep();
+                nextBtn.addEventListener('click', onClick);
+                this.boundHandlers.drawer.push({ el: nextBtn, onClick });
+            }
+
+            const prevBtn = this.drawer.querySelector('.btn-prev-step');
+            if (prevBtn) {
+                const onClick = () => this.prevStep();
+                prevBtn.addEventListener('click', onClick);
+                this.boundHandlers.drawer.push({ el: prevBtn, onClick });
+            }
+
+            this.drawer.querySelectorAll('.size-option').forEach(option => {
+                const onClick = () => this.selectSize(option);
+                const onKeyDown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.selectSize(option);
+                    }
+                };
+                option.addEventListener('click', onClick);
+                option.addEventListener('keydown', onKeyDown);
+                if (!this.boundHandlers.sizeOptions) this.boundHandlers.sizeOptions = [];
+                this.boundHandlers.sizeOptions.push({ option, onClick, onKeyDown });
+            });
+
+            const bundleCheckboxes = this.drawer.querySelectorAll('input[name="bundle_services"]');
+            bundleCheckboxes.forEach(cb => {
+                const onChange = () => this.updateBundlePropertySize();
+                cb.addEventListener('change', onChange);
+                if (!this.boundHandlers.bundleCheckboxes) this.boundHandlers.bundleCheckboxes = [];
+                this.boundHandlers.bundleCheckboxes.push({ cb, onChange });
+            });
+
+            const form = this.drawer.querySelector('#quickQuoteForm');
+            if (form) {
+                const onSubmit = (e) => {
+                    e.preventDefault();
+                    this.submitQuote();
+                };
+                form.addEventListener('submit', onSubmit);
+                this.boundHandlers.form = { form, onSubmit };
+            }
+        }
+
+        setupValidationListeners() {
+            const fields = [
+                { id: 'quoteEmail', validator: FormValidator.validateEmail, errorMsg: 'Please enter a valid email address' },
+                { id: 'quoteFirstName', validator: FormValidator.validateName, errorMsg: 'Please enter a valid name (letters only, min 2 characters)' },
+                { id: 'quoteLastName', validator: FormValidator.validateName, errorMsg: 'Please enter a valid name (letters only, min 2 characters)' }
+            ];
+
+            fields.forEach(({ id, validator, errorMsg }) => {
+                const field = document.getElementById(id);
+                if (!field) return;
+
+                const onBlur = () => {
+                    const value = field.value.trim();
+                    if (value && !validator(value)) {
+                        FormValidator.showError(id.replace('quote', '').toLowerCase(), errorMsg);
+                    } else if (value) {
+                        FormValidator.clearError(id.replace('quote', '').toLowerCase());
+                    }
+                };
+
+                const onInput = () => {
+                    FormValidator.clearError(id.replace('quote', '').toLowerCase());
+                };
+
+                field.addEventListener('blur', onBlur);
+                field.addEventListener('input', onInput);
+
+                if (!this.boundHandlers.validation) this.boundHandlers.validation = [];
+                this.boundHandlers.validation.push({ field, onBlur, onInput });
+            });
+
+            // Phone field with formatting
             const phoneField = document.getElementById('quotePhone');
             if (phoneField) {
-                phoneField.addEventListener('input', (e) => {
+                const onInput = (e) => {
                     let digits = e.target.value.replace(/\D/g, '');
-                    if (digits.length > 11) {
-                        digits = digits.slice(0, 11);
-                    }
+                    if (digits.length > 11) digits = digits.slice(0, 11);
                     e.target.value = FormValidator.formatPhone(digits);
                     FormValidator.clearError('phone');
-                });
+                };
 
-                phoneField.addEventListener('blur', () => {
+                const onBlur = () => {
                     const value = phoneField.value.trim();
                     const digits = value.replace(/\D/g, '');
                     if (value) {
@@ -471,211 +583,193 @@
                             FormValidator.clearError('phone');
                         }
                     }
-                });
-            }
+                };
 
-            const firstNameField = document.getElementById('quoteFirstName');
-            if (firstNameField) {
-                firstNameField.addEventListener('blur', () => {
-                    const value = firstNameField.value.trim();
-                    if (value && !FormValidator.validateName(value)) {
-                        FormValidator.showError('firstName', 'Please enter a valid name (letters only, min 2 characters)');
-                    } else if (value) {
-                        FormValidator.clearError('firstName');
-                    }
-                });
-                firstNameField.addEventListener('input', () => FormValidator.clearError('firstName'));
-            }
-
-            const lastNameField = document.getElementById('quoteLastName');
-            if (lastNameField) {
-                lastNameField.addEventListener('blur', () => {
-                    const value = lastNameField.value.trim();
-                    if (value && !FormValidator.validateName(value)) {
-                        FormValidator.showError('lastName', 'Please enter a valid name (letters only, min 2 characters)');
-                    } else if (value) {
-                        FormValidator.clearError('lastName');
-                    }
-                });
-                lastNameField.addEventListener('input', () => FormValidator.clearError('lastName'));
+                phoneField.addEventListener('input', onInput);
+                phoneField.addEventListener('blur', onBlur);
+                this.boundHandlers.validation.push({ field: phoneField, onBlur, onInput });
             }
         }
 
         setupTransportationValidation() {
-            const busType = document.getElementById('busType');
-            const numBuses = document.getElementById('numBuses');
-            const numPassengers = document.getElementById('numPassengers');
-            const pickupDate = document.getElementById('pickupDate');
-            const pickupTime = document.getElementById('pickupTime');
-            const dropoffTime = document.getElementById('dropoffTime');
-            const tripType = document.getElementById('tripType');
-            const pickupLocation = document.getElementById('pickupLocation');
-            const dropoffLocation = document.getElementById('dropoffLocation');
-            const dropoffDate = document.getElementById('dropoffDate');
+            const fields = {
+                busType: { el: document.getElementById('busType'), validate: (v) => !!v, error: 'Please select a bus type' },
+                numBuses: { el: document.getElementById('numBuses'), min: 1, max: 25, error: 'Please enter number of buses (1-25)', maxError: 'Maximum 25 buses allowed' },
+                numPassengers: { el: document.getElementById('numPassengers'), min: 1, max: 1000, error: 'Please enter number of passengers (1-1000)', maxError: 'Maximum 1000 passengers allowed' },
+                pickupDate: { el: document.getElementById('pickupDate') },
+                pickupTime: { el: document.getElementById('pickupTime') },
+                dropoffTime: { el: document.getElementById('dropoffTime') },
+                tripType: { el: document.getElementById('tripType'), validate: (v) => !!v, error: 'Please select trip type' },
+                pickupLocation: { el: document.getElementById('pickupLocation'), minLen: 5, error: 'Please enter pick-up location', shortError: 'Please enter a complete address' },
+                dropoffLocation: { el: document.getElementById('dropoffLocation'), minLen: 5, error: 'Please enter drop-off location', shortError: 'Please enter a complete address' },
+                dropoffDate: { el: document.getElementById('dropoffDate') }
+            };
 
             const now = new Date();
             const today = now.toISOString().split('T')[0];
-            
-            if (pickupDate) {
-                pickupDate.setAttribute('min', today);
+            if (fields.pickupDate.el) {
+                fields.pickupDate.el.setAttribute('min', today);
             }
 
-            if (busType) {
-                busType.addEventListener('change', () => {
-                    if (busType.value) {
+            // Set up min date for dropoff based on pickup
+            if (fields.pickupDate.el && fields.dropoffDate.el) {
+                const onPickupChange = () => {
+                    fields.dropoffDate.el.setAttribute('min', fields.pickupDate.el.value);
+                };
+                fields.pickupDate.el.addEventListener('change', onPickupChange);
+                if (!this.boundHandlers.transport) this.boundHandlers.transport = [];
+                this.boundHandlers.transport.push({ el: fields.pickupDate.el, onPickupChange });
+            }
+
+            // Bus type
+            if (fields.busType.el) {
+                const onChange = () => {
+                    if (fields.busType.el.value) {
                         FormValidator.clearError('busType');
-                        busType.classList.add('valid');
+                        fields.busType.el.classList.add('valid');
                     }
-                });
-                busType.addEventListener('blur', () => {
-                    if (!busType.value) {
-                        FormValidator.showError('busType', 'Please select a bus type');
+                };
+                const onBlur = () => {
+                    if (!fields.busType.el.value) {
+                        FormValidator.showError('busType', fields.busType.error);
                     }
-                });
+                };
+                fields.busType.el.addEventListener('change', onChange);
+                fields.busType.el.addEventListener('blur', onBlur);
+                this.boundHandlers.transport.push(
+                    { el: fields.busType.el, onChange },
+                    { el: fields.busType.el, onBlur }
+                );
             }
 
-            if (numBuses) {
-                numBuses.addEventListener('input', (e) => {
+            // Numeric fields with min/max
+            ['numBuses', 'numPassengers'].forEach(key => {
+                const config = fields[key];
+                if (!config.el) return;
+
+                const onInput = (e) => {
                     let value = parseInt(e.target.value) || 0;
-                    if (value > 25) e.target.value = 25;
+                    if (value > config.max) e.target.value = config.max;
                     if (value < 1 && e.target.value !== '') e.target.value = 1;
-                    if (value >= 1 && value <= 25) {
-                        FormValidator.clearError('numBuses');
-                        numBuses.classList.add('valid');
+                    if (value >= config.min && value <= config.max) {
+                        FormValidator.clearError(key);
+                        config.el.classList.add('valid');
                     }
-                });
-                numBuses.addEventListener('blur', () => {
-                    const value = parseInt(numBuses.value) || 0;
-                    if (!value || value < 1) {
-                        FormValidator.showError('numBuses', 'Please enter number of buses (1-25)');
-                    } else if (value > 25) {
-                        FormValidator.showError('numBuses', 'Maximum 25 buses allowed');
-                    }
-                });
-            }
+                };
 
-            if (numPassengers) {
-                numPassengers.addEventListener('input', (e) => {
-                    let value = parseInt(e.target.value) || 0;
-                    if (value > 1000) e.target.value = 1000;
-                    if (value < 1 && e.target.value !== '') e.target.value = 1;
-                    if (value >= 1 && value <= 1000) {
-                        FormValidator.clearError('numPassengers');
-                        numPassengers.classList.add('valid');
+                const onBlur = () => {
+                    const value = parseInt(config.el.value) || 0;
+                    if (!value || value < config.min) {
+                        FormValidator.showError(key, config.error);
+                    } else if (value > config.max) {
+                        FormValidator.showError(key, config.maxError);
                     }
-                });
-                numPassengers.addEventListener('blur', () => {
-                    const value = parseInt(numPassengers.value) || 0;
-                    if (!value || value < 1) {
-                        FormValidator.showError('numPassengers', 'Please enter number of passengers (1-1000)');
-                    } else if (value > 1000) {
-                        FormValidator.showError('numPassengers', 'Maximum 1000 passengers allowed');
-                    }
-                });
-            }
+                };
 
-            if (pickupDate) {
-                pickupDate.addEventListener('change', () => {
-                    const selected = new Date(pickupDate.value);
+                config.el.addEventListener('input', onInput);
+                config.el.addEventListener('blur', onBlur);
+                this.boundHandlers.transport.push(
+                    { el: config.el, onInput },
+                    { el: config.el, onBlur }
+                );
+            });
+
+            // Date fields
+            if (fields.pickupDate.el) {
+                const onChange = () => {
+                    const selected = new Date(fields.pickupDate.el.value);
                     const now = new Date();
                     now.setHours(0, 0, 0, 0);
                     if (selected < now) {
                         FormValidator.showError('pickupDate', 'Please select a future date');
-                        pickupDate.value = '';
+                        fields.pickupDate.el.value = '';
                     } else {
                         FormValidator.clearError('pickupDate');
-                        pickupDate.classList.add('valid');
+                        fields.pickupDate.el.classList.add('valid');
                     }
-                });
+                };
+                fields.pickupDate.el.addEventListener('change', onChange);
+                this.boundHandlers.transport.push({ el: fields.pickupDate.el, onChange });
             }
 
-            if (pickupTime) {
-                pickupTime.addEventListener('change', () => {
-                    if (pickupTime.value) {
-                        FormValidator.clearError('pickupTime');
-                        pickupTime.classList.add('valid');
+            if (fields.dropoffDate.el) {
+                const onChange = () => {
+                    const pickDate = fields.pickupDate.el?.value;
+                    const dropDate = fields.dropoffDate.el.value;
+                    if (pickDate && dropDate && new Date(dropDate) < new Date(pickDate)) {
+                        FormValidator.showError('dropoffDate', 'Drop-off date cannot be before pick-up date');
+                        fields.dropoffDate.el.value = '';
+                    } else {
+                        FormValidator.clearError('dropoffDate');
+                        fields.dropoffDate.el.classList.add('valid');
                     }
-                });
+                };
+                fields.dropoffDate.el.addEventListener('change', onChange);
+                this.boundHandlers.transport.push({ el: fields.dropoffDate.el, onChange });
             }
 
-            if (dropoffTime) {
-                dropoffTime.addEventListener('change', () => {
-                    if (dropoffTime.value) {
-                        FormValidator.clearError('dropoffTime');
-                        dropoffTime.classList.add('valid');
-                    }
-                });
-            }
-
-            if (tripType) {
-                tripType.addEventListener('change', () => {
-                    if (tripType.value) {
-                        FormValidator.clearError('tripType');
-                        tripType.classList.add('valid');
-                    }
-                });
-                tripType.addEventListener('blur', () => {
-                    if (!tripType.value) {
-                        FormValidator.showError('tripType', 'Please select trip type');
-                    }
-                });
-            }
-
-            if (pickupLocation) {
-                pickupLocation.addEventListener('input', () => {
-                    if (pickupLocation.value.trim().length > 5) {
-                        FormValidator.clearError('pickupLocation');
-                        pickupLocation.classList.add('valid');
-                    }
-                });
-                pickupLocation.addEventListener('blur', () => {
-                    if (!pickupLocation.value.trim()) {
-                        FormValidator.showError('pickupLocation', 'Please enter pick-up location');
-                    } else if (pickupLocation.value.trim().length < 5) {
-                        FormValidator.showError('pickupLocation', 'Please enter a complete address');
-                    }
-                });
-            }
-
-            if (dropoffLocation) {
-                dropoffLocation.addEventListener('input', () => {
-                    if (dropoffLocation.value.trim().length > 5) {
-                        FormValidator.clearError('dropoffLocation');
-                        dropoffLocation.classList.add('valid');
-                    }
-                });
-                dropoffLocation.addEventListener('blur', () => {
-                    if (!dropoffLocation.value.trim()) {
-                        FormValidator.showError('dropoffLocation', 'Please enter drop-off location');
-                    } else if (dropoffLocation.value.trim().length < 5) {
-                        FormValidator.showError('dropoffLocation', 'Please enter a complete address');
-                    }
-                });
-            }
-            if (dropoffDate) {
-            // Set minimum to same as pick-up date
-                if (pickupDate) {
-                    pickupDate.addEventListener('change', () => {
-                        dropoffDate.setAttribute('min', pickupDate.value);
-                    });
-                }
-            
-                dropoffDate.addEventListener('change', () => {
-                    const pickDate = pickupDate?.value;
-                    const dropDate = dropoffDate.value;
-                    
-                    if (pickDate && dropDate) {
-                        if (new Date(dropDate) < new Date(pickDate)) {
-                            FormValidator.showError('dropoffDate', 'Drop-off date cannot be before pick-up date');
-                            dropoffDate.value = '';
-                        } else {
-                            FormValidator.clearError('dropoffDate');
-                            dropoffDate.classList.add('valid');
+            // Time fields
+            ['pickupTime', 'dropoffTime'].forEach(key => {
+                if (fields[key].el) {
+                    const onChange = () => {
+                        if (fields[key].el.value) {
+                            FormValidator.clearError(key);
+                            fields[key].el.classList.add('valid');
                         }
+                    };
+                    fields[key].el.addEventListener('change', onChange);
+                    this.boundHandlers.transport.push({ el: fields[key].el, onChange });
+                }
+            });
+
+            // Trip type
+            if (fields.tripType.el) {
+                const onChange = () => {
+                    if (fields.tripType.el.value) {
+                        FormValidator.clearError('tripType');
+                        fields.tripType.el.classList.add('valid');
                     }
-                 });
+                };
+                const onBlur = () => {
+                    if (!fields.tripType.el.value) {
+                        FormValidator.showError('tripType', fields.tripType.error);
+                    }
+                };
+                fields.tripType.el.addEventListener('change', onChange);
+                fields.tripType.el.addEventListener('blur', onBlur);
+                this.boundHandlers.transport.push(
+                    { el: fields.tripType.el, onChange },
+                    { el: fields.tripType.el, onBlur }
+                );
             }
-            
+
+            // Location fields
+            ['pickupLocation', 'dropoffLocation'].forEach(key => {
+                if (!fields[key].el) return;
+                const config = fields[key];
+
+                const onInput = () => {
+                    if (config.el.value.trim().length > config.minLen) {
+                        FormValidator.clearError(key);
+                        config.el.classList.add('valid');
+                    }
+                };
+
+                const onBlur = () => {
+                    if (!config.el.value.trim()) {
+                        FormValidator.showError(key, config.error);
+                    } else if (config.el.value.trim().length < config.minLen) {
+                        FormValidator.showError(key, config.shortError);
+                    }
+                };
+
+                config.el.addEventListener('input', onInput);
+                config.el.addEventListener('blur', onBlur);
+                this.boundHandlers.transport.push(
+                    { el: config.el, onInput },
+                    { el: config.el, onBlur }
+                );
+            });
         }
 
         updateBundlePropertySize() {
@@ -713,9 +807,10 @@
                 if (inner) inner.style.transform = '';
             }
 
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
                 this.flipCooldown = false;
             }, CONFIG.flipCooldown);
+            this.timeouts.push(timeoutId);
         }
 
         handleFilter(btn) {
@@ -747,10 +842,7 @@
         }
 
         openDrawer(serviceType) {
-            if (!this.drawer) {
-                console.error('Drawer not found');
-                return;
-            }
+            if (!this.drawer) return;
 
             this.resetForm();
             this.selectedService = serviceType;
@@ -772,10 +864,11 @@
             this.drawer.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
                 const firstInput = this.drawer.querySelector('input:not([type="hidden"]), select, textarea');
                 if (firstInput) firstInput.focus();
             }, 300);
+            this.timeouts.push(timeoutId);
         }
 
         closeDrawer() {
@@ -799,11 +892,11 @@
             if (this.bundleFields) this.bundleFields.style.display = 'none';
 
             const serviceNames = {
-                'cleaning': 'Cleaning Services Quote',
-                'transportation': 'Transportation Quote',
-                'landscaping': 'Landscaping Quote',
-                'maintenance': 'Maintenance Quote',
-                'bundle': 'Custom Bundle Quote'
+                cleaning: 'Cleaning Services Quote',
+                transportation: 'Transportation Quote',
+                landscaping: 'Landscaping Quote',
+                maintenance: 'Maintenance Quote',
+                bundle: 'Custom Bundle Quote'
             };
 
             if (this.drawerServiceName) {
@@ -812,23 +905,19 @@
 
             if (this.step1Title) {
                 const titles = {
-                    'cleaning': 'Cleaning Service Details',
-                    'transportation': 'Transportation Details',
-                    'landscaping': 'Landscaping Details',
-                    'maintenance': 'Maintenance Details',
-                    'bundle': 'Build Your Bundle'
+                    cleaning: 'Cleaning Service Details',
+                    transportation: 'Transportation Details',
+                    landscaping: 'Landscaping Details',
+                    maintenance: 'Maintenance Details',
+                    bundle: 'Build Your Bundle'
                 };
                 this.step1Title.textContent = titles[serviceType] || 'Service Details';
             }
 
             if (serviceType === 'transportation') {
-                if (this.transportationFields) {
-                    this.transportationFields.style.display = 'block';
-                }
+                if (this.transportationFields) this.transportationFields.style.display = 'block';
             } else if (serviceType === 'bundle') {
-                if (this.bundleFields) {
-                    this.bundleFields.style.display = 'block';
-                }
+                if (this.bundleFields) this.bundleFields.style.display = 'block';
             } else if (['cleaning', 'landscaping', 'maintenance'].includes(serviceType)) {
                 if (this.propertySizeGroup) {
                     this.propertySizeGroup.style.display = 'block';
@@ -862,10 +951,11 @@
             this.currentStep = step;
             this.updateStepUI();
 
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
                 const firstInput = nextStepEl?.querySelector('input, select, textarea');
                 if (firstInput) firstInput.focus();
             }, 100);
+            this.timeouts.push(timeoutId);
         }
 
         updateStepUI() {
@@ -922,7 +1012,8 @@
                     const sizeSelector = document.querySelector('.property-size-group .size-selector');
                     if (sizeSelector) {
                         sizeSelector.classList.add('has-error');
-                        setTimeout(() => sizeSelector.classList.remove('has-error'), 3000);
+                        const timeoutId = setTimeout(() => sizeSelector.classList.remove('has-error'), 3000);
+                        this.timeouts.push(timeoutId);
                     }
                 }
             }
@@ -930,7 +1021,7 @@
             if (step === 1 && this.selectedService === 'bundle') {
                 const bundleCheckboxes = this.drawer.querySelectorAll('input[name="bundle_services"]:checked');
                 const hasTransportation = Array.from(bundleCheckboxes).some(cb => cb.value === 'transportation');
-                
+
                 if (!hasTransportation) {
                     const bundleSizeValue = document.getElementById('bundleSizeValue')?.value;
                     if (!bundleSizeValue) {
@@ -952,35 +1043,35 @@
                     }
                 }
             }
+
             if (step === 1 && this.selectedService === 'transportation') {
                 const transportFields = ['busType', 'numBuses', 'numPassengers', 'pickupDate', 'pickupTime', 'dropoffDate', 'dropoffTime', 'tripType', 'pickupLocation', 'dropoffLocation'];
-                    
+
                 transportFields.forEach(fieldId => {
                     const field = document.getElementById(fieldId);
                     if (field && field.hasAttribute('required') && !field.value.trim()) {
                         isValid = false;
-                            FormValidator.showError(fieldId, 'This field is required');
-                        }
+                        FormValidator.showError(fieldId, 'This field is required');
+                    }
                 });
 
-                    // Validate drop-off date is not before pick-up
                 const pickDate = document.getElementById('pickupDate')?.value;
                 const dropDate = document.getElementById('dropoffDate')?.value;
                 if (pickDate && dropDate && new Date(dropDate) < new Date(pickDate)) {
-                        isValid = false;
-                        FormValidator.showError('dropoffDate', 'Drop-off date must be on or after pick-up date');
+                    isValid = false;
+                    FormValidator.showError('dropoffDate', 'Drop-off date must be on or after pick-up date');
                 }
 
                 const busCount = parseInt(document.getElementById('numBuses')?.value) || 0;
                 if (busCount < 1 || busCount > 25) {
-                        isValid = false;
-                        FormValidator.showError('numBuses', 'Please enter 1-25 buses');
+                    isValid = false;
+                    FormValidator.showError('numBuses', 'Please enter 1-25 buses');
                 }
 
                 const passCount = parseInt(document.getElementById('numPassengers')?.value) || 0;
                 if (passCount < 1 || passCount > 1000) {
-                        isValid = false;
-                        FormValidator.showError('numPassengers', 'Please enter 1-1000 passengers');
+                    isValid = false;
+                    FormValidator.showError('numPassengers', 'Please enter 1-1000 passengers');
                 }
             }
 
@@ -994,17 +1085,14 @@
                     FormValidator.showError('email', 'Please enter a valid email address');
                     isValid = false;
                 }
-
                 if (phone && !FormValidator.validatePhone(phone)) {
                     FormValidator.showError('phone', 'Please enter a valid phone number');
                     isValid = false;
                 }
-
                 if (firstName && !FormValidator.validateName(firstName)) {
                     FormValidator.showError('firstName', 'Please enter a valid first name');
                     isValid = false;
                 }
-
                 if (lastName && !FormValidator.validateName(lastName)) {
                     FormValidator.showError('lastName', 'Please enter a valid last name');
                     isValid = false;
@@ -1069,10 +1157,10 @@
             if (!this.validateStep(this.currentStep)) return;
 
             const submitBtn = this.drawer.querySelector('.btn-submit-quote');
-            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            const originalText = submitBtn ? submitBtn.textContent : '';
 
             if (submitBtn) {
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
             }
 
@@ -1080,25 +1168,32 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
+            // Sanitize all inputs
+            Object.keys(data).forEach(key => {
+                if (typeof data[key] === 'string') {
+                    data[key] = sanitizeInput(data[key]);
+                }
+            });
+
             if (this.selectedService === 'bundle') {
                 const checkedServices = this.drawer.querySelectorAll('input[name="bundle_services"]:checked');
                 data.bundle_services = Array.from(checkedServices).map(cb => cb.value).join(', ');
             }
 
-            let toEmail = 'info@cfshouston.com';
+            let toEmail = CONFIG.emails.default;
             if (['cleaning', 'landscaping', 'maintenance'].includes(this.selectedService)) {
-                toEmail = 'cleaning@cfshouston.com';
+                toEmail = CONFIG.emails.cleaning;
             } else if (this.selectedService === 'transportation') {
-                toEmail = 'transportation@cfshouston.com';
+                toEmail = CONFIG.emails.transportation;
             } else if (this.selectedService === 'bundle') {
                 const checkedServices = this.drawer.querySelectorAll('input[name="bundle_services"]:checked');
                 const hasTransportation = Array.from(checkedServices).some(cb => cb.value === 'transportation');
                 const hasCleaning = Array.from(checkedServices).some(cb => ['cleaning', 'landscaping', 'maintenance'].includes(cb.value));
-                
+
                 if (hasTransportation && !hasCleaning) {
-                    toEmail = 'transportation@cfshouston.com';
+                    toEmail = CONFIG.emails.transportation;
                 } else if (hasCleaning) {
-                    toEmail = 'cleaning@cfshouston.com';
+                    toEmail = CONFIG.emails.cleaning;
                 }
             }
 
@@ -1116,80 +1211,78 @@
             };
 
             try {
-                await emailjs.send('default_service', 'template_jvn3yzi', templateParams);
+                await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, templateParams);
 
                 if (submitBtn) {
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Quote Sent!';
+                    submitBtn.textContent = 'Quote Sent!';
                     submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                 }
 
                 this.showToast('Quote request sent successfully! We\'ll be in touch within 2 hours.', 'success');
 
-                setTimeout(() => {
+                const timeoutId = setTimeout(() => {
                     this.closeDrawer();
-                    setTimeout(() => {
+                    const resetTimeout = setTimeout(() => {
                         if (submitBtn) {
-                            submitBtn.innerHTML = originalText;
+                            submitBtn.textContent = originalText;
                             submitBtn.style.background = '';
                             submitBtn.disabled = false;
                         }
                     }, 300);
+                    this.timeouts.push(resetTimeout);
                 }, 2000);
+                this.timeouts.push(timeoutId);
 
             } catch (error) {
-                console.error('EmailJS Error:', error);
-                
                 if (submitBtn) {
-                    submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed';
+                    submitBtn.textContent = 'Failed';
                     submitBtn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
                 }
 
-                this.showToast('Failed to send quote. Please call us at 281-506-8826.', 'error');
+                this.showToast('Failed to send quote. Please call us at ' + CONFIG.phone + '.', 'error');
 
-                setTimeout(() => {
+                const timeoutId = setTimeout(() => {
                     if (submitBtn) {
-                        submitBtn.innerHTML = originalText;
+                        submitBtn.textContent = originalText;
                         submitBtn.style.background = '';
                         submitBtn.disabled = false;
                     }
                 }, 3000);
+                this.timeouts.push(timeoutId);
             }
         }
 
         buildEmailMessage(data) {
-            let message = '';
+            const parts = [];
+            parts.push(`Phone: ${data.phone || 'Not provided'}`);
+            parts.push(`Company/School: ${data.company || 'Not provided'}`);
 
-            message += `Phone: ${data.phone}\n`;
-            message += `Company/School: ${data.company || 'Not provided'}\n`;
-            
             const size = data.property_size || data.bundle_property_size;
-            if (size) {
-                message += `Property Size: ${size}\n`;
-            }
-
-            if (data.bundle_services) {
-                message += `Bundle Services: ${data.bundle_services}\n`;
-            }
+            if (size) parts.push(`Property Size: ${size}`);
+            if (data.bundle_services) parts.push(`Bundle Services: ${data.bundle_services}`);
 
             if (data.num_buses || data.bus_type) {
-                message += `\n--- Transportation Details ---\n`;
-                message += `Bus Type: ${data.bus_type || 'Not specified'}\n`;
-                message += `Number of Buses: ${data.num_buses || 'Not specified'}\n`;
-                message += `Number of Passengers: ${data.num_passengers || 'Not specified'}\n`;
-                message += `Pick-up Date: ${data.pickup_date || 'Not specified'}\n`;
-                message += `Pick-up Time: ${data.pickup_time || 'Not specified'}\n`;
-                message += `Drop-off Date: ${data.dropoff_date || 'Not specified'}\n`;
-                message += `Drop-off Time: ${data.dropoff_time || 'Not specified'}\n`;
-                message += `Trip Type: ${data.trip_type || 'Not specified'}\n`;
-                message += `Pick-up Location: ${data.pickup_location || 'Not specified'}\n`;
-                message += `Drop-off Location: ${data.dropoff_location || 'Not specified'}\n`;
+                parts.push('');
+                parts.push('--- Transportation Details ---');
+                parts.push(`Bus Type: ${data.bus_type || 'Not specified'}`);
+                parts.push(`Number of Buses: ${data.num_buses || 'Not specified'}`);
+                parts.push(`Number of Passengers: ${data.num_passengers || 'Not specified'}`);
+                parts.push(`Pick-up Date: ${data.pickup_date || 'Not specified'}`);
+                parts.push(`Pick-up Time: ${data.pickup_time || 'Not specified'}`);
+                parts.push(`Drop-off Date: ${data.dropoff_date || 'Not specified'}`);
+                parts.push(`Drop-off Time: ${data.dropoff_time || 'Not specified'}`);
+                parts.push(`Trip Type: ${data.trip_type || 'Not specified'}`);
+                parts.push(`Pick-up Location: ${data.pickup_location || 'Not specified'}`);
+                parts.push(`Drop-off Location: ${data.dropoff_location || 'Not specified'}`);
             }
 
             if (data.message) {
-                message += `\n--- Additional Notes ---\n${data.message}\n`;
+                parts.push('');
+                parts.push('--- Additional Notes ---');
+                parts.push(data.message);
             }
 
-            return message;
+            return parts.join('\n');
         }
 
         showToast(message, type = 'success') {
@@ -1199,34 +1292,34 @@
             const toast = document.createElement('div');
             toast.className = `quote-toast toast-${type}`;
             toast.setAttribute('role', 'alert');
-            toast.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#10b981' : '#ef4444'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                z-index: 100000;
-                font-weight: 500;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-                animation: slideInRight 0.3s ease;
-            `;
+
+            const icon = document.createElement('i');
+            icon.className = `fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}`;
+
+            const span = document.createElement('span');
+            span.textContent = message;
+
+            toast.appendChild(icon);
+            toast.appendChild(span);
+
+            // Use CSS classes instead of cssText for CSP compliance
+            toast.classList.add('toast-visible');
+            if (type === 'success') {
+                toast.classList.add('toast-success');
+            } else {
+                toast.classList.add('toast-error');
+            }
 
             document.body.appendChild(toast);
 
-            setTimeout(() => {
-                toast.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
+            const timeoutId = setTimeout(() => {
+                toast.classList.add('toast-hiding');
+                const removeTimeout = setTimeout(() => {
+                    if (toast.parentNode) toast.remove();
+                }, 300);
+                this.timeouts.push(removeTimeout);
             }, 5000);
+            this.timeouts.push(timeoutId);
         }
 
         setupIntersectionObserver() {
@@ -1235,17 +1328,17 @@
                 rootMargin: '0px 0px -50px 0px'
             };
 
-            const observer = new IntersectionObserver((entries) => {
+            this.observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                        observer.unobserve(entry.target);
+                        this.observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
             this.cards.forEach(card => {
-                observer.observe(card);
+                this.observer.observe(card);
             });
         }
 
@@ -1254,21 +1347,75 @@
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(60px)';
 
-                setTimeout(() => {
-                    card.style.transition = `all 0.8s cubic-bezier(0.4, 0, 0.2, 1)`;
+                const timeoutId = setTimeout(() => {
+                    card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
                     card.style.opacity = '1';
                     card.style.transform = '';
                 }, index * CONFIG.staggerDelay);
+                this.timeouts.push(timeoutId);
             });
         }
 
         destroy() {
+            // Clear all timeouts
+            this.timeouts.forEach(id => clearTimeout(id));
+            this.timeouts = [];
+
+            // Destroy particle system
             if (this.particleSystem) {
                 this.particleSystem.destroy();
+                this.particleSystem = null;
             }
+
+            // Disconnect observer
+            if (this.observer) {
+                this.observer.disconnect();
+                this.observer = null;
+            }
+
+            // Remove all event listeners
+            Object.keys(this.boundHandlers).forEach(key => {
+                const handlers = this.boundHandlers[key];
+                if (Array.isArray(handlers)) {
+                    handlers.forEach(h => {
+                        if (h.card) {
+                            if (h.onClick) h.card.removeEventListener('click', h.onClick);
+                            if (h.onKeyDown) h.card.removeEventListener('keydown', h.onKeyDown);
+                        } else if (h.btn) {
+                            h.btn.removeEventListener('click', h.onClick);
+                        } else if (h.el && h.onClick) {
+                            h.el.removeEventListener('click', h.onClick);
+                        } else if (h.el && h.onChange) {
+                            h.el.removeEventListener('change', h.onChange);
+                        } else if (h.el && h.onInput) {
+                            h.el.removeEventListener('input', h.onInput);
+                        } else if (h.el && h.onBlur) {
+                            h.el.removeEventListener('blur', h.onBlur);
+                        } else if (h.option) {
+                            if (h.onClick) h.option.removeEventListener('click', h.onClick);
+                            if (h.onKeyDown) h.option.removeEventListener('keydown', h.onKeyDown);
+                        } else if (h.cb && h.onChange) {
+                            h.cb.removeEventListener('change', h.onChange);
+                        } else if (h.field) {
+                            if (h.onBlur) h.field.removeEventListener('blur', h.onBlur);
+                            if (h.onInput) h.field.removeEventListener('input', h.onInput);
+                        }
+                    });
+                } else if (handlers && handlers.el) {
+                    if (handlers.onClick) handlers.el.removeEventListener('click', handlers.onClick);
+                    if (handlers.onSubmit) handlers.el.removeEventListener('submit', handlers.onSubmit);
+                } else if (handlers && handlers.bundleBtn && handlers.onClick) {
+                    handlers.bundleBtn.removeEventListener('click', handlers.onClick);
+                } else if (typeof handlers === 'function') {
+                    document.removeEventListener('keydown', handlers);
+                }
+            });
+
+            this.boundHandlers = {};
         }
     }
 
+    // ─── Bootstrap ──────────────────────────────────────────────
     let servicesInstance = null;
 
     function init() {
@@ -1282,12 +1429,4 @@
     } else {
         init();
     }
-
-    window.addEventListener('beforeunload', () => {
-        if (servicesInstance) {
-            servicesInstance.destroy();
-        }
-    });
-
-    window.ServicesTheater = ServicesTheater;
 })();

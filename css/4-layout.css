@@ -1,0 +1,180 @@
+/* ============================================
+   CRYSTAL FACILITY SOLUTIONS - LAYOUT
+   Page Structure, Section Spacing, Global Responsive
+   ============================================ */
+
+/* ============================================
+   PAGE WRAPPER
+   ============================================ */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* ============================================
+   MAIN CONTENT AREA
+   ============================================ */
+#main-content {
+    flex: 1;
+}
+
+/* ============================================
+   SECTION BASE SPACING
+   (Section-specific styling lives in dedicated files)
+   ============================================ */
+.section {
+    padding-block: var(--spacing-24);
+    padding-inline: var(--container-padding);
+    position: relative;
+}
+
+.section-sm {
+    padding-block: var(--spacing-16);
+}
+
+.section-lg {
+    padding-block: var(--spacing-24);
+}
+
+/* ============================================
+   SECTION HEADER PATTERN
+   (Used across multiple sections)
+   ============================================ */
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-16);
+    position: relative;
+}
+
+.section-header h2 {
+    font-size: var(--font-size-3xl);
+    color: var(--dark);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--spacing-4);
+}
+
+.section-header p {
+    color: var(--gray);
+    font-size: var(--font-size-lg);
+    max-width: 600px;
+    margin-inline: auto;
+}
+
+.section-header::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--cfs-green);
+    margin: var(--spacing-4) auto 0;
+    border-radius: var(--border-radius-full);
+}
+
+/* ============================================
+   GLOBAL RESPONSIVE CONTAINER ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1200px) {
+    .container {
+        padding-inline: var(--spacing-6);
+    }
+}
+
+@media (max-width: 992px) {
+    .section {
+        padding-block: var(--spacing-16);
+    }
+
+    .section-header h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --container-padding: var(--spacing-4);
+    }
+
+    .section {
+        padding-block: var(--spacing-12);
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding-block: var(--spacing-10);
+    }
+
+    .section-header h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .section-header p {
+        font-size: var(--font-size-base);
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .section {
+        padding-block: var(--spacing-8);
+    }
+}
+
+/* ============================================
+   LARGE SCREENS
+   ============================================ */
+@media (min-width: 1920px) {
+    .container {
+        max-width: var(--container-max-width-lg);
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .nav,
+    .chat-widget,
+    .hero-buttons,
+    .modal,
+    .dots,
+    .mobile-menu-btn,
+    .mobile-nav,
+    .back-to-top {
+        display: none !important;
+    }
+
+    .section {
+        padding-block: var(--spacing-6);
+        page-break-inside: avoid;
+    }
+
+    body {
+        background: var(--white) !important;
+        color: var(--dark) !important;
+    }
+
+    a {
+        text-decoration: none !important;
+        color: var(--dark) !important;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: var(--font-size-xs);
+        color: var(--gray);
+    }
+
+    .contact-form,
+    .contact-info,
+    .form-glass {
+        box-shadow: none !important;
+        border: 1px solid var(--gray-pale) !important;
+        background: var(--white) !important;
+    }
+}
