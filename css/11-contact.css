@@ -538,6 +538,39 @@
     border-color: var(--cfs-green);
     background: rgba(0, 0, 0, 0.3);
 }
+.input-glass select ~ label {
+    top: -0.5rem;
+    left: 1rem;
+    transform: none;
+    font-size: 0.75rem;
+    color: var(--cfs-green);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    z-index: 4;
+}
+
+/* Select text always has top padding so it doesn't overlap */
+.input-glass select {
+    padding-top: 1.25rem;
+    padding-bottom: 0.75rem;
+    padding-right: 3rem;
+    appearance: none;
+    -webkit-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+}
+
+/* Select icon always green */
+.input-glass select ~ i {
+    color: var(--cfs-green);
+}
+
+/* Glow always visible on select */
+.input-glass select ~ .input-glow {
+    opacity: 0.5;
+}
 
 /* Label starts inside the input field */
 .input-glass-inner label {

@@ -73,6 +73,7 @@
             }
             this.initTimeline();
             this.initCertTooltips();
+            this.initFacilityTooltips();
         }
 
         cacheElements() {
@@ -187,7 +188,7 @@
                 if (!counter) return;
 
                 let pct;
-                switch(target) { case 99: pct = 99; break; case 14: pct = 70; break; case 500: pct = 85; break; case 50: pct = 75; break; default: pct = 80; }
+                switch(target) { case 99: pct = 99; break; case 15: pct = 70; break; case 500: pct = 85; break; case 50: pct = 75; break; default: pct = 80; }
 
                 const t1 = setTimeout(() => { if (progress) progress.style.width = pct + '%'; }, i * 200);
                 this.timeouts.push(t1);
@@ -274,14 +275,14 @@
             this.certBadges.forEach(badge => {
                 const onEnter = () => {
                     const text = badge.getAttribute('title') || badge.getAttribute('aria-label');
-                    if (text) this.showTooltip(badge, text);
+                    if (text) this.showCertTooltip(badge, text);
                 };
-                const onLeave = () => this.hideTooltip(badge);
+                const onLeave = () => this.hideCertTooltip(badge);
                 const onFocus = () => {
                     const text = badge.getAttribute('title') || badge.getAttribute('aria-label');
-                    if (text) this.showTooltip(badge, text);
+                    if (text) this.showCertTooltip(badge, text);
                 };
-                const onBlur = () => this.hideTooltip(badge);
+                const onBlur = () => this.hideCertTooltip(badge);
                 badge.addEventListener('mouseenter', onEnter);
                 badge.addEventListener('mouseleave', onLeave);
                 badge.addEventListener('focus', onFocus);
@@ -291,55 +292,312 @@
             });
         }
 
-        showTooltip(el, text) {
+        showCertTooltip(el, text) {
             let tip = el.querySelector('.cert-tooltip');
             if (!tip) {
                 tip = document.createElement('div');
                 tip.className = 'cert-tooltip';
                 tip.textContent = text;
-                tip.style.position = 'absolute';
-                tip.style.bottom = 'calc(100% + 10px)';
-                tip.style.left = '50%';
-                tip.style.transform = 'translateX(-50%) scale(0.8)';
-                tip.style.background = '#212529';
-                tip.style.color = 'white';
-                tip.style.padding = '0.75rem 1rem';
-                tip.style.borderRadius = '10px';
-                tip.style.fontSize = '0.85rem';
-                tip.style.whiteSpace = 'nowrap';
-                tip.style.zIndex = '100';
-                tip.style.opacity = '0';
-                tip.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                tip.style.pointerEvents = 'none';
-
+                tip.style.cssText = `
+                    position: absolute;
+                    bottom: calc(100% + 10px);
+                    left: 50%;
+                    transform: translateX(-50%) scale(0.8);
+                    background: #212529;
+                    color: white;
+                    padding: 0.75rem 1rem;
+                    border-radius: 10px;
+                    font-size: 0.85rem;
+                    white-space: nowrap;
+                    z-index: 100;
+                    opacity: 0;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    pointer-events: none;
+                `;
                 const arrow = document.createElement('div');
-                arrow.style.position = 'absolute';
-                arrow.style.top = '100%';
-                arrow.style.left = '50%';
-                arrow.style.transform = 'translateX(-50%)';
-                arrow.style.border = '6px solid transparent';
-                arrow.style.borderTopColor = '#212529';
+                arrow.style.cssText = `
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 6px solid transparent;
+                    border-top-color: #212529;
+                `;
                 tip.appendChild(arrow);
-
                 el.style.position = 'relative';
                 el.appendChild(tip);
-
-                const rafId = requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
                     tip.style.opacity = '1';
                     tip.style.transform = 'translateX(-50%) scale(1)';
                 });
-                this.rafIds.push(rafId);
             }
         }
 
-        hideTooltip(el) {
+        hideCertTooltip(el) {
             const tip = el.querySelector('.cert-tooltip');
             if (tip) {
                 tip.style.opacity = '0';
                 tip.style.transform = 'translateX(-50%) scale(0.8)';
-                const t = setTimeout(() => { if (tip.parentNode) tip.remove(); }, 300);
-                this.timeouts.push(t);
+                setTimeout(() => { if (tip.parentNode) tip.remove(); }, 300);
             }
+        }
+
+        // ─── Facility Type Tooltips ─────────────────────────────
+        initFacilityTooltips() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'facility-tooltip';
+            tooltip.id = 'facility-tooltip';
+            document.body.appendChild(tooltip);
+
+            const facilityData = {
+                'Education Facilities': {
+                    icon: '🎓', title: 'Education Facilities',
+                    desc: 'Comprehensive cleaning and maintenance for schools, colleges, and educational institutions.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Classroom sanitization', 'Cafeteria deep cleaning', 'Gymnasium floor care', 'Restroom hygiene', 'Window cleaning'] },
+                        'Transportation': { icon: '🚌', items: ['School bus services', 'Field trip transport', 'Athletic team travel', 'Safe route planning'] },
+                        'Landscaping': { icon: '🌿', items: ['Campus grounds keeping', 'Sports field maintenance', 'Playground safety surfacing', 'Seasonal planting programs'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC filter replacement', 'Plumbing repairs', 'Electrical maintenance', 'Playground upkeep', 'Emergency repairs'] }
+                    },
+                    highlight: { icon: '📚', text: 'Serving 50+ educational institutions' }
+                },
+                'Corporate Offices': {
+                    icon: '🏢', title: 'Corporate Offices',
+                    desc: 'Professional facility management for corporate offices and business centers.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Daily office cleaning', 'Carpet & upholstery care', 'Window washing', 'Restroom sanitization', 'Trash removal'] },
+                        'Transportation': { icon: '🚌', items: ['Employee shuttle services', 'Corporate event transport', 'Airport transfer coordination', 'Executive car services'] },
+                        'Landscaping': { icon: '🌿', items: ['Corporate campus grounds', 'Entryway & reception gardens', 'Outdoor meeting spaces', 'Sustainable landscape design'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Light bulb replacement', 'Plumbing repairs', 'Furniture assembly', 'IT infrastructure support'] }
+                    },
+                    highlight: { icon: '💼', text: 'Partnering with 100+ office buildings' }
+                },
+                'Apartment Complex': {
+                    icon: '🏠', title: 'Apartment Complex',
+                    desc: 'Full-service facility solutions for apartment communities and condominiums.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Common area maintenance', 'Move-in/out deep cleaning', 'Clubhouse & amenity cleaning', 'Trash chute & dumpster areas', 'Window washing services'] },
+                        'Transportation': { icon: '🚌', items: ['Resident shuttle services', 'Moving day support', 'Package delivery logistics', 'Visitor parking management'] },
+                        'Landscaping': { icon: '🌿', items: ['Community grounds keeping', 'Pool area maintenance', 'Walking path care', 'Seasonal flower programs', 'Tree & shrub management'] },
+                        'Maintenance': { icon: '🛠️', items: ['Unit turnover repairs', 'Plumbing & electrical', 'HVAC servicing', 'Appliance maintenance', '24/7 emergency repairs'] }
+                    },
+                    highlight: { icon: '⭐', text: 'Managing 75+ apartment communities' }
+                },
+                'Car Dealerships': {
+                    icon: '🚗', title: 'Car Dealerships',
+                    desc: 'Specialized cleaning and detailing services for car showrooms and service centers.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Showroom floor polishing', 'Vehicle detailing', 'Service bay cleaning', 'Customer lounge care', 'Window cleaning'] },
+                        'Transportation': { icon: '🚌', items: ['Customer shuttle services', 'Vehicle delivery transport', 'Test drive route support', 'Event logistics'] },
+                        'Landscaping': { icon: '🌿', items: ['Lot maintenance & debris removal', 'Entryway presentation', 'Test drive route care', 'Seasonal decorations'] },
+                        'Maintenance': { icon: '🛠️', items: ['Lot maintenance', 'Light fixture cleaning', 'Pressure washing', 'Signage cleaning', 'Emergency spills'] }
+                    },
+                    highlight: { icon: '🏆', text: 'Trusted by 30+ dealerships' }
+                },
+                'Gyms': {
+                    icon: '💪', title: 'Fitness Centers',
+                    desc: 'Hygiene-focused cleaning for gyms, yoga studios, and fitness facilities.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Equipment sanitization', 'Locker room deep clean', 'Floor mat cleaning', 'Shower & sauna care', 'Mirror polishing'] },
+                        'Transportation': { icon: '🚌', items: ['Member shuttle services', 'Event transport', 'Equipment delivery', 'Staff commuting support'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor training areas', 'Pool deck maintenance', 'Entryway greenery', 'Parking lot cleanliness'] },
+                        'Maintenance': { icon: '🛠️', items: ['Equipment inspection', 'HVAC filter changes', 'Plumbing repairs', 'Lighting maintenance', 'Emergency response'] }
+                    },
+                    highlight: { icon: '🏋️', text: 'Keeping 40+ gyms spotless' }
+                },
+                'Retail Stores': {
+                    icon: '🛍️', title: 'Retail Stores',
+                    desc: 'Retail-focused cleaning that enhances customer experience and brand image.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Floor care & buffing', 'Fitting room sanitization', 'Display case cleaning', 'Restroom maintenance', 'Window washing'] },
+                        'Transportation': { icon: '🚌', items: ['Customer shuttle services', 'Delivery coordination', 'Event transport', 'Staff parking management'] },
+                        'Landscaping': { icon: '🌿', items: ['Storefront presentation', 'Entryway maintenance', 'Seasonal decorations', 'Outdoor display areas'] },
+                        'Maintenance': { icon: '🛠️', items: ['Fixture repairs', 'Lighting maintenance', 'HVAC servicing', 'Signage cleaning', 'Emergency repairs'] }
+                    },
+                    highlight: { icon: '🛒', text: 'Serving 60+ retail locations' }
+                },
+                'Industrial Facilities': {
+                    icon: '🏭', title: 'Industrial Facilities',
+                    desc: 'Heavy-duty cleaning and maintenance for warehouses and manufacturing plants.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Warehouse floor scrubbing', 'Machinery degreasing', 'High-dust removal', 'Loading dock cleaning', 'Safety line painting'] },
+                        'Transportation': { icon: '🚌', items: ['Employee shuttle services', 'Inter-facility transport', 'Shift change coordination', 'Logistics support'] },
+                        'Landscaping': { icon: '🌿', items: ['Industrial grounds maintenance', 'Perimeter fencing care', 'Storm water management', 'Environmental compliance'] },
+                        'Maintenance': { icon: '🛠️', items: ['Equipment maintenance', 'Electrical repairs', 'Plumbing services', 'Structural repairs', 'Safety inspections'] }
+                    },
+                    highlight: { icon: '⚙️', text: 'Supporting 25+ industrial sites' }
+                },
+                'Hotels & Hospitality': {
+                    icon: '🏨', title: 'Hotels & Hospitality',
+                    desc: 'Premium cleaning standards for hotels, resorts, and hospitality venues.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Guest room turnover', 'Lobby & common areas', 'Pool & spa maintenance', 'Restaurant kitchen deep clean', 'Laundry services'] },
+                        'Transportation': { icon: '🚌', items: ['Guest shuttle services', 'Airport transfers', 'Tour & excursion transport', 'Valet parking management'] },
+                        'Landscaping': { icon: '🌿', items: ['Resort grounds & gardens', 'Poolscape maintenance', 'Outdoor event spaces', 'Entryway & porte-cochère', 'Tropical plant programs'] },
+                        'Maintenance': { icon: '🛠️', items: ['Room repairs & upkeep', 'HVAC & climate control', 'Plumbing & electrical', 'Pool & spa equipment', '24/7 engineering support'] }
+                    },
+                    highlight: { icon: '🌟', text: 'Proudly serving 80+ hotels' }
+                },
+                'Event Venues': {
+                    icon: '🎉', title: 'Event Venues',
+                    desc: 'Pre and post-event cleaning for conference centers, stadiums, and banquet halls.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Pre-event setup cleaning', 'Post-event deep clean', 'Carpet & upholstery care', 'Restroom servicing', 'Waste management'] },
+                        'Transportation': { icon: '🚌', items: ['Attendee shuttle coordination', 'VIP transport services', 'Equipment & gear moving', 'Parking management support'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor event preparation', 'Tent & pavilion areas', 'Grounds beautification', 'Post-event restoration'] },
+                        'Maintenance': { icon: '🛠️', items: ['Setup & breakdown support', 'Equipment installation', 'Lighting & AV coordination', 'Emergency repairs during events'] }
+                    },
+                    highlight: { icon: '🎊', text: '500+ events serviced annually' }
+                },
+                'Recreation And Shopping Areas': {
+                    icon: '🎮', title: 'Recreation & Shopping',
+                    desc: 'Comprehensive maintenance for malls, shopping centers, and recreational facilities.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Common area maintenance', 'Food court deep cleaning', 'Restroom hygiene', 'Parking structure cleaning', 'Escalator care'] },
+                        'Transportation': { icon: '🚌', items: ['Customer shuttle services', 'Security transport', 'Employee parking shuttles', 'Special event transport'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor mall areas', 'Parking lot islands', 'Entryway gardens', 'Seasonal displays', 'Storm debris management'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Signage maintenance', 'Emergency response'] }
+                    },
+                    highlight: { icon: '🏬', text: 'Managing 35+ recreation centers' }
+                },
+                'Healthcare Facilities': {
+                    icon: '🏥', title: 'Healthcare Facilities',
+                    desc: 'Medical-grade cleaning and disinfection for hospitals, clinics, and care facilities.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Patient room sanitization', 'Operating room sterilization', 'Waiting area cleaning', 'Medical waste disposal', 'Floor disinfection'] },
+                        'Transportation': { icon: '🚌', items: ['Patient transport services', 'Medical equipment moving', 'Staff shuttle coordination', 'Emergency logistics'] },
+                        'Landscaping': { icon: '🌿', items: ['Healing garden maintenance', 'Patient outdoor areas', 'Entryway wellness gardens', 'Smoke-free zone enforcement'] },
+                        'Maintenance': { icon: '🛠️', items: ['Medical equipment calibration', 'HVAC & air quality', 'Plumbing & medical gases', 'Emergency generator care', '24/7 biomedical support'] }
+                    },
+                    highlight: { icon: '❤️', text: 'Trusted by 45+ healthcare facilities' }
+                },
+                'Places of Worship': {
+                    icon: '⛪', title: 'Places of Worship',
+                    desc: 'Respectful and thorough cleaning for churches, mosques, temples, and synagogues.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Sanctuary cleaning', 'Fellowship hall care', 'Kitchen deep clean', 'Restroom maintenance', 'Window washing'] },
+                        'Transportation': { icon: '🚌', items: ['Congregation shuttle services', 'Youth group transport', 'Event & retreat coordination', 'Elderly & special needs access'] },
+                        'Landscaping': { icon: '🌿', items: ['Grounds & cemetery care', 'Memorial garden maintenance', 'Entryway presentation', 'Seasonal decorations', 'Parking lot landscaping'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC servicing', 'Plumbing repairs', 'Electrical work', 'Grounds keeping', 'Emergency repairs'] }
+                    },
+                    highlight: { icon: '🙏', text: 'Serving 20+ places of worship' }
+                },
+                'Government Buildings': {
+                    icon: '🏛️', title: 'Government Buildings',
+                    desc: 'Secure and compliant facility services for municipal and federal buildings.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Office cleaning', 'Public area maintenance', 'Restroom sanitization', 'Window cleaning', 'Floor care'] },
+                        'Transportation': { icon: '🚌', items: ['Official vehicle services', 'Employee shuttle programs', 'Secure transport coordination', 'Event logistics support'] },
+                        'Landscaping': { icon: '🌿', items: ['Public grounds maintenance', 'Monument & memorial care', 'Sustainable practices', 'Storm response'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Security system support', 'Emergency response'] }
+                    },
+                    highlight: { icon: '📋', text: 'Contracted with 15+ agencies' }
+                },
+                'Banks And Financial Institutions': {
+                    icon: '🏦', title: 'Banking & Finance',
+                    desc: 'Discreet and secure cleaning for banks, credit unions, and financial institutions.',
+                    services: {
+                        'Cleaning': { icon: '🧹', items: ['Teller area sanitization', 'Vault room cleaning', 'Customer lounge care', 'ATM area maintenance', 'Window cleaning'] },
+                        'Transportation': { icon: '🚌', items: ['Secure cash transport', 'Executive car services', 'Client shuttle programs', 'Event logistics'] },
+                        'Landscaping': { icon: '🌿', items: ['Professional exterior presentation', 'Drive-thru lane maintenance', 'Entryway gardens', 'Seasonal decorations'] },
+                        'Maintenance': { icon: '🛠️', items: ['Security system checks', 'HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Emergency response'] }
+                    },
+                    highlight: { icon: '💰', text: 'Securing 50+ financial institutions' }
+                }
+            };
+
+            const buildHtml = (key) => {
+                const data = facilityData[key];
+                if (!data) return '';
+                const entries = Object.entries(data.services);
+                const isThree = false; 
+                const services = entries.map(([name, svc]) => `
+                    <div class="tooltip-service-col ${isThree ? 'full-width' : ''}">
+                        <div class="service-col-header"><span>${svc.icon}</span><span>${name}</span></div>
+                        <ul class="service-list">${svc.items.map(i => `<li>${i}</li>`).join('')}</ul>
+                    </div>
+                `).join('');
+                return `
+                    <div class="tooltip-header"><div class="tooltip-icon">${data.icon}</div><h4 class="tooltip-title">${data.title}</h4></div>
+                    <p class="tooltip-description">${data.desc}</p>
+                    <div class="tooltip-services">${services}</div>
+                    <div class="tooltip-highlight"><span>${data.highlight.icon}</span><span>${data.highlight.text}</span></div>
+                `;
+            };
+
+            const position = (target) => {
+                const rect = target.getBoundingClientRect();
+                const tw = tooltip.offsetWidth || 380;
+                const th = tooltip.offsetHeight || 400;
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                const m = 12;
+
+                // Default: below the target
+                let top = rect.bottom + 10;
+                let left = rect.left + rect.width / 2 - tw / 2;
+
+                // If too close to bottom, flip above
+                if (top + th > vh - m) {
+                    top = rect.top - th - 10;
+                    tooltip.classList.add('position-above');
+                } else {
+                    tooltip.classList.remove('position-above');
+                }
+
+                // If still off-screen above, force to viewport top with margin
+                if (top < m) {
+                    top = m;
+                }
+
+                // Horizontal bounds
+                if (left < m) left = m;
+                if (left + tw > vw - m) left = vw - tw - m;
+
+                tooltip.style.top = top + 'px';
+                tooltip.style.left = left + 'px';
+            };
+
+            let hideTimer = null;
+            let overTip = false;
+
+            const show = (logo) => {
+                const key = logo.getAttribute('data-facility');
+                if (!key || !facilityData[key]) return;
+                if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+                tooltip.innerHTML = buildHtml(key);
+                tooltip.classList.add('visible');
+                requestAnimationFrame(() => requestAnimationFrame(() => position(logo)));
+            };
+
+            const hide = () => {
+                tooltip.classList.remove('visible');
+                hideTimer = setTimeout(() => { if (!overTip) tooltip.innerHTML = ''; }, 300);
+            };
+
+            const logos = document.querySelectorAll('.client-logo[data-facility]');
+            logos.forEach(logo => {
+                logo.addEventListener('mouseenter', () => show(logo));
+                logo.addEventListener('mouseleave', () => { hideTimer = setTimeout(() => { if (!overTip) hide(); }, 60); });
+                logo.addEventListener('focus', () => show(logo));
+                logo.addEventListener('blur', hide);
+            });
+
+            tooltip.addEventListener('mouseenter', () => { overTip = true; if (hideTimer) clearTimeout(hideTimer); });
+            tooltip.addEventListener('mouseleave', () => { overTip = false; hide(); });
+
+            const onEsc = (e) => { if (e.key === 'Escape') { tooltip.classList.remove('visible'); tooltip.innerHTML = ''; } };
+            document.addEventListener('keydown', onEsc);
+
+            const onResize = () => {
+                if (tooltip.classList.contains('visible')) {
+                    const active = document.querySelector('.client-logo[data-facility]:hover');
+                    if (active) position(active);
+                }
+            };
+            window.addEventListener('resize', onResize);
+
+            this.boundHandlers.facilityTooltips = { onEsc, onResize, tooltip };
         }
 
         setupEventListeners() {
@@ -389,7 +647,15 @@
             this.rafIds = [];
             if (this.observer) { this.observer.disconnect(); this.observer = null; }
 
+            const ft = this.boundHandlers.facilityTooltips;
+            if (ft) {
+                document.removeEventListener('keydown', ft.onEsc);
+                window.removeEventListener('resize', ft.onResize);
+                if (ft.tooltip) ft.tooltip.remove();
+            }
+
             Object.keys(this.boundHandlers).forEach(key => {
+                if (key === 'facilityTooltips') return;
                 const h = this.boundHandlers[key];
                 if (Array.isArray(h)) {
                     h.forEach(item => {
@@ -418,7 +684,6 @@
         }
     }
 
-    // ─── Cleanup / Destroy ──────────────────────────────────────
     function destroy() {
         if (!state.isInitialized) return;
         state.timeouts.forEach(id => clearTimeout(id));
@@ -428,7 +693,6 @@
         state.isInitialized = false;
     }
 
-    // ─── Bootstrap ──────────────────────────────────────────────
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

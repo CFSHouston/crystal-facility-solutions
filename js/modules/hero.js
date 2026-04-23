@@ -63,7 +63,6 @@
         initTypingAnimation();
         initMouseGlow();
         initButtonRipple();
-        initScrollIndicator();
         initParallax();
 
         state.isInitialized = true;
@@ -297,39 +296,6 @@
 
         registerCleanup(() => {
             btn.removeEventListener('mousemove', onMouseMove);
-        });
-    }
-
-    // ─── Scroll Indicator ───────────────────────────────────────
-    function initScrollIndicator() {
-        const indicator = document.querySelector('.scroll-indicator');
-        if (!indicator) return;
-
-        function onClick() {
-            const services = document.getElementById('services');
-            if (services) {
-                services.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        let ticking = false;
-        function onScroll() {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                const scrolled = window.scrollY > CONFIG.scroll.indicatorFadeThreshold;
-                indicator.style.opacity = scrolled ? '0' : '1';
-                indicator.style.pointerEvents = scrolled ? 'none' : 'auto';
-                ticking = false;
-            });
-        }
-
-        indicator.addEventListener('click', onClick);
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-        registerCleanup(() => {
-            indicator.removeEventListener('click', onClick);
-            window.removeEventListener('scroll', onScroll);
         });
     }
 
