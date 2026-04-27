@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Security Headers (also configure on server) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' https://images.unsplash.com data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' https://images.unsplash.com data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), accelerometer=(), gyroscope=(), magnetometer=()">
@@ -35,7 +35,7 @@
     <meta property="og:description" content="Premium cleaning, transportation, landscaping, and maintenance services for schools and businesses in Houston since 2010.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cfshouston.com/">
-    <meta property="og:image" content="https://cfshouston.com/images/og-image.jpg">
+    <meta property="og:image" content="https://cfshouston.com/images/social.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US">
@@ -44,7 +44,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Crystal Facility Solutions | Houston's Premier Facility Management">
     <meta name="twitter:description" content="Premium cleaning, transportation, landscaping, and maintenance services for schools and businesses in Houston since 2010.">
-    <meta name="twitter:image" content="https://cfshouston.com/images/og-image.jpg">
+    <meta name="twitter:image" content="https://cfshouston.com/images/social.png">
 
     <!-- Preconnect & DNS Prefetch for Performance -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -143,15 +143,10 @@
     }
     </script>
 
-    <!-- EmailJS — Deferred for Performance -->
+    <!-- EmailJS — External Init File (CSP Compliant) -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
-    <script defer>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init({ publicKey: "F2TtT04bpqE_Lew1Q" });
-            }
-        });
-    </script>
+    <script src="js/emailjs-init.js" defer></script>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
