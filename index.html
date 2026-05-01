@@ -1605,9 +1605,8 @@
                             <div class="quote-icon">
                                 <i class="fas fa-quote-left"></i>
                             </div>
-                            <p class="testimonial-text">Crystal Facility Solutions transformed our school campus. Their
-                                attention to detail and consistent quality have made them an invaluable partner. The
-                                team is professional, responsive, and truly cares about our needs.</p>
+                            <p class="testimonial-text">Best service. I’m very satisfied.
+                            </p>
                             <div class="testimonial-rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -1618,12 +1617,12 @@
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">
-                                <span>SM</span>
+                                <span>BK</span>
                                 <div class="avatar-ring"></div>
                             </div>
                             <div class="author-info">
-                                <h4>Sarah Mitchell</h4>
-                                <p>Principal, Houston ISD</p>
+                                <h4>Benjamin K</h4>
+                                <p>Customer</p>
                                 <span class="author-badge">
                                     <i class="fas fa-check-circle"></i> Verified Client
                                 </span>
@@ -1637,9 +1636,9 @@
                             <div class="quote-icon">
                                 <i class="fas fa-quote-left"></i>
                             </div>
-                            <p class="testimonial-text">We've been using CFS for 3 years. Their transportation service
-                                is punctual and safe. Parents love the real-time tracking app. Highly recommend for any
-                                facility needs.</p>
+                            <p class="testimonial-text">They are responsive to our needs, flexible with scheduling, and proactive in addressing any requests or concerns. The consistency and attention to detail they deliver create a clean and welcoming environment for both our employees and clients.
+We highly recommend CFS to any business seeking a dependable and professional cleaning partner.
+                            </p>
                             <div class="testimonial-rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -1650,12 +1649,12 @@
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">
-                                <span>RJ</span>
+                                <span>JC</span>
                                 <div class="avatar-ring"></div>
                             </div>
                             <div class="author-info">
-                                <h4>Robert Johnson</h4>
-                                <p>Facilities Director, TechCorp</p>
+                                <h4>Jamie Clark</h4>
+                                <p>Customer</p>
                                 <span class="author-badge">
                                     <i class="fas fa-check-circle"></i> Verified Client
                                 </span>
@@ -1669,9 +1668,8 @@
                             <div class="quote-icon">
                                 <i class="fas fa-quote-left"></i>
                             </div>
-                            <p class="testimonial-text">The landscaping team is exceptional. They transformed our
-                                corporate grounds into a beautiful, welcoming space. Their eco-friendly approach aligns
-                                perfectly with our company values.</p>
+                            <p class="testimonial-text">Very professional and efficient cleaning service. I’m very satisfied.
+                            </p>
                             <div class="testimonial-rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -1682,12 +1680,12 @@
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">
-                                <span>EP</span>
+                                <span>AE</span>
                                 <div class="avatar-ring"></div>
                             </div>
                             <div class="author-info">
-                                <h4>Emily Parker</h4>
-                                <p>CEO, GreenSpace Industries</p>
+                                <h4>Arda E</h4>
+                                <p>Customer</p>
                                 <span class="author-badge">
                                     <i class="fas fa-check-circle"></i> Verified Client
                                 </span>
@@ -1722,17 +1720,50 @@
             </div>
             <!-- CTA -->
             <div class="testimonials-cta">
-                <div class="cta-card">
-                    <div class="cta-icon">
-                        <i class="fas fa-microphone"></i>
-                        <div class="icon-pulse"></div>
+                <div class="cta-card google-review-card" id="googleReviewCard">
+                    <div class="google-icon">
+                        <i class="fab fa-google"></i>
                     </div>
-                    <h3>Share Your Experience</h3>
-                    <p>Your feedback helps us improve and serve you better</p>
-                    <button type="button" class="btn-cta" data-scroll="contact">
-                        <span>Leave a Review</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
+                    
+                    <h3>Love Our Service?</h3>
+                    <p>Your review helps the Houston business community find trusted facility management partners.</p>
+                    
+                    <div class="google-rating-preview" id="googleRatingPreview">
+                        <!-- Loading skeleton -->
+                        <div class="skeleton-stars" id="ratingSkeleton">
+                            <div class="skeleton-star"></div>
+                            <div class="skeleton-star"></div>
+                            <div class="skeleton-star"></div>
+                            <div class="skeleton-star"></div>
+                            <div class="skeleton-star"></div>
+                        </div>
+                        
+                        <!-- Live data -->
+                        <div class="rating-stars" id="ratingStars" style="display: none;"></div>
+                        <span class="rating-text" id="ratingText" style="display: none;">--</span>
+                        <span class="rating-count" id="ratingCount" style="display: none;">
+                            Based on <span class="review-count" id="reviewCount">0</span> Google reviews
+                        </span>
+                    </div>
+                    
+                    <a href="https://www.google.com/maps/place/Crystal+Facility+Solutions/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="btn-cta btn-google-review">
+                        <i class="fas fa-star"></i>
+                        <span>Review Us on Google</span>
+                    </a>
+                    
+                    <div class="review-trust-badges">
+                        <span class="trust-badge">
+                            <i class="fas fa-check-circle"></i> Verified Reviews
+                        </span>
+                        <span class="trust-badge">
+                            <i class="fas fa-shield-alt"></i> Public & Transparent
+                        </span>
+                    </div>
+                    
+                    <span class="rating-updated" id="ratingUpdated"></span>
                 </div>
             </div>
 
@@ -2161,6 +2192,7 @@
     <script src="js/modules/services.js" defer></script>
     <script src="js/modules/forms.js" defer></script>
     <script src="js/modules/testimonials.js" defer></script>
+    <script src="js/modules/google-reviews.js" defer></script>
     <script src="js/modules/footer.js" defer></script>
     <script src="js/modules/chat.js" defer></script>
     <script src="js/modules/values.js" defer></script>
