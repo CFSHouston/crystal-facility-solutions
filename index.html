@@ -1165,7 +1165,7 @@
                         </div>
                     </div>
 
-                    <div class="stat-card highlight" data-target="99">
+                    <div class="stat-card highlight" data-target="100">
                         <div class="stat-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
@@ -1816,11 +1816,11 @@ We highly recommend CFS to any business seeking a dependable and professional cl
                         </div>
                         <div class="stack-card stack-card-2" style="--delay: 0.1s">
                             <i class="fas fa-bolt"></i>
-                            <span>15min Response</span>
+                            <span>10min Response</span>
                         </div>
                         <div class="stack-card stack-card-1" style="--delay: 0s">
                             <i class="fas fa-shield-alt"></i>
-                            <span>99% Satisfaction</span>
+                            <span>100% Satisfaction</span>
                         </div>
                     </div>
 
@@ -1849,8 +1849,7 @@ We highly recommend CFS to any business seeking a dependable and professional cl
                                 <span class="method-value">info@cfshouston.com</span>
                             </div>
                         </a>
-
-                        <div class="method-card method-location">
+                        <a href="https://maps.app.goo.gl/tbh1a9b6KrFsMPNRA" class="method-card method-location">
                             <div class="method-icon">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
@@ -1858,17 +1857,17 @@ We highly recommend CFS to any business seeking a dependable and professional cl
                                 <span class="method-label">Visit Us</span>
                                 <span class="method-value">Stafford, TX</span>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- Live Status -->
-                    <div class="live-status">
+                    <div class="live-status" id="liveStatus">
                         <div class="status-indicator">
-                            <span class="status-pulse"></span>
-                            <span class="status-dot"></span>
+                            <span class="status-pulse" id="statusPulse"></span>
+                            <span class="status-dot" id="statusDot"></span>
                         </div>
-                        <span class="status-text">We're online now</span>
-                        <span class="status-time">Avg. response: 2 min</span>
+                        <span class="status-text" id="statusText">Checking...</span>
+                        <span class="status-time" id="statusTime"></span>
                     </div>
                 </div>
 

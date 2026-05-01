@@ -20,7 +20,16 @@
             maintenance: { to_email: 'cleaning@cfshouston.com', department: 'Maintenance Team' },
             other: { to_email: 'info@cfshouston.com', department: 'General Inquiries' }
         },
-        defaultRoute: { to_email: 'info@cfshouston.com', department: 'General Inquiries' }
+        defaultRoute: { to_email: 'info@cfshouston.com', department: 'General Inquiries' },
+        
+        // ─── Live Status Config ─────────────────────────────────
+        liveStatus: {
+            timezone: 'America/Chicago',
+            workDays: [1, 2, 3, 4, 5], // Monday-Friday
+            workStart: 8,  // 8:00 AM
+            workEnd: 16,   // 4:00 PM ← CHANGED from 18
+            updateInterval: 60000 // 1 minute
+        }
     };
 
     // ─── Module State ───────────────────────────────────────────
@@ -30,7 +39,8 @@
         boundHandlers: {},
         rafId: null,
         isTouchDevice: window.matchMedia('(pointer: coarse)').matches,
-        prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        liveStatusInterval: null
     };
 
     // ─── Input Sanitization ─────────────────────────────────────
@@ -41,6 +51,76 @@
             .replace(/javascript:/gi, '')
             .replace(/on\w+=/gi, '')
             .trim();
+    }
+
+    // ─── LIVE STATUS ────────────────────────────────────────────
+    function getHoustonTime() {
+        return new Date(new Date().toLocaleString('en-US', { timeZone: CONFIG.liveStatus.timezone }));
+    }
+
+    function isBusinessHours() {
+        const now = getHoustonTime();
+        const day = now.getDay();
+        const hour = now.getHours();
+        const isWorkDay = CONFIG.liveStatus.workDays.includes(day);
+        const isWorkHour = hour >= CONFIG.liveStatus.workStart && hour < CONFIG.liveStatus.workEnd;
+        return isWorkDay && isWorkHour;
+    }
+
+    function getNextOpenTime() {
+        const now = getHoustonTime();
+        const day = now.getDay();
+        const hour = now.getHours();
+        
+        // Before 8 AM on workday
+        if (CONFIG.liveStatus.workDays.includes(day) && hour < CONFIG.liveStatus.workStart) {
+            return 'today at 8 AM';
+        }
+        
+        // After 4 PM or weekend — find next workday
+        let daysAhead = 1;
+        let nextDay = (day + daysAhead) % 7;
+        
+        while (!CONFIG.liveStatus.workDays.includes(nextDay) && daysAhead < 7) {
+            daysAhead++;
+            nextDay = (day + daysAhead) % 7;
+        }
+        
+        return daysAhead === 1 ? 'tomorrow at 8 AM' : 'Monday at 8 AM';
+    }
+
+    function updateLiveStatus() {
+        const pulse = document.getElementById('statusPulse');
+        const dot = document.getElementById('statusDot');
+        const text = document.getElementById('statusText');
+        const time = document.getElementById('statusTime');
+        
+        if (!text || !dot) return;
+
+        const now = getHoustonTime();
+        const hour = now.getHours();
+        const isWorking = isBusinessHours();
+
+        if (isWorking) {
+            // Working hours: green, fixed "10 minutes"
+            dot.style.background = '#22c55e';
+            if (pulse) pulse.style.background = 'rgba(34, 197, 94, 0.5)';
+            text.textContent = "We're online now";
+            time.textContent = 'Avg. response: 10 minutes';
+        } else {
+            // After 4 PM or before 8 AM: red, show next open time
+            const nextOpen = getNextOpenTime();
+            dot.style.background = '#ef4444';
+            if (pulse) pulse.style.background = 'rgba(239, 68, 68, 0.5)';
+            text.textContent = `Back ${nextOpen}`;
+            time.textContent = ''; // No response time when closed
+        }
+    }
+
+    function initLiveStatus() {
+        updateLiveStatus();
+        // No interval needed since it's fixed text, but keep for time transitions
+        state.liveStatusInterval = setInterval(updateLiveStatus, CONFIG.liveStatus.updateInterval);
     }
 
     // ─── Initialization ─────────────────────────────────────────
@@ -54,6 +134,7 @@
         initButton();
         initCharCount();
         initValidation();
+        initLiveStatus(); // ← ADDED
         if (!state.isTouchDevice && !state.prefersReducedMotion) {
             initTilt();
         }
@@ -637,6 +718,12 @@
         if (state.rafId) {
             cancelAnimationFrame(state.rafId);
             state.rafId = null;
+        }
+
+        // Clear live status interval
+        if (state.liveStatusInterval) {
+            clearInterval(state.liveStatusInterval);
+            state.liveStatusInterval = null;
         }
 
         // Clear timeouts
