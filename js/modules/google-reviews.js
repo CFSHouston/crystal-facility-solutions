@@ -193,7 +193,7 @@
         
         if (success) {
             console.log('✅ Google reviews updated!');
-            console.log('   Rating: ' + data.rating.toFixed(1) + ' / 5.0');
+            console.log('   Rating: ' + data.rating.toFixed(1) + ' / 5');
             console.log('   Reviews: ' + data.count.toLocaleString());
             console.log('   Stored in browser for 30+ days');
         }
@@ -205,12 +205,12 @@
         
         if (!stored) {
             console.log('ℹ️  No data stored yet.');
-            console.log('   Defaults: ' + CONFIG.defaultRating + ' / 5.0 (' + CONFIG.defaultCount + ' reviews)');
+            console.log('   Defaults: ' + CONFIG.defaultRating + ' / 5 (' + CONFIG.defaultCount + ' reviews)');
             return;
         }
         
         console.log('📊 Current stored reviews:');
-        console.log('   Rating: ' + stored.rating.toFixed(1) + ' / 5.0');
+        console.log('   Rating: ' + stored.rating.toFixed(1) + ' / 5');
         console.log('   Reviews: ' + stored.count.toLocaleString());
         console.log('   Stored: ' + stored.daysOld + ' days ago');
         console.log('   Status: ' + (stored.isStale ? '⚠️ Stale — update recommended' : '✅ Fresh'));
