@@ -168,13 +168,13 @@
         // Validate inputs
         if (typeof rating !== 'number' || isNaN(rating)) {
             console.log('❌ First argument must be a number (rating, e.g., 4.9)');
-            console.log('   Usage: updateGoogleReviews(4.9, 135)');
+            console.log('   Usage: updateGoogleReviews(5, 3)');
             return;
         }
         
         if (typeof count !== 'number' || isNaN(count) || count < 0) {
             console.log('❌ Second argument must be a positive number (review count, e.g., 135)');
-            console.log('   Usage: updateGoogleReviews(4.9, 135)');
+            console.log('   Usage: updateGoogleReviews(5, 3)');
             return;
         }
         
