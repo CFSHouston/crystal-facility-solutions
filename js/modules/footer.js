@@ -1,22 +1,17 @@
-
 /* ============================================
-   FOOTER MODULE - PRODUCTION READY
-   Crystal Facility Solutions
+   FOOTER MODULE - Production Ready
    ============================================ */
 
 (function() {
     'use strict';
 
-    // ─── Configuration ──────────────────────────────────────────
     const CONFIG = {
         scrollThreshold: 500,
-        scrollThrottleMs: 16,
         mobileParticleCount: 15,
         desktopParticleCount: 30,
         mobileBreakpoint: 768
     };
 
-    // ─── Module State ───────────────────────────────────────────
     const state = {
         isInitialized: false,
         timeouts: [],
@@ -24,7 +19,6 @@
         boundHandlers: {}
     };
 
-    // ─── Initialization ─────────────────────────────────────────
     function init() {
         if (state.isInitialized) return;
         if (!document.querySelector('.footer')) return;
@@ -33,7 +27,7 @@
         initBackToTop();
         initCurrentYear();
         initFooterLinks();
-        initScrollAnimations();
+        initQuickQuoteButton();
 
         state.isInitialized = true;
     }
@@ -170,41 +164,44 @@
         state.boundHandlers.footerLinks = handlers;
     }
 
-    // ─── Scroll Animations ──────────────────────────────────────
-    function initScrollAnimations() {
-        const opts = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, opts);
+    // ─── Quick Quote Button ─────────────────────────────────────
+    function initQuickQuoteButton() {
+        const btn = document.getElementById('footerQuickQuote');
+        if (!btn) return;
 
-        document.querySelectorAll('.footer-column').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        btn.addEventListener('click', () => {
+            const drawer = document.getElementById('quickQuoteDrawer');
+            const drawerServiceName = document.getElementById('drawerServiceName');
+            const quoteServiceType = document.getElementById('quoteServiceType');
+
+            if (drawer) {
+                drawer.classList.add('active');
+                drawer.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+
+                if (drawerServiceName) drawerServiceName.textContent = 'Custom Package';
+                if (quoteServiceType) quoteServiceType.value = 'bundle';
+
+                const bundleFields = document.getElementById('bundleFields');
+                const propertySizeGroup = document.getElementById('propertySizeGroup');
+                const transportationFields = document.getElementById('transportationFields');
+
+                if (bundleFields) bundleFields.style.display = 'block';
+                if (propertySizeGroup) propertySizeGroup.style.display = 'none';
+                if (transportationFields) transportationFields.style.display = 'none';
+            }
         });
-
-        state.boundHandlers.scrollObserver = observer;
     }
 
     // ─── Cleanup / Destroy ──────────────────────────────────────
     function destroy() {
         if (!state.isInitialized) return;
 
-        // Clear timeouts
         state.timeouts.forEach(id => clearTimeout(id));
         state.timeouts = [];
-
-        // Cancel rAF
         state.rafIds.forEach(id => cancelAnimationFrame(id));
         state.rafIds = [];
 
-        // Stop particles
         if (state.boundHandlers.particles) {
             const { onVisibilityChange, onResize, animationId } = state.boundHandlers.particles;
             document.removeEventListener('visibilitychange', onVisibilityChange);
@@ -212,23 +209,16 @@
             if (animationId) cancelAnimationFrame(animationId);
         }
 
-        // Back to top
         if (state.boundHandlers.backToTop) {
             window.removeEventListener('scroll', state.boundHandlers.backToTop.onScroll);
             const btn = document.getElementById('backToTop');
             if (btn) btn.removeEventListener('click', state.boundHandlers.backToTop.onClick);
         }
 
-        // Footer links
         if (state.boundHandlers.footerLinks) {
             state.boundHandlers.footerLinks.forEach(h => {
                 h.link.removeEventListener('click', h.onClick);
             });
-        }
-
-        // Observer
-        if (state.boundHandlers.scrollObserver) {
-            state.boundHandlers.scrollObserver.disconnect();
         }
 
         state.boundHandlers = {};
