@@ -74,6 +74,7 @@
             this.initTimeline();
             this.initCertTooltips();
             this.initFacilityTooltips();
+            this.initDetailsToggle();
         }
 
         cacheElements() {
@@ -352,159 +353,150 @@
             const facilityData = {
                 'Education Facilities': {
                     icon: '🎓', title: 'Education Facilities',
-                    desc: 'Comprehensive cleaning and maintenance for schools, colleges, and educational institutions.',
+                    desc: 'Reliable cleaning and maintenance support for schools, colleges, and educational institutions through our trusted partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Classroom sanitization', 'Cafeteria deep cleaning', 'Gymnasium floor care', 'Restroom hygiene', 'Window cleaning'] },
-                        'Transportation': { icon: '🚌', items: ['School bus services', 'Field trip transport', 'Athletic team travel', 'Safe route planning'] },
-                        'Landscaping': { icon: '🌿', items: ['Campus grounds keeping', 'Sports field maintenance', 'Playground safety surfacing', 'Seasonal planting programs'] },
-                        'Maintenance': { icon: '🛠️', items: ['HVAC filter replacement', 'Plumbing repairs', 'Electrical maintenance', 'Playground upkeep', 'Emergency repairs'] }
+                        'Cleaning': { icon: '🧹', items: ['Classroom cleaning', 'Cafeteria cleaning', 'Gymnasium floor care', 'Restroom cleaning', 'Window cleaning'] },
+                        'Transportation': { icon: '🚌', items: ['School bus coordination', 'Field trip transport', 'Athletic team travel'] },
+                        'Landscaping': { icon: '🌿', items: ['Campus grounds keeping', 'Sports field maintenance', 'Seasonal planting'] },
+                        'Maintenance': { icon: '🛠️', items: ['General repairs', 'Plumbing & electrical', 'HVAC filter changes', 'Playground upkeep'] }
                     },
-                    highlight: { icon: '📚', text: 'Serving 50+ educational institutions' }
+                    highlight: { icon: '📚', text: 'Trusted partner for educational institutions' }
                 },
                 'Corporate Offices': {
                     icon: '🏢', title: 'Corporate Offices',
-                    desc: 'Professional facility management for corporate offices and business centers.',
+                    desc: 'Professional facility support for corporate offices and business centers through our vetted partner companies.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Daily office cleaning', 'Carpet & upholstery care', 'Window washing', 'Restroom sanitization', 'Trash removal'] },
-                        'Transportation': { icon: '🚌', items: ['Employee shuttle services', 'Corporate event transport', 'Airport transfer coordination', 'Executive car services'] },
-                        'Landscaping': { icon: '🌿', items: ['Corporate campus grounds', 'Entryway & reception gardens', 'Outdoor meeting spaces', 'Sustainable landscape design'] },
-                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Light bulb replacement', 'Plumbing repairs', 'Furniture assembly', 'IT infrastructure support'] }
+                        'Cleaning': { icon: '🧹', items: ['Office cleaning', 'Carpet & floor care', 'Window washing', 'Restroom cleaning', 'Trash removal'] },
+                        'Transportation': { icon: '🚌', items: ['Employee shuttle coordination', 'Corporate event transport', 'Airport transfer support'] },
+                        'Landscaping': { icon: '🌿', items: ['Office grounds maintenance', 'Entryway presentation', 'Outdoor meeting spaces'] },
+                        'Maintenance': { icon: '🛠️', items: ['General repairs', 'Light fixture maintenance', 'Plumbing & electrical', 'Furniture assembly'] }
                     },
-                    highlight: { icon: '💼', text: 'Partnering with 100+ office buildings' }
+                    highlight: { icon: '💼', text: 'Partnering with businesses across Houston' }
                 },
                 'Apartment Complex': {
                     icon: '🏠', title: 'Apartment Complex',
-                    desc: 'Full-service facility solutions for apartment communities and condominiums.',
+                    desc: 'Comprehensive facility solutions for apartment communities through our reliable contractor network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Common area maintenance', 'Move-in/out deep cleaning', 'Clubhouse & amenity cleaning', 'Trash chute & dumpster areas', 'Window washing services'] },
-                        'Transportation': { icon: '🚌', items: ['Resident shuttle services', 'Moving day support', 'Package delivery logistics', 'Visitor parking management'] },
-                        'Landscaping': { icon: '🌿', items: ['Community grounds keeping', 'Pool area maintenance', 'Walking path care', 'Seasonal flower programs', 'Tree & shrub management'] },
-                        'Maintenance': { icon: '🛠️', items: ['Unit turnover repairs', 'Plumbing & electrical', 'HVAC servicing', 'Appliance maintenance', '24/7 emergency repairs'] }
+                        'Cleaning': { icon: '🧹', items: ['Common area cleaning', 'Move-in/out cleaning', 'Clubhouse cleaning', 'Trash area maintenance', 'Window washing'] },
+                        'Transportation': { icon: '🚌', items: ['Resident shuttle coordination', 'Moving day support', 'Visitor transport'] },
+                        'Landscaping': { icon: '🌿', items: ['Community grounds keeping', 'Pool area maintenance', 'Seasonal planting', 'Tree & shrub care'] },
+                        'Maintenance': { icon: '🛠️', items: ['Unit turnover repairs', 'Plumbing & electrical', 'HVAC servicing', 'Appliance maintenance'] }
                     },
-                    highlight: { icon: '⭐', text: 'Managing 75+ apartment communities' }
+                    highlight: { icon: '⭐', text: 'Supporting apartment communities with care' }
                 },
                 'Car Dealerships': {
                     icon: '🚗', title: 'Car Dealerships',
-                    desc: 'Specialized cleaning and detailing services for car showrooms and service centers.',
+                    desc: 'Specialized cleaning and maintenance for car showrooms and service centers through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Showroom floor polishing', 'Vehicle detailing', 'Service bay cleaning', 'Customer lounge care', 'Window cleaning'] },
-                        'Transportation': { icon: '🚌', items: ['Customer shuttle services', 'Vehicle delivery transport', 'Test drive route support', 'Event logistics'] },
-                        'Landscaping': { icon: '🌿', items: ['Lot maintenance & debris removal', 'Entryway presentation', 'Test drive route care', 'Seasonal decorations'] },
-                        'Maintenance': { icon: '🛠️', items: ['Lot maintenance', 'Light fixture cleaning', 'Pressure washing', 'Signage cleaning', 'Emergency spills'] }
+                        'Cleaning': { icon: '🧹', items: ['Showroom floor care', 'Vehicle area cleaning', 'Service bay cleaning', 'Customer lounge care', 'Window cleaning'] },
+                        'Landscaping': { icon: '🌿', items: ['Lot maintenance', 'Entryway presentation', 'Seasonal decorations'] },
+                        'Maintenance': { icon: '🛠️', items: ['Lot maintenance', 'Light fixture cleaning', 'Pressure washing', 'Signage cleaning'] }
                     },
-                    highlight: { icon: '🏆', text: 'Trusted by 30+ dealerships' }
+                    highlight: { icon: '🏆', text: 'Trusted by dealerships throughout Houston' }
                 },
                 'Gyms': {
                     icon: '💪', title: 'Fitness Centers',
-                    desc: 'Hygiene-focused cleaning for gyms, yoga studios, and fitness facilities.',
+                    desc: 'Thorough cleaning and upkeep for gyms, yoga studios, and fitness facilities through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Equipment sanitization', 'Locker room deep clean', 'Floor mat cleaning', 'Shower & sauna care', 'Mirror polishing'] },
-                        'Transportation': { icon: '🚌', items: ['Member shuttle services', 'Event transport', 'Equipment delivery', 'Staff commuting support'] },
-                        'Landscaping': { icon: '🌿', items: ['Outdoor training areas', 'Pool deck maintenance', 'Entryway greenery', 'Parking lot cleanliness'] },
-                        'Maintenance': { icon: '🛠️', items: ['Equipment inspection', 'HVAC filter changes', 'Plumbing repairs', 'Lighting maintenance', 'Emergency response'] }
+                        'Cleaning': { icon: '🧹', items: ['Equipment cleaning', 'Locker room cleaning', 'Floor mat cleaning', 'Shower & sauna care', 'Mirror polishing'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor training areas', 'Pool deck maintenance', 'Entryway greenery'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC filter changes', 'Plumbing repairs', 'Lighting maintenance'] }
                     },
-                    highlight: { icon: '🏋️', text: 'Keeping 40+ gyms spotless' }
+                    highlight: { icon: '🏋️', text: 'Keeping fitness facilities clean and ready' }
                 },
                 'Retail Stores': {
                     icon: '🛍️', title: 'Retail Stores',
-                    desc: 'Retail-focused cleaning that enhances customer experience and brand image.',
+                    desc: 'Retail-focused cleaning and maintenance that enhances customer experience through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Floor care & buffing', 'Fitting room sanitization', 'Display case cleaning', 'Restroom maintenance', 'Window washing'] },
-                        'Transportation': { icon: '🚌', items: ['Customer shuttle services', 'Delivery coordination', 'Event transport', 'Staff parking management'] },
-                        'Landscaping': { icon: '🌿', items: ['Storefront presentation', 'Entryway maintenance', 'Seasonal decorations', 'Outdoor display areas'] },
-                        'Maintenance': { icon: '🛠️', items: ['Fixture repairs', 'Lighting maintenance', 'HVAC servicing', 'Signage cleaning', 'Emergency repairs'] }
+                        'Cleaning': { icon: '🧹', items: ['Floor care & buffing', 'Fitting room cleaning', 'Display case cleaning', 'Restroom maintenance', 'Window washing'] },
+                        'Landscaping': { icon: '🌿', items: ['Storefront presentation', 'Entryway maintenance', 'Seasonal decorations'] },
+                        'Maintenance': { icon: '🛠️', items: ['Fixture repairs', 'Lighting maintenance', 'HVAC servicing', 'Signage cleaning'] }
                     },
-                    highlight: { icon: '🛒', text: 'Serving 60+ retail locations' }
+                    highlight: { icon: '🛒', text: 'Serving retail locations across the region' }
                 },
                 'Industrial Facilities': {
                     icon: '🏭', title: 'Industrial Facilities',
-                    desc: 'Heavy-duty cleaning and maintenance for warehouses and manufacturing plants.',
+                    desc: 'Heavy-duty cleaning and maintenance for warehouses and manufacturing plants through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Warehouse floor scrubbing', 'Machinery degreasing', 'High-dust removal', 'Loading dock cleaning', 'Safety line painting'] },
-                        'Transportation': { icon: '🚌', items: ['Employee shuttle services', 'Inter-facility transport', 'Shift change coordination', 'Logistics support'] },
-                        'Landscaping': { icon: '🌿', items: ['Industrial grounds maintenance', 'Perimeter fencing care', 'Storm water management', 'Environmental compliance'] },
-                        'Maintenance': { icon: '🛠️', items: ['Equipment maintenance', 'Electrical repairs', 'Plumbing services', 'Structural repairs', 'Safety inspections'] }
+                        'Cleaning': { icon: '🧹', items: ['Warehouse floor scrubbing', 'Machinery area cleaning', 'High-dust removal', 'Loading dock cleaning', 'Safety line painting'] },
+                        'Landscaping': { icon: '🌿', items: ['Industrial grounds maintenance', 'Perimeter care', 'Storm debris management'] },
+                        'Maintenance': { icon: '🛠️', items: ['Equipment maintenance', 'Electrical repairs', 'Plumbing services', 'Structural repairs'] }
                     },
-                    highlight: { icon: '⚙️', text: 'Supporting 25+ industrial sites' }
+                    highlight: { icon: '⚙️', text: 'Supporting industrial operations reliably' }
                 },
                 'Hotels & Hospitality': {
                     icon: '🏨', title: 'Hotels & Hospitality',
-                    desc: 'Premium cleaning standards for hotels, resorts, and hospitality venues.',
+                    desc: 'Premium cleaning standards for hotels, resorts, and hospitality venues through our trusted partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Guest room turnover', 'Lobby & common areas', 'Pool & spa maintenance', 'Restaurant kitchen deep clean', 'Laundry services'] },
-                        'Transportation': { icon: '🚌', items: ['Guest shuttle services', 'Airport transfers', 'Tour & excursion transport', 'Valet parking management'] },
-                        'Landscaping': { icon: '🌿', items: ['Resort grounds & gardens', 'Poolscape maintenance', 'Outdoor event spaces', 'Entryway & porte-cochère', 'Tropical plant programs'] },
-                        'Maintenance': { icon: '🛠️', items: ['Room repairs & upkeep', 'HVAC & climate control', 'Plumbing & electrical', 'Pool & spa equipment', '24/7 engineering support'] }
+                        'Cleaning': { icon: '🧹', items: ['Guest room cleaning', 'Lobby & common areas', 'Pool & spa cleaning', 'Restaurant kitchen cleaning', 'Laundry support'] },
+                        'Landscaping': { icon: '🌿', items: ['Resort grounds & gardens', 'Poolscape maintenance', 'Outdoor event spaces', 'Entryway presentation'] },
+                        'Maintenance': { icon: '🛠️', items: ['Room repairs', 'HVAC & climate control', 'Plumbing & electrical', 'Pool & spa equipment'] }
                     },
-                    highlight: { icon: '🌟', text: 'Proudly serving 80+ hotels' }
+                    highlight: { icon: '🌟', text: 'Proudly serving the hospitality industry' }
                 },
                 'Event Venues': {
                     icon: '🎉', title: 'Event Venues',
-                    desc: 'Pre and post-event cleaning for conference centers, stadiums, and banquet halls.',
+                    desc: 'Pre and post-event cleaning for conference centers, stadiums, and banquet halls through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Pre-event setup cleaning', 'Post-event deep clean', 'Carpet & upholstery care', 'Restroom servicing', 'Waste management'] },
-                        'Transportation': { icon: '🚌', items: ['Attendee shuttle coordination', 'VIP transport services', 'Equipment & gear moving', 'Parking management support'] },
-                        'Landscaping': { icon: '🌿', items: ['Outdoor event preparation', 'Tent & pavilion areas', 'Grounds beautification', 'Post-event restoration'] },
-                        'Maintenance': { icon: '🛠️', items: ['Setup & breakdown support', 'Equipment installation', 'Lighting & AV coordination', 'Emergency repairs during events'] }
+                        'Cleaning': { icon: '🧹', items: ['Pre-event setup cleaning', 'Post-event deep cleaning', 'Carpet & upholstery care', 'Restroom servicing', 'Waste management'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor event preparation', 'Grounds beautification', 'Post-event restoration'] },
+                        'Maintenance': { icon: '🛠️', items: ['Setup & breakdown support', 'Equipment installation', 'Lighting coordination', 'Emergency repairs'] }
                     },
-                    highlight: { icon: '🎊', text: '500+ events serviced annually' }
+                    highlight: { icon: '🎊', text: 'Making every event space shine' }
                 },
                 'Recreation And Shopping Areas': {
                     icon: '🎮', title: 'Recreation & Shopping',
-                    desc: 'Comprehensive maintenance for malls, shopping centers, and recreational facilities.',
+                    desc: 'Comprehensive maintenance for malls, shopping centers, and recreational facilities through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Common area maintenance', 'Food court deep cleaning', 'Restroom hygiene', 'Parking structure cleaning', 'Escalator care'] },
-                        'Transportation': { icon: '🚌', items: ['Customer shuttle services', 'Security transport', 'Employee parking shuttles', 'Special event transport'] },
-                        'Landscaping': { icon: '🌿', items: ['Outdoor mall areas', 'Parking lot islands', 'Entryway gardens', 'Seasonal displays', 'Storm debris management'] },
-                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Signage maintenance', 'Emergency response'] }
+                        'Cleaning': { icon: '🧹', items: ['Common area cleaning', 'Food court cleaning', 'Restroom hygiene', 'Parking structure cleaning', 'Escalator care'] },
+                        'Transportation': { icon: '🚌', items: ['Customer shuttle coordination', 'Security transport', 'Event transport'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor mall areas', 'Parking lot islands', 'Entryway gardens', 'Seasonal displays'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Signage maintenance'] }
                     },
-                    highlight: { icon: '🏬', text: 'Managing 35+ recreation centers' }
+                    highlight: { icon: '🏬', text: 'Managing recreation and shopping spaces' }
                 },
                 'Healthcare Facilities': {
                     icon: '🏥', title: 'Healthcare Facilities',
-                    desc: 'Medical-grade cleaning and disinfection for hospitals, clinics, and care facilities.',
+                    desc: 'Cleaning and maintenance support for clinics and care facilities through our trusted partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Patient room sanitization', 'Operating room sterilization', 'Waiting area cleaning', 'Medical waste disposal', 'Floor disinfection'] },
-                        'Transportation': { icon: '🚌', items: ['Patient transport services', 'Medical equipment moving', 'Staff shuttle coordination', 'Emergency logistics'] },
-                        'Landscaping': { icon: '🌿', items: ['Healing garden maintenance', 'Patient outdoor areas', 'Entryway wellness gardens', 'Smoke-free zone enforcement'] },
-                        'Maintenance': { icon: '🛠️', items: ['Medical equipment calibration', 'HVAC & air quality', 'Plumbing & medical gases', 'Emergency generator care', '24/7 biomedical support'] }
+                        'Cleaning': { icon: '🧹', items: ['General area cleaning', 'Waiting area cleaning', 'Floor cleaning', 'Window cleaning'] },
+                        'Landscaping': { icon: '🌿', items: ['Outdoor patient areas', 'Entryway gardens', 'Grounds maintenance'] },
+                        'Maintenance': { icon: '🛠️', items: ['General repairs', 'HVAC & air quality', 'Plumbing & electrical', 'Emergency support'] }
                     },
-                    highlight: { icon: '❤️', text: 'Trusted by 45+ healthcare facilities' }
+                    highlight: { icon: '❤️', text: 'Supporting healthcare facilities with care' }
                 },
                 'Places of Worship': {
                     icon: '⛪', title: 'Places of Worship',
-                    desc: 'Respectful and thorough cleaning for churches, mosques, temples, and synagogues.',
+                    desc: 'Respectful cleaning and maintenance for churches, mosques, temples, and synagogues through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Sanctuary cleaning', 'Fellowship hall care', 'Kitchen deep clean', 'Restroom maintenance', 'Window washing'] },
-                        'Transportation': { icon: '🚌', items: ['Congregation shuttle services', 'Youth group transport', 'Event & retreat coordination', 'Elderly & special needs access'] },
-                        'Landscaping': { icon: '🌿', items: ['Grounds & cemetery care', 'Memorial garden maintenance', 'Entryway presentation', 'Seasonal decorations', 'Parking lot landscaping'] },
-                        'Maintenance': { icon: '🛠️', items: ['HVAC servicing', 'Plumbing repairs', 'Electrical work', 'Grounds keeping', 'Emergency repairs'] }
+                        'Cleaning': { icon: '🧹', items: ['Sanctuary cleaning', 'Fellowship hall care', 'Kitchen cleaning', 'Restroom maintenance', 'Window washing'] },
+                        'Landscaping': { icon: '🌿', items: ['Grounds & cemetery care', 'Memorial garden maintenance', 'Entryway presentation', 'Seasonal decorations'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC servicing', 'Plumbing repairs', 'Electrical work', 'General upkeep'] }
                     },
-                    highlight: { icon: '🙏', text: 'Serving 20+ places of worship' }
+                    highlight: { icon: '🙏', text: 'Serving places of worship with respect' }
                 },
                 'Government Buildings': {
                     icon: '🏛️', title: 'Government Buildings',
-                    desc: 'Secure and compliant facility services for municipal and federal buildings.',
+                    desc: 'Facility services for municipal and federal buildings through our reliable partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Office cleaning', 'Public area maintenance', 'Restroom sanitization', 'Window cleaning', 'Floor care'] },
-                        'Transportation': { icon: '🚌', items: ['Official vehicle services', 'Employee shuttle programs', 'Secure transport coordination', 'Event logistics support'] },
-                        'Landscaping': { icon: '🌿', items: ['Public grounds maintenance', 'Monument & memorial care', 'Sustainable practices', 'Storm response'] },
-                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Security system support', 'Emergency response'] }
+                        'Cleaning': { icon: '🧹', items: ['Office cleaning', 'Public area maintenance', 'Restroom cleaning', 'Window cleaning', 'Floor care'] },
+                        'Transportation': { icon: '🚌', items: ['Official vehicle coordination', 'Employee shuttle programs', 'Event transport'] },
+                        'Landscaping': { icon: '🌿', items: ['Public grounds maintenance', 'Monument care', 'Sustainable practices'] },
+                        'Maintenance': { icon: '🛠️', items: ['HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Emergency response'] }
                     },
-                    highlight: { icon: '📋', text: 'Contracted with 15+ agencies' }
+                    highlight: { icon: '📋', text: 'Partnering with government agencies' }
                 },
                 'Banks And Financial Institutions': {
                     icon: '🏦', title: 'Banking & Finance',
-                    desc: 'Discreet and secure cleaning for banks, credit unions, and financial institutions.',
+                    desc: 'Discreet cleaning and maintenance for banks and financial institutions through our partner network.',
                     services: {
-                        'Cleaning': { icon: '🧹', items: ['Teller area sanitization', 'Vault room cleaning', 'Customer lounge care', 'ATM area maintenance', 'Window cleaning'] },
-                        'Transportation': { icon: '🚌', items: ['Secure cash transport', 'Executive car services', 'Client shuttle programs', 'Event logistics'] },
-                        'Landscaping': { icon: '🌿', items: ['Professional exterior presentation', 'Drive-thru lane maintenance', 'Entryway gardens', 'Seasonal decorations'] },
-                        'Maintenance': { icon: '🛠️', items: ['Security system checks', 'HVAC maintenance', 'Plumbing repairs', 'Electrical work', 'Emergency response'] }
+                        'Cleaning': { icon: '🧹', items: ['Teller area cleaning', 'Vault room cleaning', 'Customer lounge care', 'ATM area maintenance', 'Window cleaning'] },
+                        'Landscaping': { icon: '🌿', items: ['Professional exterior presentation', 'Drive-thru maintenance', 'Entryway gardens'] },
+                        'Maintenance': { icon: '🛠️', items: ['Security system checks', 'HVAC maintenance', 'Plumbing repairs', 'Electrical work'] }
                     },
-                    highlight: { icon: '💰', text: 'Securing 50+ financial institutions' }
+                    highlight: { icon: '💰', text: 'Securing financial institutions with trust' }
                 }
-            };
+            };;
 
             const buildHtml = (key) => {
                 const data = facilityData[key];
@@ -638,6 +630,38 @@
             [this.storyCard, this.excellenceCard, ...this.statCards].forEach(card => {
                 if (card) card.style.transform = '';
             });
+        }
+
+        initDetailsToggle() {
+            const toggle = document.getElementById('detailsToggle');
+            const content = document.getElementById('detailsContent');
+            if (!toggle || !content) return;
+
+            const onClick = () => {
+                const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                content.setAttribute('aria-hidden', expanded);
+
+                // Smooth scroll to content when opening
+                if (!expanded) {
+                    const rafId = requestAnimationFrame(() => {
+                        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    });
+                    this.rafIds.push(rafId);
+                }
+            };
+
+            const onKey = (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onClick();
+                }
+            };
+
+            toggle.addEventListener('click', onClick);
+            toggle.addEventListener('keydown', onKey);
+            if (!this.boundHandlers.detailsToggle) this.boundHandlers.detailsToggle = [];
+            this.boundHandlers.detailsToggle.push({ toggle, onClick, onKey });
         }
 
         destroy() {

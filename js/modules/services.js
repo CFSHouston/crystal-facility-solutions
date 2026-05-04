@@ -165,6 +165,80 @@
             this.animationId = requestAnimationFrame(() => this.animate());
         }
 
+
+        openDetailDrawer(serviceType) {
+            const drawerMap = {
+                cleaning: 'cleaningDetailDrawer',
+                transportation: 'transportationDetailDrawer',
+                landscaping: 'landscapingDetailDrawer',
+                maintenance: 'maintenanceDetailDrawer'
+            };
+            const drawerId = drawerMap[serviceType];
+            if (!drawerId) return;
+
+            const drawer = document.getElementById(drawerId);
+            if (!drawer) return;
+
+            // Close any open quick quote drawer first
+            if (this.drawer && this.drawer.classList.contains('active')) {
+                this.closeDrawer();
+            }
+
+            // Hide chat widget
+            const chatWidget = document.querySelector('.chat-widget');
+            if (chatWidget) {
+                chatWidget.style.opacity = '0';
+                chatWidget.style.pointerEvents = 'none';
+                chatWidget.style.transition = 'opacity 0.3s ease';
+            }
+
+            drawer.classList.add('active');
+            drawer.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // Setup backdrop click and escape key for this drawer
+            const backdrop = drawer.querySelector('.detail-drawer-backdrop');
+            const closeBtn = drawer.querySelector('.btn-close-detail-drawer');
+
+            const closeDrawer = () => {
+                drawer.classList.remove('active');
+                drawer.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (chatWidget) {
+                    chatWidget.style.opacity = '1';
+                    chatWidget.style.pointerEvents = 'all';
+                }
+                if (backdrop) backdrop.removeEventListener('click', closeDrawer);
+                if (closeBtn) closeBtn.removeEventListener('click', closeDrawer);
+                document.removeEventListener('keydown', onEsc);
+            };
+
+            const onEsc = (e) => {
+                if (e.key === 'Escape') closeDrawer();
+            };
+
+            if (backdrop) backdrop.addEventListener('click', closeDrawer);
+            if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+            document.addEventListener('keydown', onEsc);
+
+            // Handle "Get a Quote" button inside detail drawer
+            const quoteBtn = drawer.querySelector('.btn-detail-quote');
+            if (quoteBtn) {
+                const onQuoteClick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeDrawer();
+                    const timeoutId = setTimeout(() => {
+                        this.openDrawer(serviceType);
+                    }, 300);
+                    this.timeouts.push(timeoutId);
+                };
+                quoteBtn.addEventListener('click', onQuoteClick);
+                if (!this.boundHandlers.detailQuote) this.boundHandlers.detailQuote = [];
+                this.boundHandlers.detailQuote.push({ quoteBtn, onQuoteClick });
+            }
+        }
+
         destroy() {
             this.isActive = false;
             if (this.animationId) {
@@ -453,15 +527,13 @@
             document.addEventListener('keydown', onEscape);
             this.boundHandlers.escape = onEscape;
 
-            // Learn more buttons
+            // Learn more buttons - open detail drawer
             document.querySelectorAll('.btn-learn-more').forEach(btn => {
                 const onClick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) {
-                        contactSection.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    const service = btn.dataset.service;
+                    if (service) this.openDetailDrawer(service);
                 };
                 btn.addEventListener('click', onClick);
                 if (!this.boundHandlers.learnMore) this.boundHandlers.learnMore = [];
@@ -1354,6 +1426,80 @@
                 }, index * CONFIG.staggerDelay);
                 this.timeouts.push(timeoutId);
             });
+        }
+
+
+        openDetailDrawer(serviceType) {
+            const drawerMap = {
+                cleaning: 'cleaningDetailDrawer',
+                transportation: 'transportationDetailDrawer',
+                landscaping: 'landscapingDetailDrawer',
+                maintenance: 'maintenanceDetailDrawer'
+            };
+            const drawerId = drawerMap[serviceType];
+            if (!drawerId) return;
+
+            const drawer = document.getElementById(drawerId);
+            if (!drawer) return;
+
+            // Close any open quick quote drawer first
+            if (this.drawer && this.drawer.classList.contains('active')) {
+                this.closeDrawer();
+            }
+
+            // Hide chat widget
+            const chatWidget = document.querySelector('.chat-widget');
+            if (chatWidget) {
+                chatWidget.style.opacity = '0';
+                chatWidget.style.pointerEvents = 'none';
+                chatWidget.style.transition = 'opacity 0.3s ease';
+            }
+
+            drawer.classList.add('active');
+            drawer.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // Setup backdrop click and escape key for this drawer
+            const backdrop = drawer.querySelector('.detail-drawer-backdrop');
+            const closeBtn = drawer.querySelector('.btn-close-detail-drawer');
+
+            const closeDrawer = () => {
+                drawer.classList.remove('active');
+                drawer.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (chatWidget) {
+                    chatWidget.style.opacity = '1';
+                    chatWidget.style.pointerEvents = 'all';
+                }
+                if (backdrop) backdrop.removeEventListener('click', closeDrawer);
+                if (closeBtn) closeBtn.removeEventListener('click', closeDrawer);
+                document.removeEventListener('keydown', onEsc);
+            };
+
+            const onEsc = (e) => {
+                if (e.key === 'Escape') closeDrawer();
+            };
+
+            if (backdrop) backdrop.addEventListener('click', closeDrawer);
+            if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+            document.addEventListener('keydown', onEsc);
+
+            // Handle "Get a Quote" button inside detail drawer
+            const quoteBtn = drawer.querySelector('.btn-detail-quote');
+            if (quoteBtn) {
+                const onQuoteClick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeDrawer();
+                    const timeoutId = setTimeout(() => {
+                        this.openDrawer(serviceType);
+                    }, 300);
+                    this.timeouts.push(timeoutId);
+                };
+                quoteBtn.addEventListener('click', onQuoteClick);
+                if (!this.boundHandlers.detailQuote) this.boundHandlers.detailQuote = [];
+                this.boundHandlers.detailQuote.push({ quoteBtn, onQuoteClick });
+            }
         }
 
         destroy() {
