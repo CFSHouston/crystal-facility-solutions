@@ -16,7 +16,7 @@
         flipCooldown: 350,
         emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         phoneRegex: /^[\d\s\-\+\(\)]{10,}$/,
-        nameRegex: /^[a-zA-Z\s\-'"]{2,50}$/,
+        nameRegex: /^[a-zA-Z\s\-\'"]{2,50}$/,
         emails: {
             default: 'info@cfshouston.com',
             cleaning: 'cleaning@cfshouston.com',
@@ -163,80 +163,6 @@
             });
 
             this.animationId = requestAnimationFrame(() => this.animate());
-        }
-
-
-        openDetailDrawer(serviceType) {
-            const drawerMap = {
-                cleaning: 'cleaningDetailDrawer',
-                transportation: 'transportationDetailDrawer',
-                landscaping: 'landscapingDetailDrawer',
-                maintenance: 'maintenanceDetailDrawer'
-            };
-            const drawerId = drawerMap[serviceType];
-            if (!drawerId) return;
-
-            const drawer = document.getElementById(drawerId);
-            if (!drawer) return;
-
-            // Close any open quick quote drawer first
-            if (this.drawer && this.drawer.classList.contains('active')) {
-                this.closeDrawer();
-            }
-
-            // Hide chat widget
-            const chatWidget = document.querySelector('.chat-widget');
-            if (chatWidget) {
-                chatWidget.style.opacity = '0';
-                chatWidget.style.pointerEvents = 'none';
-                chatWidget.style.transition = 'opacity 0.3s ease';
-            }
-
-            drawer.classList.add('active');
-            drawer.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-
-            // Setup backdrop click and escape key for this drawer
-            const backdrop = drawer.querySelector('.detail-drawer-backdrop');
-            const closeBtn = drawer.querySelector('.btn-close-detail-drawer');
-
-            const closeDrawer = () => {
-                drawer.classList.remove('active');
-                drawer.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-                if (chatWidget) {
-                    chatWidget.style.opacity = '1';
-                    chatWidget.style.pointerEvents = 'all';
-                }
-                if (backdrop) backdrop.removeEventListener('click', closeDrawer);
-                if (closeBtn) closeBtn.removeEventListener('click', closeDrawer);
-                document.removeEventListener('keydown', onEsc);
-            };
-
-            const onEsc = (e) => {
-                if (e.key === 'Escape') closeDrawer();
-            };
-
-            if (backdrop) backdrop.addEventListener('click', closeDrawer);
-            if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-            document.addEventListener('keydown', onEsc);
-
-            // Handle "Get a Quote" button inside detail drawer
-            const quoteBtn = drawer.querySelector('.btn-detail-quote');
-            if (quoteBtn) {
-                const onQuoteClick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeDrawer();
-                    const timeoutId = setTimeout(() => {
-                        this.openDrawer(serviceType);
-                    }, 300);
-                    this.timeouts.push(timeoutId);
-                };
-                quoteBtn.addEventListener('click', onQuoteClick);
-                if (!this.boundHandlers.detailQuote) this.boundHandlers.detailQuote = [];
-                this.boundHandlers.detailQuote.push({ quoteBtn, onQuoteClick });
-            }
         }
 
         destroy() {
@@ -1428,7 +1354,6 @@
             });
         }
 
-
         openDetailDrawer(serviceType) {
             const drawerMap = {
                 cleaning: 'cleaningDetailDrawer',
@@ -1567,6 +1492,16 @@
     function init() {
         if (document.querySelector('.services-theater')) {
             servicesInstance = new ServicesTheater();
+
+            // Listen for external open requests via custom event
+            // This allows footer.js and other modules to open the drawer
+            // without exposing the instance to window global
+            document.addEventListener('cfs:openDrawer', (e) => {
+                const { serviceType, serviceName } = e.detail || {};
+                if (servicesInstance && typeof servicesInstance.openDrawer === 'function') {
+                    servicesInstance.openDrawer(serviceType || 'bundle');
+                }
+            });
         }
     }
 

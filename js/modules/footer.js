@@ -1,5 +1,6 @@
 /* ============================================
    FOOTER MODULE - Production Ready
+   Crystal Facility Solutions
    ============================================ */
 
 (function() {
@@ -165,32 +166,26 @@
     }
 
     // ─── Quick Quote Button ─────────────────────────────────────
+    // Uses CustomEvent for decoupled communication with services.js
+    // No window global exposure — secure and testable
     function initQuickQuoteButton() {
         const btn = document.getElementById('footerQuickQuote');
         if (!btn) return;
 
-        btn.addEventListener('click', () => {
-            const drawer = document.getElementById('quickQuoteDrawer');
-            const drawerServiceName = document.getElementById('drawerServiceName');
-            const quoteServiceType = document.getElementById('quoteServiceType');
+        const onClick = () => {
+            // Dispatch event to services module — it handles validation & drawer state
+            document.dispatchEvent(new CustomEvent('cfs:openDrawer', {
+                detail: {
+                    serviceType: 'bundle',
+                    serviceName: 'Custom Package'
+                },
+                bubbles: true,
+                cancelable: true
+            }));
+        };
 
-            if (drawer) {
-                drawer.classList.add('active');
-                drawer.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-
-                if (drawerServiceName) drawerServiceName.textContent = 'Custom Package';
-                if (quoteServiceType) quoteServiceType.value = 'bundle';
-
-                const bundleFields = document.getElementById('bundleFields');
-                const propertySizeGroup = document.getElementById('propertySizeGroup');
-                const transportationFields = document.getElementById('transportationFields');
-
-                if (bundleFields) bundleFields.style.display = 'block';
-                if (propertySizeGroup) propertySizeGroup.style.display = 'none';
-                if (transportationFields) transportationFields.style.display = 'none';
-            }
-        });
+        btn.addEventListener('click', onClick);
+        state.boundHandlers.quickQuote = { btn, onClick };
     }
 
     // ─── Cleanup / Destroy ──────────────────────────────────────
@@ -219,6 +214,14 @@
             state.boundHandlers.footerLinks.forEach(h => {
                 h.link.removeEventListener('click', h.onClick);
             });
+        }
+
+        // Clean up quick quote listener
+        if (state.boundHandlers.quickQuote) {
+            state.boundHandlers.quickQuote.btn.removeEventListener(
+                'click',
+                state.boundHandlers.quickQuote.onClick
+            );
         }
 
         state.boundHandlers = {};
