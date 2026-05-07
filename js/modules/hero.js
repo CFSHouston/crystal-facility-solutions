@@ -1,349 +1,415 @@
 /* ============================================
-   HERO MODULE - PRODUCTION READY
+   HERO MODULE - Crystal & Water Drop Background + Typing Animation
    Crystal Facility Solutions
    ============================================ */
 
 (function() {
     'use strict';
 
-    // ─── Configuration ──────────────────────────────────────────
-    const CONFIG = {
-        particles: {
-            mobileCount: 25,
-            desktopCount: 50,
-            connectionDistance: 100,
-            connectionOpacity: 0.1,
-            mobileBreakpoint: 768
-        },
-        typing: {
-            typeSpeed: 150,
-            deleteSpeed: 100,
-            pauseBeforeDelete: 2000,
-            pauseBeforeType: 500,
-            startDelay: 2000
-        },
-        scroll: {
-            indicatorFadeThreshold: 100,
-            parallaxRate: 0.3,
-            throttleMs: 16
-        },
-        glow: {
-            lerpFactor: 0.1
+    // ─── Crystal Canvas Config ─────────────────────────────────
+    const CANVAS_CONFIG = {
+        crystalCount: 7,
+        dropletCount: 18,
+        sparkleCount: 30,
+        connectionDistance: 150,
+        mouseInfluenceRadius: 200,
+        colors: {
+            crystal: { r: 200, g: 230, b: 255 },
+            crystalHighlight: { r: 255, g: 255, b: 255 },
+            droplet: { r: 168, g: 216, b: 255 },
+            dropletCore: { r: 255, g: 255, b: 255 },
+            sparkle: { r: 220, g: 240, b: 255 },
+            greenAccent: { r: 124, g: 179, b: 66 }
         }
     };
 
-    // ─── Module State ───────────────────────────────────────────
-    const state = {
-        isInitialized: false,
-        prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-        isTouchDevice: window.matchMedia('(pointer: coarse)').matches
+    // ─── Typing Animation Config ───────────────────────────────
+    const TYPING_CONFIG = {
+        words: ['CLEANING', 'MAINTENANCE', 'LANDSCAPING', 'TRANSPORTATION'],
+        typeSpeed: 120,
+        deleteSpeed: 60,
+        pauseTime: 800,
+        startDelay: 1000
     };
 
-    // Store all cleanup functions
-    const cleanupRegistry = [];
+    // ─── Shared State ──────────────────────────────────────────
+    let canvas, ctx;
+    let width, height;
+    let crystals = [];
+    let droplets = [];
+    let sparkles = [];
+    let mouse = { x: -1000, y: -1000 };
+    let animationId = null;
+    let isActive = true;
 
-    function registerCleanup(fn) {
-        cleanupRegistry.push(fn);
-    }
+    // ─── Typing State ──────────────────────────────────────────
+    let typingElement = null;
+    let cursorElement = null;
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let isPaused = false;
+    let typingTimeoutId = null;
+    let typingActive = true;
 
-    function clearAllTimeouts() {
-        // Track highest timeout ID and clear all up to it
-        const highest = setTimeout(() => {}, 0);
-        for (let i = 0; i <= highest; i++) {
-            clearTimeout(i);
+    // ═══════════════════════════════════════════════════════════
+    //  CRYSTAL & WATER DROP CANVAS CLASSES
+    // ═══════════════════════════════════════════════════════════
+
+    class Crystal {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 60 + 30;
+            this.sides = Math.floor(Math.random() * 3) + 5;
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.002;
+            this.opacity = Math.random() * 0.15 + 0.05;
+            this.pulsePhase = Math.random() * Math.PI * 2;
+            this.pulseSpeed = Math.random() * 0.001 + 0.0005;
+            this.driftX = (Math.random() - 0.5) * 0.2;
+            this.driftY = (Math.random() - 0.5) * 0.15;
+        }
+        update() {
+            this.rotation += this.rotationSpeed;
+            this.pulsePhase += this.pulseSpeed;
+            this.x += this.driftX;
+            this.y += this.driftY;
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CANVAS_CONFIG.mouseInfluenceRadius) {
+                const force = (CANVAS_CONFIG.mouseInfluenceRadius - dist) / CANVAS_CONFIG.mouseInfluenceRadius;
+                this.rotation += force * 0.01;
+                this.opacity = Math.min(0.25, this.opacity + force * 0.001);
+            } else {
+                this.opacity = Math.max(0.05, this.opacity - 0.0001);
+            }
+            if (this.x < -100) this.x = width + 100;
+            if (this.x > width + 100) this.x = -100;
+            if (this.y < -100) this.y = height + 100;
+            if (this.y > height + 100) this.y = -100;
+        }
+        draw() {
+            const pulse = Math.sin(this.pulsePhase) * 0.5 + 0.5;
+            const currentOpacity = this.opacity * (0.8 + pulse * 0.2);
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.beginPath();
+            for (let i = 0; i < this.sides; i++) {
+                const angle = (i / this.sides) * Math.PI * 2 - Math.PI / 2;
+                const r = i % 2 === 0 ? this.size : this.size * 0.6;
+                const px = Math.cos(angle) * r;
+                const py = Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.8})`);
+            grad.addColorStop(0.5, `rgba(${CANVAS_CONFIG.colors.crystal.r}, ${CANVAS_CONFIG.colors.crystal.g}, ${CANVAS_CONFIG.colors.crystal.b}, ${currentOpacity * 0.5})`);
+            grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.crystal.r}, ${CANVAS_CONFIG.colors.crystal.g}, ${CANVAS_CONFIG.colors.crystal.b}, 0)`);
+            ctx.fillStyle = grad;
+            ctx.fill();
+            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.6})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.beginPath();
+            for (let i = 0; i < this.sides; i++) {
+                const angle = (i / this.sides) * Math.PI * 2 - Math.PI / 2;
+                const r = i % 2 === 0 ? this.size * 0.7 : this.size * 0.4;
+                ctx.moveTo(0, 0);
+                ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+            }
+            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.3})`;
+            ctx.stroke();
+            ctx.restore();
         }
     }
 
-    // ─── Initialization ─────────────────────────────────────────
-    function init() {
-        if (state.isInitialized) return;
-        if (!document.querySelector('.hero')) return;
-
-        initParticles();
-        initTypingAnimation();
-        initMouseGlow();
-        initButtonRipple();
-        initParallax();
-
-        state.isInitialized = true;
-    }
-
-    // ─── Particle System ────────────────────────────────────────
-    function initParticles() {
-        const canvas = document.getElementById('particleCanvas');
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d', { willReadFrequently: false });
-        let particles = [];
-        let animationId = null;
-        let isVisible = true;
-
-        const particleCount = window.innerWidth < CONFIG.particles.mobileBreakpoint
-            ? CONFIG.particles.mobileCount
-            : CONFIG.particles.desktopCount;
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+    class Droplet {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.radius = Math.random() * 4 + 2;
+            this.speedY = Math.random() * 0.8 + 0.2;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.wobblePhase = Math.random() * Math.PI * 2;
+            this.wobbleSpeed = Math.random() * 0.02 + 0.01;
+            this.opacity = Math.random() * 0.6 + 0.2;
+            this.trail = [];
+            this.maxTrailLength = 8;
         }
-
-        class Particle {
-            constructor() {
-                this.reset();
+        update() {
+            this.wobblePhase += this.wobbleSpeed;
+            this.x += this.speedX + Math.sin(this.wobblePhase) * 0.5;
+            this.y += this.speedY;
+            this.trail.push({ x: this.x, y: this.y, opacity: this.opacity });
+            if (this.trail.length > this.maxTrailLength) this.trail.shift();
+            if (this.y > height + 20) {
+                this.y = -20;
+                this.x = Math.random() * width;
+                this.trail = [];
             }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
-                this.color = Math.random() > 0.5 ? '124, 179, 66' : '156, 204, 101';
+            if (this.x < -20) this.x = width + 20;
+            if (this.x > width + 20) this.x = -20;
+            const dx = this.x - mouse.x;
+            const dy = this.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CANVAS_CONFIG.mouseInfluenceRadius * 0.5) {
+                const force = (CANVAS_CONFIG.mouseInfluenceRadius * 0.5 - dist) / (CANVAS_CONFIG.mouseInfluenceRadius * 0.5);
+                this.x += (dx / dist) * force * 2;
+                this.y += (dy / dist) * force * 2;
             }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
+        }
+        draw() {
+            this.trail.forEach((point, index) => {
+                const trailOpacity = (index / this.trail.length) * this.opacity * 0.3;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.arc(point.x, point.y, this.radius * (index / this.trail.length), 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${trailOpacity})`;
                 ctx.fill();
-            }
+            });
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            const grad = ctx.createRadialGradient(
+                this.x - this.radius * 0.3, this.y - this.radius * 0.3, 0,
+                this.x, this.y, this.radius
+            );
+            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.dropletCore.r}, ${CANVAS_CONFIG.colors.dropletCore.g}, ${CANVAS_CONFIG.colors.dropletCore.b}, ${this.opacity * 0.9})`);
+            grad.addColorStop(0.4, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.7})`);
+            grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.3})`);
+            ctx.fillStyle = grad;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.25, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+            const glowGrad = ctx.createRadialGradient(this.x, this.y, this.radius, this.x, this.y, this.radius * 2);
+            glowGrad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.2})`);
+            glowGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = glowGrad;
+            ctx.fill();
         }
+    }
 
-        function createParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+    class Sparkle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 3 + 1;
+            this.life = 0;
+            this.maxLife = Math.random() * 120 + 60;
+            this.fadeIn = this.maxLife * 0.2;
+            this.fadeOut = this.maxLife * 0.2;
+            this.driftX = (Math.random() - 0.5) * 0.5;
+            this.driftY = (Math.random() - 0.5) * 0.5;
+            this.twinkleSpeed = Math.random() * 0.1 + 0.05;
+            this.twinklePhase = Math.random() * Math.PI * 2;
         }
+        update() {
+            this.life++;
+            this.x += this.driftX;
+            this.y += this.driftY;
+            this.twinklePhase += this.twinkleSpeed;
+            if (this.life >= this.maxLife) this.reset();
+        }
+        draw() {
+            let opacity = 0;
+            if (this.life < this.fadeIn) opacity = this.life / this.fadeIn;
+            else if (this.life > this.maxLife - this.fadeOut) opacity = (this.maxLife - this.life) / this.fadeOut;
+            else opacity = 1;
+            const twinkle = Math.sin(this.twinklePhase) * 0.3 + 0.7;
+            opacity *= twinkle;
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.twinklePhase * 0.5);
+            ctx.beginPath();
+            ctx.moveTo(0, -this.size * 2);
+            ctx.lineTo(0, this.size * 2);
+            ctx.moveTo(-this.size * 2, 0);
+            ctx.lineTo(this.size * 2, 0);
+            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.sparkle.r}, ${CANVAS_CONFIG.colors.sparkle.g}, ${CANVAS_CONFIG.colors.sparkle.b}, ${opacity * 0.8})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.fill();
+            ctx.restore();
+        }
+    }
 
-        function drawConnections() {
-            const maxDist = CONFIG.particles.connectionDistance;
-            const maxOpacity = CONFIG.particles.connectionOpacity;
-
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < maxDist) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(124, 179, 66, ${maxOpacity * (1 - distance / maxDist)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
+    // ─── Canvas Helpers ────────────────────────────────────────
+    function drawConnections() {
+        for (let i = 0; i < crystals.length; i++) {
+            for (let j = i + 1; j < crystals.length; j++) {
+                const dx = crystals[i].x - crystals[j].x;
+                const dy = crystals[i].y - crystals[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < CANVAS_CONFIG.connectionDistance) {
+                    const opacity = (1 - dist / CANVAS_CONFIG.connectionDistance) * 0.08;
+                    ctx.beginPath();
+                    ctx.moveTo(crystals[i].x, crystals[i].y);
+                    ctx.lineTo(crystals[j].x, crystals[j].y);
+                    ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${opacity})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
                 }
             }
         }
-
-        function animate() {
-            if (!isVisible) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            drawConnections();
-            animationId = requestAnimationFrame(animate);
-        }
-
-        function onVisibilityChange() {
-            isVisible = document.visibilityState === 'visible';
-            if (isVisible && !animationId) {
-                animate();
-            }
-        }
-
-        function onResize() {
-            resize();
-            createParticles();
-        }
-
-        resize();
-        createParticles();
-        animate();
-
-        document.addEventListener('visibilitychange', onVisibilityChange);
-        window.addEventListener('resize', onResize);
-
-        registerCleanup(() => {
-            isVisible = false;
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-            document.removeEventListener('visibilitychange', onVisibilityChange);
-            window.removeEventListener('resize', onResize);
-        });
     }
 
-    // ─── Typing Animation ───────────────────────────────────────
-    function initTypingAnimation() {
-        const typingElement = document.querySelector('.typing-text');
-        if (!typingElement) return;
-
-        const text = typingElement.dataset.text || '';
-        if (!text) return;
-
-        let index = 0;
-        let isDeleting = false;
-        let timeoutId = null;
-        let isRunning = true;
-
-        function type() {
-            if (!isRunning) return;
-
-            if (!isDeleting && index <= text.length) {
-                typingElement.textContent = text.slice(0, index++);
-                timeoutId = setTimeout(type, CONFIG.typing.typeSpeed);
-            } else if (isDeleting && index > 0) {
-                typingElement.textContent = text.slice(0, --index);
-                timeoutId = setTimeout(type, CONFIG.typing.deleteSpeed);
-            } else {
-                isDeleting = !isDeleting;
-                timeoutId = setTimeout(type, isDeleting
-                    ? CONFIG.typing.pauseBeforeDelete
-                    : CONFIG.typing.pauseBeforeType);
-            }
+    function drawLightRays() {
+        const time = Date.now() * 0.0003;
+        const rayCount = 5;
+        for (let i = 0; i < rayCount; i++) {
+            const angle = (i / rayCount) * Math.PI * 2 + time;
+            const x1 = width * 0.5 + Math.cos(angle) * 100;
+            const y1 = height * 0.5 + Math.sin(angle) * 100;
+            const x2 = x1 + Math.cos(angle) * 400;
+            const y2 = y1 + Math.sin(angle) * 400;
+            const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, 0)`);
+            grad.addColorStop(0.5, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, 0.03)`);
+            grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, 0)`);
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2 + Math.cos(angle + Math.PI / 2) * 30, y2 + Math.sin(angle + Math.PI / 2) * 30);
+            ctx.lineTo(x2 - Math.cos(angle + Math.PI / 2) * 30, y2 - Math.sin(angle + Math.PI / 2) * 30);
+            ctx.closePath();
+            ctx.fillStyle = grad;
+            ctx.fill();
         }
-
-        timeoutId = setTimeout(type, CONFIG.typing.startDelay);
-
-        registerCleanup(() => {
-            isRunning = false;
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-                timeoutId = null;
-            }
-        });
     }
 
-    // ─── Mouse Glow Effect ──────────────────────────────────────
-    function initMouseGlow() {
-        const glow = document.getElementById('mouseGlow');
+    // ─── Canvas Init ───────────────────────────────────────────
+    function initCanvas() {
+        canvas = document.getElementById('particleCanvas');
+        if (!canvas) return;
+        ctx = canvas.getContext('2d', { willReadFrequently: false });
+        resizeCanvas();
+        for (let i = 0; i < CANVAS_CONFIG.crystalCount; i++) crystals.push(new Crystal());
+        for (let i = 0; i < CANVAS_CONFIG.dropletCount; i++) droplets.push(new Droplet());
+        for (let i = 0; i < CANVAS_CONFIG.sparkleCount; i++) sparkles.push(new Sparkle());
         const hero = document.querySelector('.hero');
-        if (!glow || !hero || state.isTouchDevice) return;
-
-        let rafId = null;
-        let mouseX = 0, mouseY = 0;
-        let currentX = 0, currentY = 0;
-        let isActive = true;
-
-        function onMouseMove(e) {
-            const rect = hero.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-        }
-
-        function onMouseLeave() {
-            glow.style.opacity = '0';
-        }
-
-        function onMouseEnter() {
-            glow.style.opacity = '1';
-        }
-
-        function animate() {
-            if (!isActive) return;
-            currentX += (mouseX - currentX) * CONFIG.glow.lerpFactor;
-            currentY += (mouseY - currentY) * CONFIG.glow.lerpFactor;
-            glow.style.left = currentX + 'px';
-            glow.style.top = currentY + 'px';
-            rafId = requestAnimationFrame(animate);
-        }
-
-        hero.addEventListener('mousemove', onMouseMove);
-        hero.addEventListener('mouseleave', onMouseLeave);
-        hero.addEventListener('mouseenter', onMouseEnter);
-
-        if (!state.prefersReducedMotion) {
-            animate();
-        }
-
-        registerCleanup(() => {
-            isActive = false;
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-            hero.removeEventListener('mousemove', onMouseMove);
-            hero.removeEventListener('mouseleave', onMouseLeave);
-            hero.removeEventListener('mouseenter', onMouseEnter);
-        });
-    }
-
-    // ─── Button Ripple Effect ───────────────────────────────────
-    function initButtonRipple() {
-        const btn = document.querySelector('.btn-hero-primary');
-        if (!btn) return;
-
-        const ripple = btn.querySelector('.btn-ripple');
-        if (!ripple) return;
-
-        function onMouseMove(e) {
-            const rect = btn.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            ripple.style.setProperty('--x', x + '%');
-            ripple.style.setProperty('--y', y + '%');
-        }
-
-        btn.addEventListener('mousemove', onMouseMove);
-
-        registerCleanup(() => {
-            btn.removeEventListener('mousemove', onMouseMove);
-        });
-    }
-
-    // ─── Parallax Effect ────────────────────────────────────────
-    function initParallax() {
-        const shapes = document.querySelectorAll('.shape');
-        if (!shapes.length || state.prefersReducedMotion) return;
-
-        let ticking = false;
-
-        function onScroll() {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * CONFIG.scroll.parallaxRate;
-                shapes.forEach((shape, index) => {
-                    const speed = (index + 1) * 0.1;
-                    shape.style.transform = `translateY(${rate * speed}px)`;
-                });
-                ticking = false;
+        if (hero) {
+            hero.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+            hero.addEventListener('mouseleave', () => {
+                mouse.x = -1000;
+                mouse.y = -1000;
             });
         }
+        window.addEventListener('resize', resizeCanvas);
+        document.addEventListener('visibilitychange', () => {
+            isActive = !document.hidden;
+            if (isActive) animateCanvas();
+        });
+        animateCanvas();
+    }
 
-        window.addEventListener('scroll', onScroll, { passive: true });
+    function resizeCanvas() {
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+        width = hero.offsetWidth;
+        height = hero.offsetHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
 
-        registerCleanup(() => {
-            window.removeEventListener('scroll', onScroll);
+    function animateCanvas() {
+        if (!isActive) {
+            animationId = null;
+            return;
+        }
+        ctx.clearRect(0, 0, width, height);
+        drawLightRays();
+        drawConnections();
+        crystals.forEach(c => { c.update(); c.draw(); });
+        droplets.forEach(d => { d.update(); d.draw(); });
+        sparkles.forEach(s => { s.update(); s.draw(); });
+        animationId = requestAnimationFrame(animateCanvas);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  TYPING ANIMATION
+    // ═══════════════════════════════════════════════════════════
+
+    function initTyping() {
+        typingElement = document.querySelector('.typing-text');
+        cursorElement = document.querySelector('.typing-cursor');
+        if (!typingElement) {
+            console.warn('Typing animation: .typing-text element not found');
+            return;
+        }
+        typingElement.textContent = '';
+        setTimeout(() => {
+            if (typingActive) typingLoop();
+        }, TYPING_CONFIG.startDelay);
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                typingActive = false;
+                if (typingTimeoutId) clearTimeout(typingTimeoutId);
+            } else {
+                typingActive = true;
+                typingLoop();
+            }
         });
     }
 
-    // ─── Cleanup / Destroy ──────────────────────────────────────
-    function destroy() {
-        if (!state.isInitialized) return;
-
-        cleanupRegistry.forEach(fn => {
-            try { fn(); } catch (e) { /* ignore cleanup errors */ }
-        });
-        cleanupRegistry.length = 0;
-
-        state.isInitialized = false;
+    function typingLoop() {
+        if (!typingActive || !typingElement) return;
+        const currentWord = TYPING_CONFIG.words[wordIndex];
+        if (isPaused) {
+            isPaused = false;
+            isDeleting = true;
+            typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.pauseTime);
+            return;
+        }
+        if (isDeleting) {
+            charIndex--;
+            typingElement.textContent = currentWord.substring(0, charIndex);
+            if (charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % TYPING_CONFIG.words.length;
+                typingTimeoutId = setTimeout(typingLoop, 300);
+            } else {
+                typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.deleteSpeed);
+            }
+        } else {
+            charIndex++;
+            typingElement.textContent = currentWord.substring(0, charIndex);
+            if (charIndex === currentWord.length) {
+                isPaused = true;
+                typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.pauseTime);
+            } else {
+                typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.typeSpeed);
+            }
+        }
     }
 
-    // ─── Bootstrap ──────────────────────────────────────────────
+    // ═══════════════════════════════════════════════════════════
+    //  BOOTSTRAP
+    // ═══════════════════════════════════════════════════════════
+
+    function init() {
+        initCanvas();
+        initTyping();
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
-
 })();

@@ -3,7 +3,12 @@
    Cinematic Premium Hero Section
    ============================================ */
 
+/* ============================================
+   HERO SECTION - Crystal Background Layering
+   ============================================ */
+
 .hero {
+    position: relative;
     min-height: 100vh;
     min-height: 100dvh;
     display: flex;
@@ -11,10 +16,20 @@
     justify-content: center;
     text-align: center;
     padding: calc(var(--nav-height) + 2rem) 2rem 4rem;
-    position: relative;
     overflow: hidden;
     isolation: isolate;
-    background: #0a0a0a;
+    /* Dark base that complements the crystal colors */
+    background: linear-gradient(180deg, #0c1418 0%, #0a1a20 30%, #0d1f2d 60%, #0a1620 100%);
+}
+
+/* Subtle vignette overlay for text readability */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 20, 30, 0.4) 100%);
+    pointer-events: none;
 }
 
 /* ============================================
@@ -57,7 +72,7 @@
 .particle-canvas {
     position: absolute;
     inset: 0;
-    z-index: -2;
+    z-index: 1;
     pointer-events: none;
 }
 
@@ -67,7 +82,7 @@
 .hero-shapes {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
     overflow: hidden;
 }
@@ -76,51 +91,23 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.4;
-    animation: floatShape 15s infinite ease-in-out;
+    opacity: 0.3;
 }
 
 .shape-1 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(124, 179, 66, 0.4) 0%, transparent 70%);
-    top: -20%;
-    right: -10%;
-    animation-delay: 0s;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(124, 179, 66, 0.2) 0%, transparent 70%);
+    top: -10%;
+    right: -5%;
 }
 
 .shape-2 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(156, 204, 101, 0.3) 0%, transparent 70%);
-    bottom: -10%;
-    left: -10%;
-    animation-delay: -5s;
-}
-
-.shape-3 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(124, 179, 66, 0.3) 0%, transparent 70%);
-    top: 40%;
-    left: 20%;
-    animation-delay: -10s;
-}
-
-.shape-4 {
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(156, 204, 101, 0.25) 0%, transparent 70%);
-    bottom: 30%;
-    right: 20%;
-    animation-delay: -7s;
-}
-
-@keyframes floatShape {
-    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    25% { transform: translate(50px, -30px) scale(1.1) rotate(90deg); }
-    50% { transform: translate(-30px, 20px) scale(0.9) rotate(180deg); }
-    75% { transform: translate(20px, 40px) scale(1.05) rotate(270deg); }
+    background: radial-gradient(circle, rgba(168, 216, 255, 0.15) 0%, transparent 70%);
+    bottom: -5%;
+    left: -5%;
 }
 
 /* ============================================
@@ -128,14 +115,17 @@
    ============================================ */
 .mouse-glow {
     position: fixed;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(124, 179, 66, 0.15) 0%, transparent 60%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, 
+        rgba(168, 216, 255, 0.08) 0%, 
+        rgba(124, 179, 66, 0.04) 30%, 
+        transparent 60%);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
     transform: translate(-50%, -50%);
     mix-blend-mode: screen;
 }
@@ -149,13 +139,14 @@
    ============================================ */
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 10;  /* FIXED: was 2, bumped above canvas */
     max-width: 1000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    pointer-events: auto;
 }
 
 /* ============================================
@@ -275,24 +266,32 @@
 }
 
 /* ============================================
-   TYPING ANIMATION
+   TYPING ANIMATION - FIXED
    ============================================ */
 .title-line-3 {
-    font-size: 0.4em;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
-    letter-spacing: 0.4em;
+    /* FIXED: was 0.4em (way too small), now uses clamp for responsive sizing */
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+    font-weight: 600;  /* bumped up for visibility */
+    color: rgba(255, 255, 255, 0.95);  /* FIXED: was 0.8, now 0.95 for better contrast */
+    letter-spacing: 0.25em;  /* slightly reduced from 0.4em */
     text-transform: uppercase;
-    margin-top: 1rem;
+    margin-top: 1.5rem;  /* more breathing room */
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    position: relative;
+    z-index: 10;  /* ensure above everything */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);  /* readability boost */
+    min-height: 1.5em;  /* prevent layout shift */
 }
 
 .typing-text {
     display: inline;
     min-height: 1.2em;
+    color: inherit;
+    font-weight: 700;  /* make typed text bold */
+    letter-spacing: 0.15em;  /* tighter letter spacing for typed word */
 }
 
 .typing-cursor {
@@ -301,7 +300,9 @@
     height: 1.2em;
     background: var(--cfs-green);
     animation: cursorBlink 1s step-end infinite;
-    box-shadow: 0 0 10px var(--cfs-green);
+    box-shadow: 0 0 15px var(--cfs-green), 0 0 30px rgba(124, 179, 66, 0.3);
+    margin-left: 3px;
+    flex-shrink: 0;  /* prevent cursor from shrinking */
 }
 
 @keyframes cursorBlink {
@@ -547,26 +548,26 @@
     border-radius: 50%;
     filter: blur(100px);
     pointer-events: none;
-    z-index: -1;
+    z-index: 0;
 }
 
 .ambient-glow-1 {
-    width: 800px;
-    height: 800px;
-    background: rgba(124, 179, 66, 0.08);
-    top: 50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(168, 216, 255, 0.06) 0%, transparent 65%);
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: ambientPulse 10s ease-in-out infinite;
+    animation: ambientPulse 12s ease-in-out infinite;
 }
 
 .ambient-glow-2 {
-    width: 600px;
-    height: 600px;
-    background: rgba(156, 204, 101, 0.06);
-    bottom: 0;
-    right: 10%;
-    animation: ambientPulse 8s ease-in-out infinite reverse;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(124, 179, 66, 0.05) 0%, transparent 60%);
+    bottom: 20%;
+    right: 15%;
+    animation: ambientPulse 10s ease-in-out infinite reverse;
 }
 
 @keyframes ambientPulse {
@@ -593,8 +594,13 @@
     }
 
     .title-line-3 {
-        font-size: 0.35em;
-        letter-spacing: 0.2em;
+        font-size: 0.8rem;  /* FIXED: was 0.35em, now readable */
+        letter-spacing: 0.15em;
+        margin-top: 1rem;
+    }
+
+    .typing-cursor {
+        height: 1em;
     }
 
     .hero-description {
@@ -639,6 +645,11 @@
 @media (max-width: 480px) {
     .hero-title {
         font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .title-line-3 {
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
     }
 
     .badge {
