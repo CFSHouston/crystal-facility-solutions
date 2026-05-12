@@ -1,24 +1,24 @@
 /* ============================================
-   HERO MODULE - Crystal & Water Drop Background + Typing Animation
+   HERO MODULE - Crystal & Water Drop Particles
    Crystal Facility Solutions
    ============================================ */
 
 (function() {
     'use strict';
 
-    // ─── Crystal Canvas Config ─────────────────────────────────
+    // ─── Crystal & Water Drop Config ───────────────────────────
     const CANVAS_CONFIG = {
-        crystalCount: 7,
-        dropletCount: 18,
-        sparkleCount: 30,
+        crystalCount: 8,
+        dropletCount: 15,
+        sparkleCount: 12,
         connectionDistance: 150,
         mouseInfluenceRadius: 200,
         colors: {
-            crystal: { r: 200, g: 230, b: 255 },
-            crystalHighlight: { r: 255, g: 255, b: 255 },
-            droplet: { r: 168, g: 216, b: 255 },
-            dropletCore: { r: 255, g: 255, b: 255 },
-            sparkle: { r: 220, g: 240, b: 255 },
+            crystal: { r: 168, g: 216, b: 255 },
+            crystalHighlight: { r: 220, g: 240, b: 255 },
+            droplet: { r: 140, g: 200, b: 255 },
+            dropletCore: { r: 200, g: 230, b: 255 },
+            sparkle: { r: 180, g: 220, b: 255 },
             greenAccent: { r: 124, g: 179, b: 66 }
         }
     };
@@ -53,7 +53,7 @@
     let typingActive = true;
 
     // ═══════════════════════════════════════════════════════════
-    //  CRYSTAL & WATER DROP CANVAS CLASSES
+    //  CRYSTAL CLASS
     // ═══════════════════════════════════════════════════════════
 
     class Crystal {
@@ -61,15 +61,15 @@
         reset() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.size = Math.random() * 60 + 30;
+            this.size = Math.random() * 50 + 25;
             this.sides = Math.floor(Math.random() * 3) + 5;
             this.rotation = Math.random() * Math.PI * 2;
-            this.rotationSpeed = (Math.random() - 0.5) * 0.002;
-            this.opacity = Math.random() * 0.15 + 0.05;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.003;
+            this.opacity = Math.random() * 0.12 + 0.03;
             this.pulsePhase = Math.random() * Math.PI * 2;
-            this.pulseSpeed = Math.random() * 0.001 + 0.0005;
-            this.driftX = (Math.random() - 0.5) * 0.2;
-            this.driftY = (Math.random() - 0.5) * 0.15;
+            this.pulseSpeed = Math.random() * 0.001 + 0.0003;
+            this.driftX = (Math.random() - 0.5) * 0.15;
+            this.driftY = (Math.random() - 0.5) * 0.1;
         }
         update() {
             this.rotation += this.rotationSpeed;
@@ -81,15 +81,15 @@
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < CANVAS_CONFIG.mouseInfluenceRadius) {
                 const force = (CANVAS_CONFIG.mouseInfluenceRadius - dist) / CANVAS_CONFIG.mouseInfluenceRadius;
-                this.rotation += force * 0.01;
-                this.opacity = Math.min(0.25, this.opacity + force * 0.001);
+                this.rotation += force * 0.008;
+                this.opacity = Math.min(0.2, this.opacity + force * 0.0008);
             } else {
-                this.opacity = Math.max(0.05, this.opacity - 0.0001);
+                this.opacity = Math.max(0.03, this.opacity - 0.00005);
             }
-            if (this.x < -100) this.x = width + 100;
-            if (this.x > width + 100) this.x = -100;
-            if (this.y < -100) this.y = height + 100;
-            if (this.y > height + 100) this.y = -100;
+            if (this.x < -150) this.x = width + 150;
+            if (this.x > width + 150) this.x = -150;
+            if (this.y < -150) this.y = height + 150;
+            if (this.y > height + 150) this.y = -150;
         }
         draw() {
             const pulse = Math.sin(this.pulsePhase) * 0.5 + 0.5;
@@ -100,7 +100,7 @@
             ctx.beginPath();
             for (let i = 0; i < this.sides; i++) {
                 const angle = (i / this.sides) * Math.PI * 2 - Math.PI / 2;
-                const r = i % 2 === 0 ? this.size : this.size * 0.6;
+                const r = i % 2 === 0 ? this.size : this.size * 0.55;
                 const px = Math.cos(angle) * r;
                 const py = Math.sin(angle) * r;
                 if (i === 0) ctx.moveTo(px, py);
@@ -108,109 +108,122 @@
             }
             ctx.closePath();
             const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
-            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.8})`);
-            grad.addColorStop(0.5, `rgba(${CANVAS_CONFIG.colors.crystal.r}, ${CANVAS_CONFIG.colors.crystal.g}, ${CANVAS_CONFIG.colors.crystal.b}, ${currentOpacity * 0.5})`);
+            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.6})`);
+            grad.addColorStop(0.5, `rgba(${CANVAS_CONFIG.colors.crystal.r}, ${CANVAS_CONFIG.colors.crystal.g}, ${CANVAS_CONFIG.colors.crystal.b}, ${currentOpacity * 0.3})`);
             grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.crystal.r}, ${CANVAS_CONFIG.colors.crystal.g}, ${CANVAS_CONFIG.colors.crystal.b}, 0)`);
             ctx.fillStyle = grad;
             ctx.fill();
-            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.6})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.4})`;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
+            // Inner facets
             ctx.beginPath();
             for (let i = 0; i < this.sides; i++) {
                 const angle = (i / this.sides) * Math.PI * 2 - Math.PI / 2;
-                const r = i % 2 === 0 ? this.size * 0.7 : this.size * 0.4;
+                const r = i % 2 === 0 ? this.size * 0.65 : this.size * 0.35;
                 ctx.moveTo(0, 0);
                 ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
             }
-            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.3})`;
+            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, ${currentOpacity * 0.2})`;
             ctx.stroke();
             ctx.restore();
         }
     }
+
+    // ═══════════════════════════════════════════════════════════
+    //  WATER DROPLET CLASS
+    // ═══════════════════════════════════════════════════════════
 
     class Droplet {
         constructor() { this.reset(); }
         reset() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.radius = Math.random() * 4 + 2;
-            this.speedY = Math.random() * 0.8 + 0.2;
-            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.radius = Math.random() * 3 + 1.5;
+            this.speedY = Math.random() * 0.6 + 0.15;
+            this.speedX = (Math.random() - 0.5) * 0.25;
             this.wobblePhase = Math.random() * Math.PI * 2;
-            this.wobbleSpeed = Math.random() * 0.02 + 0.01;
-            this.opacity = Math.random() * 0.6 + 0.2;
+            this.wobbleSpeed = Math.random() * 0.015 + 0.008;
+            this.opacity = Math.random() * 0.5 + 0.15;
             this.trail = [];
-            this.maxTrailLength = 8;
+            this.maxTrailLength = 6;
         }
         update() {
             this.wobblePhase += this.wobbleSpeed;
-            this.x += this.speedX + Math.sin(this.wobblePhase) * 0.5;
+            this.x += this.speedX + Math.sin(this.wobblePhase) * 0.3;
             this.y += this.speedY;
             this.trail.push({ x: this.x, y: this.y, opacity: this.opacity });
             if (this.trail.length > this.maxTrailLength) this.trail.shift();
-            if (this.y > height + 20) {
-                this.y = -20;
+            if (this.y > height + 15) {
+                this.y = -15;
                 this.x = Math.random() * width;
                 this.trail = [];
             }
-            if (this.x < -20) this.x = width + 20;
-            if (this.x > width + 20) this.x = -20;
+            if (this.x < -15) this.x = width + 15;
+            if (this.x > width + 15) this.x = -15;
             const dx = this.x - mouse.x;
             const dy = this.y - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < CANVAS_CONFIG.mouseInfluenceRadius * 0.5) {
-                const force = (CANVAS_CONFIG.mouseInfluenceRadius * 0.5 - dist) / (CANVAS_CONFIG.mouseInfluenceRadius * 0.5);
-                this.x += (dx / dist) * force * 2;
-                this.y += (dy / dist) * force * 2;
+            if (dist < CANVAS_CONFIG.mouseInfluenceRadius * 0.4) {
+                const force = (CANVAS_CONFIG.mouseInfluenceRadius * 0.4 - dist) / (CANVAS_CONFIG.mouseInfluenceRadius * 0.4);
+                this.x += (dx / dist) * force * 1.5;
+                this.y += (dy / dist) * force * 1.5;
             }
         }
         draw() {
+            // Trail
             this.trail.forEach((point, index) => {
-                const trailOpacity = (index / this.trail.length) * this.opacity * 0.3;
+                const trailOpacity = (index / this.trail.length) * this.opacity * 0.25;
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, this.radius * (index / this.trail.length), 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${trailOpacity})`;
                 ctx.fill();
             });
+            // Main droplet
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             const grad = ctx.createRadialGradient(
                 this.x - this.radius * 0.3, this.y - this.radius * 0.3, 0,
                 this.x, this.y, this.radius
             );
-            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.dropletCore.r}, ${CANVAS_CONFIG.colors.dropletCore.g}, ${CANVAS_CONFIG.colors.dropletCore.b}, ${this.opacity * 0.9})`);
-            grad.addColorStop(0.4, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.7})`);
-            grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.3})`);
+            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.dropletCore.r}, ${CANVAS_CONFIG.colors.dropletCore.g}, ${CANVAS_CONFIG.colors.dropletCore.b}, ${this.opacity * 0.8})`);
+            grad.addColorStop(0.4, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.5})`);
+            grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.2})`);
             ctx.fillStyle = grad;
             ctx.fill();
+            // Highlight
             ctx.beginPath();
-            ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.25, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
+            ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.6})`;
             ctx.fill();
+            // Glow
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
-            const glowGrad = ctx.createRadialGradient(this.x, this.y, this.radius, this.x, this.y, this.radius * 2);
-            glowGrad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.2})`);
+            ctx.arc(this.x, this.y, this.radius * 1.8, 0, Math.PI * 2);
+            const glowGrad = ctx.createRadialGradient(this.x, this.y, this.radius, this.x, this.y, this.radius * 1.8);
+            glowGrad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.droplet.r}, ${CANVAS_CONFIG.colors.droplet.g}, ${CANVAS_CONFIG.colors.droplet.b}, ${this.opacity * 0.15})`);
             glowGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
             ctx.fillStyle = glowGrad;
             ctx.fill();
         }
     }
 
+    // ═══════════════════════════════════════════════════════════
+    //  SPARKLE CLASS
+    // ═══════════════════════════════════════════════════════════
+
     class Sparkle {
         constructor() { this.reset(); }
         reset() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.size = Math.random() * 3 + 1;
+            this.size = Math.random() * 2.5 + 0.8;
             this.life = 0;
-            this.maxLife = Math.random() * 120 + 60;
+            this.maxLife = Math.random() * 100 + 50;
             this.fadeIn = this.maxLife * 0.2;
             this.fadeOut = this.maxLife * 0.2;
-            this.driftX = (Math.random() - 0.5) * 0.5;
-            this.driftY = (Math.random() - 0.5) * 0.5;
-            this.twinkleSpeed = Math.random() * 0.1 + 0.05;
+            this.driftX = (Math.random() - 0.5) * 0.4;
+            this.driftY = (Math.random() - 0.5) * 0.4;
+            this.twinkleSpeed = Math.random() * 0.08 + 0.04;
             this.twinklePhase = Math.random() * Math.PI * 2;
         }
         update() {
@@ -235,12 +248,12 @@
             ctx.lineTo(0, this.size * 2);
             ctx.moveTo(-this.size * 2, 0);
             ctx.lineTo(this.size * 2, 0);
-            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.sparkle.r}, ${CANVAS_CONFIG.colors.sparkle.g}, ${CANVAS_CONFIG.colors.sparkle.b}, ${opacity * 0.8})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(${CANVAS_CONFIG.colors.sparkle.r}, ${CANVAS_CONFIG.colors.sparkle.g}, ${CANVAS_CONFIG.colors.sparkle.b}, ${opacity * 0.7})`;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.arc(0, 0, this.size * 0.6, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.5})`;
             ctx.fill();
             ctx.restore();
         }
@@ -254,7 +267,7 @@
                 const dy = crystals[i].y - crystals[j].y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist < CANVAS_CONFIG.connectionDistance) {
-                    const opacity = (1 - dist / CANVAS_CONFIG.connectionDistance) * 0.08;
+                    const opacity = (1 - dist / CANVAS_CONFIG.connectionDistance) * 0.06;
                     ctx.beginPath();
                     ctx.moveTo(crystals[i].x, crystals[i].y);
                     ctx.lineTo(crystals[j].x, crystals[j].y);
@@ -266,32 +279,9 @@
         }
     }
 
-    function drawLightRays() {
-        const time = Date.now() * 0.0003;
-        const rayCount = 5;
-        for (let i = 0; i < rayCount; i++) {
-            const angle = (i / rayCount) * Math.PI * 2 + time;
-            const x1 = width * 0.5 + Math.cos(angle) * 100;
-            const y1 = height * 0.5 + Math.sin(angle) * 100;
-            const x2 = x1 + Math.cos(angle) * 400;
-            const y2 = y1 + Math.sin(angle) * 400;
-            const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-            grad.addColorStop(0, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, 0)`);
-            grad.addColorStop(0.5, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, 0.03)`);
-            grad.addColorStop(1, `rgba(${CANVAS_CONFIG.colors.crystalHighlight.r}, ${CANVAS_CONFIG.colors.crystalHighlight.g}, ${CANVAS_CONFIG.colors.crystalHighlight.b}, 0)`);
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2 + Math.cos(angle + Math.PI / 2) * 30, y2 + Math.sin(angle + Math.PI / 2) * 30);
-            ctx.lineTo(x2 - Math.cos(angle + Math.PI / 2) * 30, y2 - Math.sin(angle + Math.PI / 2) * 30);
-            ctx.closePath();
-            ctx.fillStyle = grad;
-            ctx.fill();
-        }
-    }
-
     // ─── Canvas Init ───────────────────────────────────────────
     function initCanvas() {
-        canvas = document.getElementById('particleCanvas');
+        canvas = document.getElementById('heroParticleCanvas');
         if (!canvas) return;
         ctx = canvas.getContext('2d', { willReadFrequently: false });
         resizeCanvas();
@@ -333,9 +323,8 @@
             return;
         }
         ctx.clearRect(0, 0, width, height);
-        drawLightRays();
-        drawConnections();
         crystals.forEach(c => { c.update(); c.draw(); });
+        drawConnections();
         droplets.forEach(d => { d.update(); d.draw(); });
         sparkles.forEach(s => { s.update(); s.draw(); });
         animationId = requestAnimationFrame(animateCanvas);
@@ -396,6 +385,15 @@
                 typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.typeSpeed);
             }
         }
+    }
+
+    // Mouse glow tracking
+    const mouseGlow = document.getElementById('mouseGlow');
+    if (mouseGlow) {
+        document.addEventListener('mousemove', (e) => {
+            mouseGlow.style.left = e.clientX + 'px';
+            mouseGlow.style.top = e.clientY + 'px';
+        });
     }
 
     // ═══════════════════════════════════════════════════════════

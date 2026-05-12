@@ -1,10 +1,11 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - HERO
    Cinematic Premium Hero Section
+   With Crystal & Water Drop Effects
    ============================================ */
 
 /* ============================================
-   HERO SECTION - Crystal Background Layering
+   HERO SECTION - Dark Theme
    ============================================ */
 
 .hero {
@@ -18,96 +19,85 @@
     padding: calc(var(--nav-height) + 2rem) 2rem 4rem;
     overflow: hidden;
     isolation: isolate;
-    /* Dark base that complements the crystal colors */
-    background: linear-gradient(180deg, #0c1418 0%, #0a1a20 30%, #0d1f2d 60%, #0a1620 100%);
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f0d 100%);
 }
 
-/* Subtle vignette overlay for text readability */
-.hero::after {
-    content: '';
+/* ============================================
+   DYNAMIC BACKGROUND
+   ============================================ */
+
+.hero-bg-layers {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 20, 30, 0.4) 100%);
     pointer-events: none;
-}
-
-/* ============================================
-   VIDEO BACKGROUND
-   ============================================ */
-.hero-video-container {
-    position: absolute;
-    inset: 0;
-    z-index: -3;
-    overflow: hidden;
-}
-
-.hero-video-container video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.6;
-    filter: saturate(0.8) contrast(1.1) brightness(0.8);
-    transform: scale(1.1);
-    animation: videoZoom 20s ease-in-out infinite alternate;
-}
-
-@keyframes videoZoom {
-    0% { transform: scale(1.1); }
-    100% { transform: scale(1.2); }
-}
-
-.hero-video-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.8) 100%),
-        linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, transparent 30%, transparent 70%, rgba(10, 10, 10, 0.9) 100%);
-    z-index: 1;
-}
-
-/* ============================================
-   PARTICLE CANVAS
-   ============================================ */
-.particle-canvas {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* ============================================
-   FLOATING SHAPES
-   ============================================ */
-.hero-shapes {
-    position: absolute;
-    inset: 0;
     z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
 }
 
-.shape {
+.hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(124, 179, 66, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 179, 66, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridFloat 20s linear infinite;
+}
+
+@keyframes gridFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+}
+
+.hero-bg-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.3;
+    filter: blur(100px);
+    opacity: 0.4;
+    animation: orbPulse 8s ease-in-out infinite;
 }
 
-.shape-1 {
+.hero-orb-1 {
+    width: 500px;
+    height: 500px;
+    background: rgba(124, 179, 66, 0.2);
+    top: -10%;
+    left: -5%;
+    animation-delay: 0s;
+}
+
+.hero-orb-2 {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(124, 179, 66, 0.2) 0%, transparent 70%);
-    top: -10%;
+    background: rgba(156, 204, 101, 0.15);
+    bottom: 10%;
     right: -5%;
+    animation-delay: -3s;
 }
 
-.shape-2 {
+.hero-orb-3 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(168, 216, 255, 0.15) 0%, transparent 70%);
-    bottom: -5%;
-    left: -5%;
+    background: rgba(40, 167, 69, 0.1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -6s;
+}
+
+@keyframes orbPulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+/* ============================================
+   PARTICLE CANVAS - Crystals & Water Drops
+   ============================================ */
+.hero-particles-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 /* ============================================
@@ -118,12 +108,12 @@
     width: 400px;
     height: 400px;
     background: radial-gradient(circle, 
-        rgba(168, 216, 255, 0.08) 0%, 
-        rgba(124, 179, 66, 0.04) 30%, 
+        rgba(124, 179, 66, 0.08) 0%, 
+        rgba(40, 167, 69, 0.04) 30%, 
         transparent 60%);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
     opacity: 0;
     transition: opacity 0.5s ease;
     transform: translate(-50%, -50%);
@@ -139,7 +129,7 @@
    ============================================ */
 .hero-content {
     position: relative;
-    z-index: 10;  /* FIXED: was 2, bumped above canvas */
+    z-index: 10;
     max-width: 1000px;
     margin: 0 auto;
     display: flex;
@@ -223,7 +213,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .title-line {
@@ -232,26 +221,18 @@
     position: relative;
 }
 
-.char-wrap {
+.title-line-1 .char-wrap {
     display: inline-block;
     animation: titleReveal 1s cubic-bezier(0.77, 0, 0.175, 1) both;
-    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.title-line-1 .char-wrap {
     animation-delay: 0.3s;
+    color: #ffffff;
 }
 
 .title-line-2 .char-wrap {
+    display: inline-block;
+    animation: titleReveal 1s cubic-bezier(0.77, 0, 0.175, 1) both;
     animation-delay: 0.5s;
-    background: linear-gradient(135deg, var(--cfs-green) 0%, var(--cfs-light-green) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(124, 179, 66, 0.3));
+    color: var(--cfs-green);
 }
 
 @keyframes titleReveal {
@@ -266,32 +247,30 @@
 }
 
 /* ============================================
-   TYPING ANIMATION - FIXED
+   TYPING ANIMATION
    ============================================ */
 .title-line-3 {
-    /* FIXED: was 0.4em (way too small), now uses clamp for responsive sizing */
     font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-    font-weight: 600;  /* bumped up for visibility */
-    color: rgba(255, 255, 255, 0.95);  /* FIXED: was 0.8, now 0.95 for better contrast */
-    letter-spacing: 0.25em;  /* slightly reduced from 0.4em */
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    margin-top: 1.5rem;  /* more breathing room */
+    margin-top: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     position: relative;
-    z-index: 10;  /* ensure above everything */
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);  /* readability boost */
-    min-height: 1.5em;  /* prevent layout shift */
+    z-index: 10;
+    min-height: 1.5em;
 }
 
 .typing-text {
     display: inline;
     min-height: 1.2em;
     color: inherit;
-    font-weight: 700;  /* make typed text bold */
-    letter-spacing: 0.15em;  /* tighter letter spacing for typed word */
+    font-weight: 700;
+    letter-spacing: 0.15em;
 }
 
 .typing-cursor {
@@ -302,7 +281,7 @@
     animation: cursorBlink 1s step-end infinite;
     box-shadow: 0 0 15px var(--cfs-green), 0 0 30px rgba(124, 179, 66, 0.3);
     margin-left: 3px;
-    flex-shrink: 0;  /* prevent cursor from shrinking */
+    flex-shrink: 0;
 }
 
 @keyframes cursorBlink {
@@ -314,8 +293,7 @@
    HERO DESCRIPTION
    ============================================ */
 .hero-description {
-    color: var(--white);
-    text-shadow: 0 0 30px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8);
+    color: rgba(255, 255, 255, 0.85);
     font-weight: var(--font-weight-semibold);
     font-size: 1.2rem;
 }
@@ -541,47 +519,6 @@
 }
 
 /* ============================================
-   AMBIENT GLOW EFFECTS
-   ============================================ */
-.ambient-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.ambient-glow-1 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(168, 216, 255, 0.06) 0%, transparent 65%);
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: ambientPulse 12s ease-in-out infinite;
-}
-
-.ambient-glow-2 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(124, 179, 66, 0.05) 0%, transparent 60%);
-    bottom: 20%;
-    right: 15%;
-    animation: ambientPulse 10s ease-in-out infinite reverse;
-}
-
-@keyframes ambientPulse {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.5;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.3);
-        opacity: 0.8;
-    }
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 768px) {
@@ -594,7 +531,7 @@
     }
 
     .title-line-3 {
-        font-size: 0.8rem;  /* FIXED: was 0.35em, now readable */
+        font-size: 0.8rem;
         letter-spacing: 0.15em;
         margin-top: 1rem;
     }
@@ -636,10 +573,6 @@
     .mouse-glow {
         display: none;
     }
-
-    .shape {
-        opacity: 0.2;
-    }
 }
 
 @media (max-width: 480px) {
@@ -672,21 +605,17 @@
    REDUCED MOTION
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-    .hero-video-container video,
-    .shape,
     .badge,
     .typing-cursor,
-    .scroll-wheel,
-    .ambient-glow,
-    .hero-badge-wrapper {
+    .hero-bg-grid,
+    .hero-bg-orb {
         animation: none;
     }
 
     .char-wrap,
     .desc-line,
     .hero-buttons,
-    .trust-indicators,
-    .scroll-indicator {
+    .trust-indicators {
         animation: fadeIn 0.3s ease-out both;
     }
 

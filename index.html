@@ -187,28 +187,21 @@
         <button type="button" class="btn btn-primary" data-scroll="contact">Get Quote</button>
     </div>
     <!-- Hero -->
+
     <main id="main-content">
         <section class="hero" id="home" role="banner">
+            <!-- Background Layers - Matches Services Section -->
+            <div class="hero-bg-layers" aria-hidden="true">
+                <div class="hero-bg-grid"></div>
+                <div class="hero-bg-orb hero-orb-1"></div>
+                <div class="hero-bg-orb hero-orb-2"></div>
+                <div class="hero-bg-orb hero-orb-3"></div>
+            </div>
+
+            <!-- Particle Canvas - Working Particles -->
+            <canvas id="heroParticleCanvas" class="hero-particles-canvas" aria-hidden="true"></canvas>
+
             <a id="main-content" class="sr-only">Main content</a>
-
-            <!-- Video Background -->
-            <div class="hero-video-container">
-                <video autoplay muted loop playsinline
-                    poster="images/heroSection.jpeg">
-                </video>
-                <div class="hero-video-overlay"></div>
-            </div>
-
-            <!-- Animated Particle Canvas -->
-            <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
-
-            <!-- Floating Decorative Elements -->
-            <div class="hero-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-                <div class="shape shape-4"></div>
-            </div>
 
             <!-- Mouse Follower Glow -->
             <div class="mouse-glow" id="mouseGlow"></div>
@@ -290,9 +283,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Ambient Glow Effects -->
-            <div class="ambient-glow ambient-glow-1"></div>
-            <div class="ambient-glow ambient-glow-2"></div>
         </section>
 
         <!-- Services -->
