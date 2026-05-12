@@ -1,39 +1,40 @@
 /* ============================================
-   CHAT MODULE - PRODUCTION READY
-   Crystal Facility Solutions
+   CHAT MODULE - Simple Lead Capture
+   No backend needed - shows phone at end
    ============================================ */
 
 (function() {
     'use strict';
 
-    // ─── Configuration ──────────────────────────────────────────
     const CONFIG = {
         phone: '281-506-8826',
-        typingDelay: 1500,
-        closeAnimationDelay: 300,
-        focusDelay: 100
+        phoneDisplay: '(281) 506-8826',
+        typingDelay: 700
     };
 
-    // ─── Module State ───────────────────────────────────────────
     const state = {
-        isInitialized: false,
         elements: {},
         isOpen: false,
-        isMinimized: false,
-        timeouts: [],
-        boundHandlers: {}
+        userData: { name: '', reason: '', message: '' },
+        step: 0
     };
 
-    // ─── Initialization ─────────────────────────────────────────
+    const FLOW = [
+        { bot: 'Hi there! 👋 Welcome to Crystal Facility Solutions. What\'s your name?' },
+        { 
+            bot: 'Nice to meet you, {name}! What service are you interested in?',
+            options: ['Cleaning Services', 'Transportation', 'Landscaping', 'Maintenance', 'Other']
+        },
+        { bot: 'Tell us more about your needs — property size, schedule, or anything specific?' },
+        { 
+            bot: 'Thanks, {name}! 🎯\n\nHere\'s how to reach our team directly:\n\n📞 **{phone}**\n\n⏰ We typically respond within 2 hours during business hours.\n\nYou can also email us at: info@cfshouston.com',
+            final: true
+        }
+    ];
+
     function init() {
-        if (state.isInitialized) return;
-
         cacheElements();
-        if (!validateElements()) return;
-
         bindEvents();
-        setInitialState();
-        state.isInitialized = true;
     }
 
     function cacheElements() {
@@ -48,140 +49,159 @@
         };
     }
 
-    function validateElements() {
-        const { chatWindow, chatBody, chatInput, chatToggleBtn } = state.elements;
-        return !!(chatWindow && chatBody && chatInput && chatToggleBtn);
-    }
-
-    function setInitialState() {
-        const { chatWindow, chatCloseBtn, chatMinimizeBtn, chatInput, chatSendBtn } = state.elements;
-
-        chatWindow.classList.remove('active');
-        chatCloseBtn?.setAttribute('tabindex', '-1');
-        chatMinimizeBtn?.setAttribute('tabindex', '-1');
-        chatInput?.setAttribute('tabindex', '-1');
-        chatSendBtn?.setAttribute('tabindex', '-1');
-        chatWindow.setAttribute('aria-hidden', 'true');
-
-        addBotMessage('Hi there! How can I help you today?');
-    }
-
     function bindEvents() {
         const { chatToggleBtn, chatInput, chatSendBtn, chatCloseBtn, chatMinimizeBtn } = state.elements;
 
-        const onToggle = () => handleToggle();
-        const onMinimize = (e) => { e.stopPropagation(); minimizeChat(); };
-        const onClose = (e) => { e.stopPropagation(); closeAndRefreshChat(); };
-        const onKeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
-        const onSend = () => sendMessage();
-        const onEscape = (e) => { if (e.key === 'Escape' && state.isOpen) minimizeChat(); };
+        chatToggleBtn?.addEventListener('click', () => {
+            if (!state.isOpen) {
+                openChat();
+                if (state.step === 0) {
+                    state.step = 1;
+                    setTimeout(() => showStep(0), 500);
+                }
+            } else {
+                minimizeChat();
+            }
+        });
 
-        chatToggleBtn?.addEventListener('click', onToggle);
-        chatMinimizeBtn?.addEventListener('click', onMinimize);
-        chatCloseBtn?.addEventListener('click', onClose);
-        chatInput?.addEventListener('keypress', onKeypress);
-        chatSendBtn?.addEventListener('click', onSend);
-        document.addEventListener('keydown', onEscape);
-
-        state.boundHandlers = {
-            chatToggleBtn: { el: chatToggleBtn, onToggle },
-            chatMinimizeBtn: { el: chatMinimizeBtn, onMinimize },
-            chatCloseBtn: { el: chatCloseBtn, onClose },
-            chatInput: { el: chatInput, onKeypress },
-            chatSendBtn: { el: chatSendBtn, onSend },
-            document: { onEscape }
-        };
-    }
-
-    function handleToggle() {
-        if (state.isMinimized || !state.isOpen) {
-            openChat();
-        }
+        chatMinimizeBtn?.addEventListener('click', (e) => { e.stopPropagation(); minimizeChat(); });
+        chatCloseBtn?.addEventListener('click', (e) => { e.stopPropagation(); closeChat(); });
+        
+        chatInput?.addEventListener('keypress', (e) => { 
+            if (e.key === 'Enter') handleInput(); 
+        });
+        chatSendBtn?.addEventListener('click', () => handleInput());
     }
 
     function openChat() {
-        const { chatWindow, chatToggleBtn, chatInput, chatCloseBtn, chatMinimizeBtn, chatSendBtn } = state.elements;
-
         state.isOpen = true;
-        state.isMinimized = false;
-
-        chatWindow.removeAttribute('aria-hidden');
-        chatCloseBtn?.removeAttribute('tabindex');
-        chatMinimizeBtn?.removeAttribute('tabindex');
-        chatInput?.removeAttribute('tabindex');
-        chatSendBtn?.removeAttribute('tabindex');
-        chatWindow.classList.add('active');
-        chatToggleBtn.setAttribute('aria-expanded', 'true');
-        chatToggleBtn.classList.remove('has-pending-chat');
-
-        const timeoutId = setTimeout(() => chatInput?.focus(), CONFIG.focusDelay);
-        state.timeouts.push(timeoutId);
+        state.elements.chatWindow.classList.add('active');
+        state.elements.chatWindow.removeAttribute('aria-hidden');
+        state.elements.chatToggleBtn.setAttribute('aria-expanded', 'true');
     }
 
     function minimizeChat() {
-        const { chatWindow, chatToggleBtn, chatCloseBtn, chatMinimizeBtn, chatInput, chatSendBtn } = state.elements;
-
         state.isOpen = false;
-        state.isMinimized = true;
-
-        chatToggleBtn?.focus();
-        chatWindow.classList.remove('active');
-        chatCloseBtn?.setAttribute('tabindex', '-1');
-        chatMinimizeBtn?.setAttribute('tabindex', '-1');
-        chatInput?.setAttribute('tabindex', '-1');
-        chatSendBtn?.setAttribute('tabindex', '-1');
-        chatWindow.setAttribute('aria-hidden', 'true');
-        chatToggleBtn.setAttribute('aria-expanded', 'false');
-        chatToggleBtn.classList.add('has-pending-chat');
-        chatToggleBtn.setAttribute('aria-label', 'Restore chat');
+        state.elements.chatWindow.classList.remove('active');
+        state.elements.chatWindow.setAttribute('aria-hidden', 'true');
+        state.elements.chatToggleBtn.setAttribute('aria-expanded', 'false');
     }
 
-    function closeAndRefreshChat() {
-        const { chatWindow, chatBody, chatInput, chatToggleBtn, chatCloseBtn, chatMinimizeBtn, chatSendBtn } = state.elements;
+    function closeChat() {
+        minimizeChat();
+        setTimeout(() => {
+            state.elements.chatBody.innerHTML = '';
+            state.elements.chatInput.value = '';
+            state.step = 0;
+            state.userData = { name: '', reason: '', message: '' };
+        }, 300);
+    }
 
-        state.isOpen = false;
-        state.isMinimized = false;
+    function showStep(index) {
+        const step = FLOW[index];
+        let msg = step.bot
+            .replace('{name}', state.userData.name)
+            .replace('{phone}', CONFIG.phoneDisplay);
 
-        chatToggleBtn?.focus();
-        chatWindow.classList.remove('active');
-        chatCloseBtn?.setAttribute('tabindex', '-1');
-        chatMinimizeBtn?.setAttribute('tabindex', '-1');
-        chatInput?.setAttribute('tabindex', '-1');
-        chatSendBtn?.setAttribute('tabindex', '-1');
-        chatWindow.setAttribute('aria-hidden', 'true');
+        // Show typing indicator
+        showTyping();
+        
+        setTimeout(() => {
+            hideTyping();
+            addBotMessage(msg);
 
-        const timeoutId = setTimeout(() => {
-            // Clear messages safely
-            while (chatBody.firstChild) {
-                chatBody.removeChild(chatBody.firstChild);
+            if (step.options) {
+                showOptions(step.options);
+                hideInput();
+            } else if (step.final) {
+                showFinalActions();
+                hideInput();
+            } else {
+                showInput();
+                const placeholders = ['Your name...', 'Select above', 'Your message...'];
+                state.elements.chatInput.placeholder = placeholders[index] || 'Type here...';
             }
-            chatInput.value = '';
-            chatToggleBtn.setAttribute('aria-expanded', 'false');
-            chatToggleBtn.classList.remove('has-pending-chat');
-            chatToggleBtn.setAttribute('aria-label', 'Open chat');
-            addBotMessage('Hi there! How can I help you today?');
-        }, CONFIG.closeAnimationDelay);
-        state.timeouts.push(timeoutId);
-        state.timeouts.push(timeoutId);
+        }, CONFIG.typingDelay);
     }
 
-    function sendMessage() {
-        const { chatInput, chatBody } = state.elements;
-        const text = chatInput?.value.trim();
+    function showOptions(options) {
+        const container = document.createElement('div');
+        container.className = 'chat-options';
+        
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'chat-option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => {
+                container.remove();
+                addUserMessage(opt);
+                state.userData.reason = opt;
+                state.step = 3;
+                showStep(2);
+            };
+            container.appendChild(btn);
+        });
+        
+        state.elements.chatBody.appendChild(container);
+        scrollToBottom();
+    }
+
+    function showFinalActions() {
+        const container = document.createElement('div');
+        container.className = 'chat-call-options';
+
+        // Call
+        const callBtn = document.createElement('a');
+        callBtn.href = `tel:+1${CONFIG.phone.replace(/-/g, '')}`;
+        callBtn.className = 'chat-call-btn chat-call-primary';
+        callBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Call Now';
+        container.appendChild(callBtn);
+
+        // Copy number
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'chat-call-btn chat-call-secondary';
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Number';
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(CONFIG.phoneDisplay);
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Number', 2000);
+        };
+        container.appendChild(copyBtn);
+
+        // Start over
+        const restartBtn = document.createElement('button');
+        restartBtn.className = 'chat-call-btn chat-call-ghost';
+        restartBtn.innerHTML = '<i class="fas fa-redo"></i> New Chat';
+        restartBtn.onclick = () => {
+            closeChat();
+            setTimeout(() => {
+                openChat();
+                state.step = 1;
+                showStep(0);
+            }, 400);
+        };
+        container.appendChild(restartBtn);
+
+        state.elements.chatBody.appendChild(container);
+        scrollToBottom();
+    }
+
+    function handleInput() {
+        const text = state.elements.chatInput.value.trim();
         if (!text) return;
 
         addUserMessage(text);
-        chatInput.value = '';
-        showTyping();
+        state.elements.chatInput.value = '';
 
-        const timeoutId = setTimeout(() => {
-            hideTyping();
-            const caseNum = Math.floor(10000 + Math.random() * 90000);
-            const message = 'Message received! Thanks for reaching out. I\'ve created Case #' + caseNum + ' in our system. Our team will contact you shortly. For emergencies, please call ' + CONFIG.phone + '.';
-            addBotMessage(message);
-            scrollToBottom();
-        }, CONFIG.typingDelay);
-        state.timeouts.push(timeoutId);
+        if (state.step === 1) {
+            state.userData.name = text;
+            state.step = 2;
+            showStep(1);
+        } else if (state.step === 3) {
+            state.userData.message = text;
+            state.step = 4;
+            showStep(3);
+        }
     }
 
     function addUserMessage(text) {
@@ -195,20 +215,16 @@
     function addBotMessage(text) {
         const div = document.createElement('div');
         div.className = 'message bot';
-        div.textContent = text;
+        div.innerHTML = text.replace(/\n/g, '<br>');
         state.elements.chatBody.appendChild(div);
+        scrollToBottom();
     }
 
     function showTyping() {
         const div = document.createElement('div');
         div.className = 'message bot typing-indicator';
         div.id = 'typingIndicator';
-
-        for (let i = 0; i < 3; i++) {
-            const span = document.createElement('span');
-            div.appendChild(span);
-        }
-
+        div.innerHTML = '<span></span><span></span><span></span>';
         state.elements.chatBody.appendChild(div);
         scrollToBottom();
     }
@@ -217,44 +233,20 @@
         document.getElementById('typingIndicator')?.remove();
     }
 
+    function showInput() {
+        state.elements.chatInput.style.display = '';
+        state.elements.chatSendBtn.style.display = '';
+    }
+
+    function hideInput() {
+        state.elements.chatInput.style.display = 'none';
+        state.elements.chatSendBtn.style.display = 'none';
+    }
+
     function scrollToBottom() {
-        const { chatBody } = state.elements;
-        chatBody.scrollTop = chatBody.scrollHeight;
+        state.elements.chatBody.scrollTop = state.elements.chatBody.scrollHeight;
     }
 
-    // ─── Cleanup / Destroy ──────────────────────────────────────
-    function destroy() {
-        if (!state.isInitialized) return;
-
-        // Clear timeouts
-        state.timeouts.forEach(id => clearTimeout(id));
-        state.timeouts = [];
-
-        // Remove event listeners
-        if (state.boundHandlers.chatToggleBtn) {
-            state.boundHandlers.chatToggleBtn.el?.removeEventListener('click', state.boundHandlers.chatToggleBtn.onToggle);
-        }
-        if (state.boundHandlers.chatMinimizeBtn) {
-            state.boundHandlers.chatMinimizeBtn.el?.removeEventListener('click', state.boundHandlers.chatMinimizeBtn.onMinimize);
-        }
-        if (state.boundHandlers.chatCloseBtn) {
-            state.boundHandlers.chatCloseBtn.el?.removeEventListener('click', state.boundHandlers.chatCloseBtn.onClose);
-        }
-        if (state.boundHandlers.chatInput) {
-            state.boundHandlers.chatInput.el?.removeEventListener('keypress', state.boundHandlers.chatInput.onKeypress);
-        }
-        if (state.boundHandlers.chatSendBtn) {
-            state.boundHandlers.chatSendBtn.el?.removeEventListener('click', state.boundHandlers.chatSendBtn.onSend);
-        }
-        if (state.boundHandlers.document) {
-            document.removeEventListener('keydown', state.boundHandlers.document.onEscape);
-        }
-
-        state.boundHandlers = {};
-        state.isInitialized = false;
-    }
-
-    // ─── Bootstrap ──────────────────────────────────────────────
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
