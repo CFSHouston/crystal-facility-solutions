@@ -8,15 +8,15 @@
 
     const CONFIG = {
         videos: [
-            'Videos/Video.mp4',
-            'Videos/Video4.mp4',
-            'Videos/Video6.mp4',
-            'Videos/Video8.mp4',
-            'Videos/Video2.mp4',
-            'Videos/Video3.mp4',
-            'Videos/Video5.mp4',
-            'Videos/Video7.mp4',
-            'Videos/Video1.mp4'
+            'Videos/video.mp4',
+            'Videos/video4.mp4',
+            'Videos/video6.mp4',
+            'Videos/video8.mp4',
+            'Videos/video2.mp4',
+            'Videos/video3.mp4',
+            'Videos/video5.mp4',
+            'Videos/video7.mp4',
+            'Videos/video1.mp4'
         ],
         playbackRate: 1.0,        // Slow motion (30% speed)
         crossfadeDuration: 1000,  // 1.2s fade between videos
