@@ -1,6 +1,7 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - CORE VALUES
    Cinematic Theater Mode Value Cards
+   Lightened to match services section tone
    ============================================ */
 
 .core-values-section {
@@ -8,19 +9,22 @@
     padding: 8rem 0;
     overflow: hidden;
     isolation: isolate;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f0d 100%);
+    /* LIGHTENED: was #0a0a0a → #1a1a1a → #0d1f0d */
+    /* Now matches services lightened tone with green tint */
+    background: linear-gradient(135deg, #1e2b1e 0%, #232837 50%, #252b3a 100%);
     min-height: 100vh;
 }
 
-/* Animated Background Mesh */
+/* Animated Background Mesh — LIGHTENED */
 .core-values-section::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 20% 20%, rgba(124, 179, 66, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(156, 204, 101, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(40, 167, 69, 0.08) 0%, transparent 70%);
+        /* Reduced opacity for lighter feel */
+        radial-gradient(ellipse at 20% 20%, rgba(124, 179, 66, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(156, 204, 101, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(40, 167, 69, 0.05) 0%, transparent 70%);
     animation: meshFloat 20s ease-in-out infinite;
     pointer-events: none;
     z-index: 0;
@@ -33,19 +37,20 @@
     75% { transform: translate(4%, -3%) scale(1.02); }
 }
 
-/* Noise Texture */
+/* Noise Texture — LIGHTENED opacity */
 .core-values-section::after {
     content: '';
     position: absolute;
     inset: 0;
-    opacity: 0.03;
+    /* Reduced from 0.03 to 0.015 */
+    opacity: 0.015;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     animation: noiseShift 0.5s steps(10) infinite;
     pointer-events: none;
     z-index: 1;
 }
 
-/* Floating Decorative Orbs */
+/* Floating Decorative Orbs — LIGHTENED opacity */
 .values-decoration {
     position: absolute;
     inset: 0;
@@ -58,14 +63,16 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.4;
+    /* Reduced from 0.4 to 0.2 */
+    opacity: 0.2;
     animation: orbFloat 15s ease-in-out infinite;
 }
 
 .value-orb.orb-1 {
     width: 400px;
     height: 400px;
-    background: rgba(124, 179, 66, 0.3);
+    /* Reduced from 0.3 to 0.15 */
+    background: rgba(124, 179, 66, 0.15);
     top: -10%;
     left: -5%;
     animation-delay: 0s;
@@ -74,7 +81,8 @@
 .value-orb.orb-2 {
     width: 300px;
     height: 300px;
-    background: rgba(156, 204, 101, 0.25);
+    /* Reduced from 0.25 to 0.12 */
+    background: rgba(156, 204, 101, 0.12);
     bottom: 10%;
     right: -5%;
     animation-delay: -5s;
@@ -83,7 +91,8 @@
 .value-orb.orb-3 {
     width: 250px;
     height: 250px;
-    background: rgba(40, 167, 69, 0.2);
+    /* Reduced from 0.2 to 0.1 */
+    background: rgba(40, 167, 69, 0.1);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -117,8 +126,9 @@
     color: var(--cfs-green);
     margin-bottom: 1.5rem;
     padding: 0.75rem 1.5rem;
-    background: rgba(124, 179, 66, 0.1);
-    border: 1px solid rgba(124, 179, 66, 0.3);
+    /* LIGHTENED background */
+    background: rgba(124, 179, 66, 0.08);
+    border: 1px solid rgba(124, 179, 66, 0.25);
     border-radius: 50px;
     position: relative;
     overflow: hidden;
@@ -129,7 +139,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(124, 179, 66, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(124, 179, 66, 0.25), transparent);
     transform: translateX(-100%);
     animation: labelShine 3s ease-in-out infinite;
 }
@@ -187,10 +197,11 @@
 }
 
 /* ============================================
-   VALUE CARD
+   VALUE CARD — LIGHTENED
    ============================================ */
 .value-card {
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: slightly more visible on lighter bg */
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
     padding: 2.5rem;
@@ -243,12 +254,13 @@
     transform: scaleX(1);
 }
 
-/* Card glow */
+/* Card glow — LIGHTENED */
 .value-card .card-glow {
     position: absolute;
     inset: -1px;
     border-radius: 24px;
     background: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
+    /* Reduced from 0.15 to 0.08 */
     opacity: 0;
     z-index: -1;
     transition: opacity 0.5s ease;
@@ -256,17 +268,18 @@
 }
 
 .value-card:hover .card-glow {
-    opacity: 0.15;
+    opacity: 0.08;
 }
 
 /* Hover lift */
 .value-card:hover {
     transform: translateY(-12px) scale(1.02);
-    background: rgba(255, 255, 255, 0.05);
+    /* LIGHTENED hover background */
+    background: rgba(255, 255, 255, 0.07);
     border-color: rgba(124, 179, 66, 0.2);
     box-shadow:
-        0 25px 50px -12px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(124, 179, 66, 0.1);
+        0 25px 50px -12px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(124, 179, 66, 0.08);
 }
 
 /* Active/Expanded State */
@@ -386,7 +399,8 @@
 }
 
 .value-short {
-    color: rgba(255, 255, 255, 0.7);
+    /* LIGHTENED for better contrast on lighter bg */
+    color: rgba(255, 255, 255, 0.72);
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 1rem;
@@ -473,8 +487,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(124, 179, 66, 0.15);
-    border: 1px solid rgba(124, 179, 66, 0.3);
+    background: rgba(98, 141, 52, 0.12);
+    border: 1px solid rgba(124, 179, 66, 0.25);
     color: var(--cfs-green);
     font-size: 0.9rem;
     font-weight: var(--font-weight-semibold);
@@ -502,9 +516,9 @@
 }
 
 .value-toggle:hover {
-    background: rgba(124, 179, 66, 0.25);
+    background: rgba(100, 143, 55, 0.2);
     transform: translateX(5px);
-    box-shadow: 0 4px 20px rgba(124, 179, 66, 0.3);
+    box-shadow: 0 4px 20px rgba(94, 135, 51, 0.25);
     border-color: var(--cfs-green);
 }
 
@@ -533,7 +547,7 @@
     gap: 0.75rem;
     margin-top: 4rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     position: relative;
     z-index: 2;
 }
@@ -563,7 +577,7 @@
 .progress-dot.active {
     background: var(--cfs-green);
     transform: scale(1.2);
-    box-shadow: 0 0 20px rgba(124, 179, 66, 0.5);
+    box-shadow: 0 0 20px rgba(98, 141, 53, 0.5);
 }
 
 .progress-dot.active::after {
@@ -572,12 +586,12 @@
 }
 
 .progress-dot:hover {
-    background: rgba(124, 179, 66, 0.4);
+    background: rgba(102, 146, 54, 0.4);
     transform: scale(1.1);
 }
 
 /* ============================================
-   FLOATING SHAPES
+   FLOATING SHAPES — LIGHTENED
    ============================================ */
 .values-shapes {
     position: absolute;
@@ -591,7 +605,8 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(60px);
-    opacity: 0.2;
+    /* Reduced from 0.2 to 0.1 */
+    opacity: 0.1;
     animation: float-shape 20s infinite ease-in-out;
 }
 

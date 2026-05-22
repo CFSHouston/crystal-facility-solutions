@@ -1,11 +1,14 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - FOOTER
    Four Columns: Brand | Navigate | Services | Get Started
+   Lightened to match services section tone
    ============================================ */
 
 .footer {
     position: relative;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f0d 100%);
+    /* LIGHTENED: was #0a0a0a → #1a1a1a → #0d1f0d */
+    /* Fades back to services tone for bookend effect */
+    background: linear-gradient(135deg, #475b8e 0%, #242c3e 50%, #222735 100%);
     color: var(--white);
     padding: 0;
     overflow: hidden;
@@ -13,7 +16,7 @@
 }
 
 /* ============================================
-   ANIMATED BACKGROUND
+   ANIMATED BACKGROUND — LIGHTENED
    ============================================ */
 .footer-bg {
     position: absolute;
@@ -26,17 +29,19 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 20% 0%, rgba(124, 179, 66, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 100%, rgba(156, 204, 101, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(124, 179, 66, 0.05) 0%, transparent 70%);
+        /* Reduced opacity for lighter feel */
+        radial-gradient(ellipse at 20% 0%, rgba(124, 179, 66, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(156, 204, 101, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(124, 179, 66, 0.04) 0%, transparent 70%);
 }
 
 .footer-grid-pattern {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(124, 179, 66, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 179, 66, 0.03) 1px, transparent 1px);
+        /* LIGHTENED grid lines */
+        linear-gradient(rgba(124, 179, 66, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 179, 66, 0.02) 1px, transparent 1px);
     background-size: 50px 50px;
     animation: grid-move 20s linear infinite;
 }
@@ -50,14 +55,16 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.4;
+    /* Reduced from 0.4 to 0.2 */
+    opacity: 0.2;
     animation: glow-pulse 8s ease-in-out infinite;
 }
 
 .footer-glow-1 {
     width: 400px;
     height: 400px;
-    background: rgba(124, 179, 66, 0.3);
+    /* Reduced from 0.3 to 0.15 */
+    background: rgba(124, 179, 66, 0.15);
     top: -200px;
     left: 10%;
     animation-delay: 0s;
@@ -66,18 +73,19 @@
 .footer-glow-2 {
     width: 300px;
     height: 300px;
-    background: rgba(156, 204, 101, 0.2);
+    /* Reduced from 0.2 to 0.1 */
+    background: rgba(156, 204, 101, 0.1);
     bottom: -100px;
     right: 20%;
     animation-delay: -4s;
 }
 
 @keyframes glow-pulse {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.2); }
+    0%, 100% { opacity: 0.15; transform: scale(1); }
+    50% { opacity: 0.25; transform: scale(1.2); }
 }
 
-/* Particle Canvas */
+/* Particle Canvas — LIGHTENED */
 .footer-particles {
     position: absolute;
     inset: 0;
@@ -140,7 +148,8 @@
 .footer-description {
     font-size: 0.85rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED for better contrast */
+    color: rgba(255, 255, 255, 0.6);
     margin: 0;
     max-width: 300px;
 }
@@ -163,7 +172,8 @@
     margin: 0;
     font-size: 0.9rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.9);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.92);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -194,7 +204,8 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     font-size: 0.9rem;
     padding: 0.5rem 0;
@@ -256,7 +267,8 @@
    ============================================ */
 .footer-cta-hint {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.3);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.4);
     margin: 0;
 }
 
@@ -270,13 +282,15 @@
 .social-link {
     width: 36px;
     height: 36px;
-    background: rgba(255, 255, 255, 0.05);
+    /* LIGHTENED: was rgba(255,255,255,0.05) */
+    background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.55);
     font-size: 0.85rem;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -290,10 +304,11 @@
 }
 
 /* ============================================
-   BOTTOM BAR
+   BOTTOM BAR — LIGHTENED
    ============================================ */
 .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    /* LIGHTENED border */
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     padding-top: 2rem;
     display: flex;
     justify-content: center;
@@ -304,7 +319,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.55);
     font-size: 0.9rem;
     margin: 0;
 }
@@ -314,7 +330,8 @@
 }
 
 .copy-brand {
-    color: rgba(255, 255, 255, 0.8);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.85);
     font-weight: var(--font-weight-semibold);
 }
 

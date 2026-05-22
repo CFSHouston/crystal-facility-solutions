@@ -1,6 +1,7 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - CONTACT
    Background matching Services section style
+   Lightened to match services section tone
    ============================================ */
 
 .contact-cinematic {
@@ -10,13 +11,14 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    /* EXACT MATCH to services-theater background */
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f0d 100%);
+    /* LIGHTENED: was #0a0a0a → #1a1a1a → #0d1f0d */
+    /* Now matches services lightened tone with green tint */
+    background: linear-gradient(135deg, #2a3144 0%, #2c3448 50%, #2e374d 100%);
     isolation: isolate;
 }
 
 /* ============================================
-   BACKGROUND LAYERS — Matching Services Style
+   BACKGROUND LAYERS — Matching Services Style (LIGHTENED)
    ============================================ */
 .contact-bg-layers {
     position: absolute;
@@ -25,13 +27,13 @@
     z-index: 0;
 }
 
-/* Grid pattern — EXACT MATCH to services bg-grid-pattern */
+/* Grid pattern — LIGHTENED */
 .contact-bg-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(124, 179, 66, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 179, 66, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(124, 179, 66, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 179, 66, 0.02) 1px, transparent 1px);
     background-size: 60px 60px;
     animation: gridFloat 20s linear infinite;
 }
@@ -41,19 +43,21 @@
     100% { transform: translate(60px, 60px); }
 }
 
-/* Gradient orbs — EXACT MATCH to services orbs */
+/* Gradient orbs — LIGHTENED */
 .contact-bg-orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.4;
+    /* Reduced from 0.4 to 0.2 */
+    opacity: 0.2;
     animation: orbPulse 8s ease-in-out infinite;
 }
 
 .contact-bg-orb.orb-1 {
     width: 500px;
     height: 500px;
-    background: rgba(124, 179, 66, 0.2);
+    /* Reduced from 0.2 to 0.12 */
+    background: rgba(124, 179, 66, 0.12);
     top: -10%;
     left: -5%;
     animation-delay: 0s;
@@ -62,7 +66,8 @@
 .contact-bg-orb.orb-2 {
     width: 400px;
     height: 400px;
-    background: rgba(156, 204, 101, 0.15);
+    /* Reduced from 0.15 to 0.08 */
+    background: rgba(156, 204, 101, 0.08);
     bottom: 10%;
     right: -5%;
     animation-delay: -3s;
@@ -71,7 +76,8 @@
 .contact-bg-orb.orb-3 {
     width: 300px;
     height: 300px;
-    background: rgba(40, 167, 69, 0.1);
+    /* Reduced from 0.1 to 0.06 */
+    background: rgba(40, 167, 69, 0.06);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -79,16 +85,17 @@
 }
 
 @keyframes orbPulse {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.2); opacity: 0.6; }
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.2); opacity: 0.3; }
 }
 
-/* Particles canvas — matching services-particles-canvas */
+/* Particles canvas — LIGHTENED */
 .contact-particles {
     position: absolute;
     inset: 0;
     z-index: 1;
-    opacity: 0.6;
+    /* Reduced from 0.6 to 0.4 */
+    opacity: 0.4;
     pointer-events: none;
 }
 
@@ -114,8 +121,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: rgba(124, 179, 66, 0.1);
-    border: 1px solid rgba(124, 179, 66, 0.3);
+    /* LIGHTENED background */
+    background: rgba(124, 179, 66, 0.08);
+    border: 1px solid rgba(124, 179, 66, 0.25);
     border-radius: 50px;
     color: var(--cfs-green);
     font-size: 0.875rem;
@@ -127,8 +135,8 @@
 }
 
 @keyframes eyebrowGlow {
-    0%, 100% { box-shadow: 0 0 20px rgba(124, 179, 66, 0.2); }
-    50% { box-shadow: 0 0 40px rgba(124, 179, 66, 0.4); }
+    0%, 100% { box-shadow: 0 0 20px rgba(124, 179, 66, 0.15); }
+    50% { box-shadow: 0 0 40px rgba(124, 179, 66, 0.3); }
 }
 
 .cinematic-header .header-title {
@@ -160,7 +168,8 @@
 
 .cinematic-header .header-subtitle {
     font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.7);
+    /* LIGHTENED for better contrast */
+    color: rgba(255, 255, 255, 0.72);
     max-width: 600px;
     margin: 0 auto 2.5rem;
     line-height: 1.6;
@@ -186,7 +195,7 @@
     gap: 2.5rem;
 }
 
-/* 3D Card Stack */
+/* 3D Card Stack — LIGHTENED */
 .card-stack {
     position: relative;
     height: 260px;
@@ -198,7 +207,8 @@
     width: 100%;
     max-width: 320px;
     padding: 1.5rem 2rem;
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: was rgba(255,255,255,0.03) */
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     backdrop-filter: blur(10px);
@@ -274,7 +284,7 @@
     50% { transform: translateY(-4px) scale(0.92); }
 }
 
-/* Contact Methods */
+/* Contact Methods — LIGHTENED */
 .contact-methods {
     display: flex;
     flex-direction: column;
@@ -287,7 +297,8 @@
     align-items: center;
     gap: 1.25rem;
     padding: 1.25rem 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: was rgba(255,255,255,0.03) */
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     text-decoration: none;
@@ -343,7 +354,8 @@
 
 .method-label {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.55);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -413,14 +425,15 @@
 }
 
 .status-time {
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.55);
     font-size: 0.85rem;
     padding-left: 1rem;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ============================================
-   RIGHT: FLOATING GLASS FORM
+   RIGHT: FLOATING GLASS FORM — LIGHTENED
    ============================================ */
 .form-floating-container {
     perspective: 1000px;
@@ -428,7 +441,8 @@
 
 .form-glass {
     position: relative;
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: was rgba(255,255,255,0.03) */
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 2.5rem;
@@ -451,7 +465,8 @@
     height: 200%;
     background: linear-gradient(45deg,
         transparent 40%,
-        rgba(255,255,255,0.03) 50%,
+        /* LIGHTENED reflection */
+        rgba(255,255,255,0.04) 50%,
         transparent 60%);
     animation: reflection-sweep 8s linear infinite;
     pointer-events: none;
@@ -474,11 +489,12 @@
 }
 
 .form-header-glass p {
-    color: rgba(255, 255, 255, 0.6);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.65);
     font-size: 0.95rem;
 }
 
-/* Glass Inputs */
+/* Glass Inputs — LIGHTENED */
 .form-cinematic {
     display: flex;
     flex-direction: column;
@@ -507,7 +523,8 @@
 .input-glass textarea {
     width: 100%;
     padding: 1rem 1rem 1rem 3rem;
-    background: rgba(0, 0, 0, 0.2);
+    /* LIGHTENED: was rgba(0,0,0,0.2) */
+    background: rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: var(--white);
@@ -528,7 +545,8 @@
 .input-glass select:focus,
 .input-glass textarea:focus {
     border-color: var(--cfs-green);
-    background: rgba(0, 0, 0, 0.3);
+    /* LIGHTENED focus bg */
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .input-glass select ~ label {
@@ -537,7 +555,8 @@
     transform: none;
     font-size: 0.75rem;
     color: var(--cfs-green);
-    background: rgba(10, 10, 10, 0.7);
+    /* LIGHTENED: was rgba(10,10,10,0.7) */
+    background: rgba(30, 35, 50, 0.8);
     padding: 0 0.5rem;
     border-radius: 4px;
     z-index: 4;
@@ -567,7 +586,8 @@
     left: 3rem;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.55);
     font-size: 0.95rem;
     pointer-events: none;
     transition: all 0.3s;
@@ -591,7 +611,8 @@
     transform: none;
     font-size: 0.75rem;
     color: var(--cfs-green);
-    background: rgba(10, 10, 10, 0.7);
+    /* LIGHTENED: was rgba(10,10,10,0.7) */
+    background: rgba(30, 35, 50, 0.8);
     padding: 0 0.5rem;
     border-radius: 4px;
 }
@@ -601,7 +622,8 @@
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.3);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.35);
     transition: all 0.3s;
     z-index: 3;
     pointer-events: none;
@@ -646,7 +668,8 @@
     bottom: 0.75rem;
     right: 1rem;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.45);
     z-index: 3;
     pointer-events: none;
 }
@@ -703,21 +726,22 @@
     opacity: 1;
 }
 
-/* Trust Mini */
+/* Trust Mini — LIGHTENED */
 .trust-mini {
     display: flex;
     justify-content: center;
     gap: 2rem;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .trust-mini .trust-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.55);
     font-size: 0.85rem;
 }
 
@@ -799,11 +823,12 @@
     transform: translateY(0);
 }
 
-/* Form Success Overlay */
+/* Form Success Overlay — LIGHTENED */
 .form-success-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(10, 20, 10, 0.95);
+    /* LIGHTENED: was rgba(10,20,10,0.95) */
+    background: rgba(30, 35, 50, 0.95);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;

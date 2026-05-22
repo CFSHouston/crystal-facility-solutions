@@ -1,11 +1,10 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - HERO
-   Cinematic Premium Hero Section
-   With Crystal & Water Drop Effects
+   Video Background with Content Overlay
    ============================================ */
 
 /* ============================================
-   HERO SECTION - Dark Theme
+   HERO SECTION
    ============================================ */
 
 .hero {
@@ -19,114 +18,46 @@
     padding: calc(var(--nav-height) + 2rem) 2rem 4rem;
     overflow: hidden;
     isolation: isolate;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f0d 100%);
+    background: #0a0a0a;
 }
 
 /* ============================================
-   DYNAMIC BACKGROUND
+   VIDEO BACKGROUND
    ============================================ */
 
-.hero-bg-layers {
+.hero-video-bg {
     position: absolute;
     inset: 0;
-    pointer-events: none;
     z-index: 0;
+    overflow: hidden;
 }
 
-.hero-bg-grid {
+.hero-video-bg video {
     position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(124, 179, 66, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 179, 66, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridFloat 20s linear infinite;
-}
-
-@keyframes gridFloat {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(60px, 60px); }
-}
-
-.hero-bg-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.4;
-    animation: orbPulse 8s ease-in-out infinite;
-}
-
-.hero-orb-1 {
-    width: 500px;
-    height: 500px;
-    background: rgba(124, 179, 66, 0.2);
-    top: -10%;
-    left: -5%;
-    animation-delay: 0s;
-}
-
-.hero-orb-2 {
-    width: 400px;
-    height: 400px;
-    background: rgba(156, 204, 101, 0.15);
-    bottom: 10%;
-    right: -5%;
-    animation-delay: -3s;
-}
-
-.hero-orb-3 {
-    width: 300px;
-    height: 300px;
-    background: rgba(40, 167, 69, 0.1);
     top: 50%;
     left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
     transform: translate(-50%, -50%);
-    animation-delay: -6s;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
 }
 
-@keyframes orbPulse {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.2); opacity: 0.6; }
-}
-
-/* ============================================
-   PARTICLE CANVAS - Crystals & Water Drops
-   ============================================ */
-.hero-particles-canvas {
+/* Dark overlay so text stays readable */
+.hero-video-overlay {
     position: absolute;
     inset: 0;
+    background: rgba(10, 25, 47, 0.6);
     z-index: 1;
-    opacity: 0.7;
-    pointer-events: none;
 }
 
 /* ============================================
-   MOUSE FOLLOWER GLOW
+   HERO CONTENT - MUST BE ABOVE VIDEO
    ============================================ */
-.mouse-glow {
-    position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, 
-        rgba(124, 179, 66, 0.08) 0%, 
-        rgba(40, 167, 69, 0.04) 30%, 
-        transparent 60%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: screen;
-}
 
-.hero:hover .mouse-glow {
-    opacity: 1;
-}
-
-/* ============================================
-   HERO CONTENT
-   ============================================ */
 .hero-content {
     position: relative;
     z-index: 10;
@@ -157,8 +88,8 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1.5rem;
-    background: rgba(124, 179, 66, 0.1);
-    border: 1px solid rgba(124, 179, 66, 0.3);
+    background: rgba(124, 179, 66, 0.15);
+    border: 1px solid rgba(124, 179, 66, 0.4);
     border-radius: 50px;
     color: var(--cfs-green);
     font-weight: var(--font-weight-semibold);
@@ -166,9 +97,7 @@
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(10px);
-    box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.3),
-        0 0 30px rgba(124, 179, 66, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(124, 179, 66, 0.1);
     animation: badgePulse 2s ease-in-out infinite;
 }
 
@@ -180,7 +109,6 @@
 .badge i {
     color: var(--cfs-green);
     animation: starSpin 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 5px rgba(124, 179, 66, 0.5));
 }
 
 @keyframes starSpin {
@@ -236,14 +164,8 @@
 }
 
 @keyframes titleReveal {
-    from {
-        opacity: 0;
-        transform: translateY(100%) rotateX(-90deg);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) rotateX(0);
-    }
+    from { opacity: 0; transform: translateY(100%) rotateX(-90deg); }
+    to { opacity: 1; transform: translateY(0) rotateX(0); }
 }
 
 /* ============================================
@@ -293,7 +215,7 @@
    HERO DESCRIPTION
    ============================================ */
 .hero-description {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: var(--font-weight-semibold);
     font-size: 1.2rem;
 }
@@ -308,16 +230,8 @@
 .desc-line:nth-child(2) { animation-delay: 1.2s; }
 
 @keyframes fadeSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-        filter: blur(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
+    from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
 /* ============================================
@@ -354,87 +268,26 @@
 .btn-hero-primary {
     background: linear-gradient(135deg, var(--cfs-green), var(--cfs-dark-green));
     color: var(--white);
-    box-shadow:
-        0 10px 40px rgba(124, 179, 66, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-}
-
-.btn-hero-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--cfs-light-green), var(--cfs-green));
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    box-shadow: 0 10px 40px rgba(124, 179, 66, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .btn-hero-primary:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow:
-        0 20px 60px rgba(124, 179, 66, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-}
-
-.btn-hero-primary:hover::before {
-    opacity: 1;
+    box-shadow: 0 20px 60px rgba(124, 179, 66, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
 .btn-hero-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     color: var(--white);
     backdrop-filter: blur(10px);
 }
 
-.btn-hero-secondary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(124, 179, 66, 0.1);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
 .btn-hero-secondary:hover {
-    background: rgba(124, 179, 66, 0.1);
+    background: rgba(124, 179, 66, 0.15);
     border-color: rgba(124, 179, 66, 0.5);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(124, 179, 66, 0.2);
-}
-
-.btn-hero-secondary:hover::before {
-    opacity: 1;
-}
-
-.btn-text {
-    position: relative;
-    z-index: 1;
-}
-
-.btn-icon {
-    position: relative;
-    z-index: 1;
-    transition: transform 0.3s ease;
-}
-
-.btn-hero-primary:hover .btn-icon {
-    transform: translateX(4px);
-}
-
-/* Button Ripple */
-.btn-ripple {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%),
-                rgba(255,255,255,0.4) 0%,
-                transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-}
-
-.btn-hero-primary:hover .btn-ripple {
-    opacity: 1;
 }
 
 /* ============================================
@@ -447,7 +300,7 @@
     gap: 3rem;
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     opacity: 0;
     animation: fadeSlideUp 0.8s ease-out 1.6s both;
     flex-wrap: wrap;
@@ -459,18 +312,18 @@
     gap: 1rem;
     color: var(--white);
     padding: 1rem 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 16px;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 }
 
 .trust-item:hover {
-    background: rgba(124, 179, 66, 0.1);
+    background: rgba(124, 179, 66, 0.12);
     border-color: rgba(124, 179, 66, 0.3);
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(124, 179, 66, 0.2);
+    box-shadow: 0 10px 30px rgba(124, 179, 66, 0.15);
 }
 
 .trust-icon {
@@ -515,7 +368,7 @@
 .trust-divider {
     width: 1px;
     height: 50px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* ============================================
@@ -569,10 +422,6 @@
         width: 100%;
         max-width: 280px;
     }
-
-    .mouse-glow {
-        display: none;
-    }
 }
 
 @media (max-width: 480px) {
@@ -606,9 +455,7 @@
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
     .badge,
-    .typing-cursor,
-    .hero-bg-grid,
-    .hero-bg-orb {
+    .typing-cursor {
         animation: none;
     }
 
@@ -617,9 +464,5 @@
     .hero-buttons,
     .trust-indicators {
         animation: fadeIn 0.3s ease-out both;
-    }
-
-    .mouse-glow {
-        display: none;
     }
 }

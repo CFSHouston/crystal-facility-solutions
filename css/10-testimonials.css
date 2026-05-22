@@ -1,20 +1,23 @@
 /* ============================================
    CRYSTAL FACILITY SOLUTIONS - TESTIMONIALS
    Cinematic 3D Carousel
+   Lightened to match services section tone
    ============================================ */
 
 .testimonials-cinematic {
     position: relative;
     padding: 8rem 0;
     overflow: hidden;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f0d 100%);
+    /* LIGHTENED: was #0a0a0a → #1a1a1a → #0d1f0d */
+    /* Now matches services lightened tone with green tint */
+    background: linear-gradient(135deg, #252b3a 0%, #282f40 50%, #2a3144 100%);
     min-height: 100vh;
     perspective: 1000px;
     isolation: isolate;
 }
 
 /* ============================================
-   DYNAMIC BACKGROUND
+   DYNAMIC BACKGROUND — LIGHTENED
    ============================================ */
 .testimonials-bg {
     position: absolute;
@@ -27,9 +30,10 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 20% 20%, rgba(124, 179, 66, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(156, 204, 101, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(40, 167, 69, 0.1) 0%, transparent 70%);
+        /* Reduced opacity for lighter feel */
+        radial-gradient(ellipse at 20% 20%, rgba(124, 179, 66, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(156, 204, 101, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(40, 167, 69, 0.05) 0%, transparent 70%);
     animation: meshMove 20s ease-in-out infinite;
 }
 
@@ -43,7 +47,8 @@
 .bg-noise {
     position: absolute;
     inset: 0;
-    opacity: 0.03;
+    /* Reduced from 0.03 to 0.015 */
+    opacity: 0.015;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     animation: noiseShift 0.5s steps(10) infinite;
 }
@@ -52,14 +57,16 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.4;
+    /* Reduced from 0.4 to 0.2 */
+    opacity: 0.2;
     animation: glowPulse 4s ease-in-out infinite;
 }
 
 .bg-glow-1 {
     width: 400px;
     height: 400px;
-    background: rgba(124, 179, 66, 0.3);
+    /* Reduced from 0.3 to 0.15 */
+    background: rgba(124, 179, 66, 0.15);
     top: -200px;
     left: -100px;
     animation-delay: 0s;
@@ -68,7 +75,8 @@
 .bg-glow-2 {
     width: 300px;
     height: 300px;
-    background: rgba(156, 204, 101, 0.25);
+    /* Reduced from 0.25 to 0.12 */
+    background: rgba(156, 204, 101, 0.12);
     bottom: -150px;
     right: -100px;
     animation-delay: 1.3s;
@@ -77,7 +85,8 @@
 .bg-glow-3 {
     width: 250px;
     height: 250px;
-    background: rgba(40, 167, 69, 0.2);
+    /* Reduced from 0.2 to 0.1 */
+    background: rgba(40, 167, 69, 0.1);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -85,12 +94,12 @@
 }
 
 @keyframes glowPulse {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.2); opacity: 0.6; }
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.2); opacity: 0.3; }
 }
 
 /* ============================================
-   FLOATING QUOTE MARKS
+   FLOATING QUOTE MARKS — LIGHTENED
    ============================================ */
 .floating-quotes {
     position: absolute;
@@ -103,7 +112,8 @@
     position: absolute;
     font-family: Georgia, serif;
     font-size: 200px;
-    color: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: was 0.03 */
+    color: rgba(255, 255, 255, 0.04);
     font-weight: 700;
     line-height: 1;
     animation: floatQuote 15s ease-in-out infinite;
@@ -115,10 +125,10 @@
 .mark-4 { bottom: 20%; right: 5%; animation-delay: 11.25s; }
 
 @keyframes floatQuote {
-    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.03; }
-    25% { transform: translateY(-30px) rotate(5deg); opacity: 0.05; }
-    50% { transform: translateY(0) rotate(0deg); opacity: 0.03; }
-    75% { transform: translateY(30px) rotate(-5deg); opacity: 0.05; }
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.04; }
+    25% { transform: translateY(-30px) rotate(5deg); opacity: 0.06; }
+    50% { transform: translateY(0) rotate(0deg); opacity: 0.04; }
+    75% { transform: translateY(30px) rotate(-5deg); opacity: 0.06; }
 }
 
 /* ============================================
@@ -147,15 +157,16 @@
     color: var(--cfs-green);
     margin-bottom: 1rem;
     padding: 0.5rem 1rem;
-    background: rgba(124, 179, 66, 0.1);
-    border: 1px solid rgba(124, 179, 66, 0.3);
+    /* LIGHTENED background */
+    background: rgba(124, 179, 66, 0.08);
+    border: 1px solid rgba(124, 179, 66, 0.25);
     border-radius: 100px;
     animation: eyebrowPulse 2s ease-in-out infinite;
 }
 
 @keyframes eyebrowPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 179, 66, 0.4); }
-    50% { box-shadow: 0 0 20px 5px rgba(124, 179, 66, 0.2); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 179, 66, 0.3); }
+    50% { box-shadow: 0 0 20px 5px rgba(124, 179, 66, 0.15); }
 }
 
 .header-title {
@@ -183,7 +194,8 @@
 
 .header-subtitle {
     font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.7);
+    /* LIGHTENED for better contrast */
+    color: rgba(255, 255, 255, 0.72);
     max-width: 600px;
     margin: 0 auto 1.5rem;
     line-height: 1.6;
@@ -194,8 +206,9 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* LIGHTENED */
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 100px;
     backdrop-filter: blur(10px);
 }
@@ -246,12 +259,13 @@
     perspective: 1000px;
 }
 
-/* Testimonial Cards */
+/* Testimonial Cards — LIGHTENED */
 .testimonial-card {
     position: absolute;
     width: 100%;
     max-width: 600px;
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: was rgba(255,255,255,0.03) */
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 2.5rem;
@@ -261,7 +275,7 @@
     opacity: 0;
     pointer-events: none;
     box-shadow:
-        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 25px 50px -12px rgba(0, 0, 0, 0.4),
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
 }
 
@@ -284,7 +298,7 @@
     z-index: 5;
 }
 
-/* Card Glow */
+/* Card Glow — LIGHTENED */
 .card-glow {
     position: absolute;
     inset: -1px;
@@ -297,7 +311,8 @@
 }
 
 .testimonial-card.active .card-glow {
-    opacity: 0.3;
+    /* Reduced from 0.3 to 0.15 */
+    opacity: 0.15;
     animation: glowRotate 8s linear infinite;
 }
 
@@ -371,7 +386,8 @@
     background: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
     border-radius: 50%;
     font-weight: 700;
-    color: #0a0a0a;
+    /* LIGHTENED: was #0a0a0a */
+    color: #1e2332;
     font-size: 1.125rem;
 }
 
@@ -402,7 +418,8 @@
 
 .author-info p {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.72);
     margin-bottom: 0.5rem;
 }
 
@@ -419,10 +436,11 @@
 }
 
 /* ============================================
-   GOOGLE REVIEW CARD
+   GOOGLE REVIEW CARD — LIGHTENED
    ============================================ */
 .google-review-card {
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(10, 10, 10, 0.98));
+    /* LIGHTENED: was dark gradient */
+    background: linear-gradient(135deg, rgba(30, 35, 50, 0.95), rgba(40, 47, 64, 0.98));
     border: 1px solid rgba(124, 179, 66, 0.3);
     border-radius: 24px;
     padding: 2.5rem;
@@ -435,7 +453,7 @@
 
 .google-review-card:hover {
     border-color: rgba(124, 179, 66, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
 }
 
 .google-review-card.loading .google-rating-preview {
@@ -483,7 +501,8 @@
     gap: 0.5rem;
     margin: 1.5rem 0;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.05);
+    /* LIGHTENED */
+    background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     transition: opacity 0.3s ease;
@@ -522,7 +541,8 @@
 
 .rating-count {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.6);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.65);
 }
 
 .rating-count .review-count {
@@ -605,9 +625,11 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.7);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.72);
     padding: 0.375rem 0.875rem;
-    background: rgba(255, 255, 255, 0.05);
+    /* LIGHTENED */
+    background: rgba(255, 255, 255, 0.04);
     border-radius: 100px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -733,7 +755,8 @@
     width: 56px;
     height: 56px;
     border: none;
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED */
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     color: var(--white);
@@ -749,7 +772,7 @@
 .nav-btn:hover {
     transform: scale(1.1);
     border-color: var(--cfs-green);
-    box-shadow: 0 0 30px rgba(124, 179, 66, 0.3);
+    box-shadow: 0 0 30px rgba(124, 179, 66, 0.25);
 }
 
 .nav-btn:active {
@@ -841,7 +864,7 @@
 }
 
 /* ============================================
-   CTA SECTION
+   CTA SECTION — LIGHTENED
    ============================================ */
 .testimonials-cta {
     display: flex;
@@ -850,7 +873,8 @@
 
 .cta-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.03);
+    /* LIGHTENED: was rgba(255,255,255,0.03) */
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 3rem;
@@ -865,7 +889,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(124, 179, 66, 0.1), rgba(156, 204, 101, 0.1));
+    /* LIGHTENED gradient overlay */
+    background: linear-gradient(135deg, rgba(124, 179, 66, 0.08), rgba(156, 204, 101, 0.08));
     opacity: 0;
     transition: opacity 0.5s ease;
 }
@@ -873,7 +898,7 @@
 .cta-card:hover {
     transform: translateY(-5px);
     border-color: rgba(124, 179, 66, 0.3);
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
 }
 
 .cta-card:hover::before {
@@ -891,7 +916,8 @@
     background: linear-gradient(135deg, var(--cfs-green), var(--cfs-light-green));
     border-radius: 50%;
     font-size: 2rem;
-    color: #0a0a0a;
+    /* LIGHTENED: was #0a0a0a */
+    color: #1e2332;
 }
 
 .icon-pulse {
@@ -917,7 +943,8 @@
 
 .cta-card p {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    /* LIGHTENED */
+    color: rgba(255, 255, 255, 0.72);
     margin-bottom: 1.5rem;
     position: relative;
 }

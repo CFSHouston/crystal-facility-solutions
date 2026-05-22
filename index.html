@@ -186,21 +186,13 @@
 
     <main id="main-content">
         <section class="hero" id="home" role="banner">
-            <!-- Background Layers - Matches Services Section -->
-            <div class="hero-bg-layers" aria-hidden="true">
-                <div class="hero-bg-grid"></div>
-                <div class="hero-bg-orb hero-orb-1"></div>
-                <div class="hero-bg-orb hero-orb-2"></div>
-                <div class="hero-bg-orb hero-orb-3"></div>
+            <!-- Video Background -->
+            <div class="hero-video-bg" aria-hidden="true">
+                <video id="heroVideo" autoplay muted playsinline></video>
+                <div class="hero-video-overlay"></div>
             </div>
 
-            <!-- Particle Canvas - Working Particles -->
-            <canvas id="heroParticleCanvas" class="hero-particles-canvas" aria-hidden="true"></canvas>
-
             <a id="main-content" class="sr-only">Main content</a>
-
-            <!-- Mouse Follower Glow -->
-            <div class="mouse-glow" id="mouseGlow"></div>
 
             <!-- Main Content -->
             <div class="hero-content">
@@ -2936,6 +2928,7 @@
     <!-- JavaScript Modules -->
     <script src="js/modules/navigation.js" defer></script>
     <script src="js/modules/hero.js" defer></script> 
+    <script src="js/modules/hero-video.js" defer></script>
     <script src="js/modules/services.js" defer></script>
     <script src="js/modules/forms.js" defer></script>
     <script src="js/modules/testimonials.js" defer></script>
