@@ -801,8 +801,30 @@
     overflow: hidden;
     padding: 1.25rem 0;
     flex: 1;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* Fade masks hide the duplicate seam */
+.clients-marquee::before,
+.clients-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.clients-marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, #1e2332, transparent);
+}
+
+.clients-marquee::after {
+    right: 0;
+    background: linear-gradient(-90deg, #1e2332, transparent);
 }
 
 .marquee-track {
