@@ -31,13 +31,13 @@
 
 .nav.scrolled {
     height: var(--nav-height-scrolled);
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom-color: rgba(124, 179, 66, 0.2);
+    background: rgba(16, 26, 42, 0.72);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    border-bottom-color: rgba(124, 179, 66, 0.25);
     box-shadow:
-        0 4px 30px rgba(0, 0, 0, 0.3),
-        0 0 60px rgba(124, 179, 66, 0.15);
+        0 4px 30px rgba(0, 0, 0, 0.25),
+        0 0 40px rgba(124, 179, 66, 0.08);
 }
 
 .nav.scrolled::before {
