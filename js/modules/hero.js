@@ -1,6 +1,5 @@
 /* ============================================
-   HERO MODULE - Crystal & Water Drop Particles
-   Crystal Facility Solutions
+   HERO MODULE - Crystal Facility Solutions
    ============================================ */
 
 (function() {
@@ -331,42 +330,79 @@
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  TYPING ANIMATION
+    //  TYPING ANIMATION — Defensive with Fallback
     // ═══════════════════════════════════════════════════════════
 
     function initTyping() {
         typingElement = document.querySelector('.typing-text');
         cursorElement = document.querySelector('.typing-cursor');
-        if (!typingElement) {
-            console.warn('Typing animation: .typing-text element not found');
+
+        // Defensive: if elements missing, show static fallback
+        if (!typingElement || !cursorElement) {
+            console.warn('Typing animation: elements not found, using fallback');
+            showStaticFallback();
             return;
         }
+
+        // Clear any stale state
         typingElement.textContent = '';
-        setTimeout(() => {
+        wordIndex = 0;
+        charIndex = 0;
+        isDeleting = false;
+        isPaused = false;
+
+        // Start after delay
+        typingTimeoutId = setTimeout(() => {
             if (typingActive) typingLoop();
         }, TYPING_CONFIG.startDelay);
+
+        // Pause/resume on tab visibility
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 typingActive = false;
                 if (typingTimeoutId) clearTimeout(typingTimeoutId);
             } else {
                 typingActive = true;
-                typingLoop();
+                // Resume from current state
+                typingTimeoutId = setTimeout(typingLoop, 200);
             }
         });
     }
 
+    function showStaticFallback() {
+        const line3 = document.querySelector('.title-line-3');
+        if (line3) {
+            line3.innerHTML = '<span class="typing-fallback">Cleaning &middot; Transportation &middot; Landscaping &middot; Maintenance</span>';
+        }
+    }
+
     function typingLoop() {
         if (!typingActive || !typingElement) return;
+
+        // Safety: ensure words array is valid
+        if (!TYPING_CONFIG.words || TYPING_CONFIG.words.length === 0) {
+            typingElement.textContent = 'Facility Services';
+            return;
+        }
+
         const currentWord = TYPING_CONFIG.words[wordIndex];
+
+        // Safety: ensure current word is a string
+        if (typeof currentWord !== 'string') {
+            wordIndex = (wordIndex + 1) % TYPING_CONFIG.words.length;
+            typingTimeoutId = setTimeout(typingLoop, 100);
+            return;
+        }
+
         if (isPaused) {
             isPaused = false;
             isDeleting = true;
             typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.pauseTime);
             return;
         }
+
         if (isDeleting) {
-            charIndex--;
+            charIndex = Math.max(0, charIndex - 1);
             typingElement.textContent = currentWord.substring(0, charIndex);
             if (charIndex === 0) {
                 isDeleting = false;
@@ -376,7 +412,7 @@
                 typingTimeoutId = setTimeout(typingLoop, TYPING_CONFIG.deleteSpeed);
             }
         } else {
-            charIndex++;
+            charIndex = Math.min(currentWord.length, charIndex + 1);
             typingElement.textContent = currentWord.substring(0, charIndex);
             if (charIndex === currentWord.length) {
                 isPaused = true;
