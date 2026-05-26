@@ -625,3 +625,88 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ============================================
+   SERVICE SELECTOR (Quick Quote Drawer Step 1)
+   ============================================ */
+.service-selector-group {
+    margin-bottom: 2rem;
+}
+
+.service-selector-group label {
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.service-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+}
+
+.service-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    text-align: center;
+}
+
+.service-option i {
+    font-size: 1.5rem;
+    color: #7cb342;
+    transition: all 0.3s ease;
+}
+
+.service-option:hover {
+    background: rgba(124, 179, 66, 0.1);
+    border-color: rgba(124, 179, 66, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.15);
+}
+
+.service-option.selected,
+.service-option[aria-checked="true"] {
+    background: rgba(124, 179, 66, 0.2);
+    border-color: #7cb342;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(124, 179, 66, 0.3);
+}
+
+.service-option.selected i,
+.service-option[aria-checked="true"] i {
+    transform: scale(1.15);
+}
+
+.service-option:focus-visible {
+    outline: 2px solid #7cb342;
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .service-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .service-option {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .service-option i {
+        font-size: 1.25rem;
+    }
+}

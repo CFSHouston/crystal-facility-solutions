@@ -176,6 +176,168 @@
 }
 
 /* ============================================
+   NAV DROPDOWN MENU
+   ============================================ */
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius-full);
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    transition: all var(--transition-fast) var(--ease-in-out);
+    position: relative;
+    overflow: hidden;
+}
+
+.dropdown-trigger:hover,
+.dropdown-trigger:focus-visible {
+    color: var(--white);
+    transform: translateY(-2px);
+    text-shadow: 0 0 20px rgba(124, 179, 66, 0.5);
+}
+
+.dropdown-trigger::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cfs-green), transparent);
+    transition: all var(--transition-fast) ease;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--cfs-green);
+}
+
+.dropdown-trigger:hover::after,
+.dropdown-trigger:focus-visible::after {
+    width: 80%;
+}
+
+.dropdown-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    opacity: 0.7;
+}
+
+/* Show dropdown on hover OR when expanded */
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu,
+.dropdown-trigger[aria-expanded="true"] ~ .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown:hover .dropdown-arrow,
+.nav-dropdown:focus-within .dropdown-arrow,
+.dropdown-trigger[aria-expanded="true"] .dropdown-arrow {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    min-width: 200px;
+    background: rgba(16, 26, 42, 0.95);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid rgba(124, 179, 66, 0.25);
+    border-radius: 12px;
+    padding: 0.5rem;
+    list-style: none;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(124, 179, 66, 0.1);
+    z-index: 1000;
+}
+
+/* Dropdown caret arrow */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(16, 26, 42, 0.95);
+    border-top: 1px solid rgba(124, 179, 66, 0.25);
+    border-left: 1px solid rgba(124, 179, 66, 0.25);
+}
+
+.dropdown-menu li {
+    margin: 0;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    position: relative;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus-visible {
+    background: rgba(124, 179, 66, 0.15);
+    color: var(--cfs-green);
+    transform: translateX(4px);
+}
+
+.dropdown-menu a.active {
+    background: rgba(124, 179, 66, 0.2);
+    color: var(--cfs-green);
+    font-weight: 600;
+}
+
+/* Left green accent bar */
+.dropdown-menu a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 50%;
+    background: var(--cfs-green);
+    transition: width 0.3s ease;
+    transform: translateY(-50%);
+    border-radius: 0 3px 3px 0;
+}
+
+.dropdown-menu a:hover::before,
+.dropdown-menu a:focus-visible::before,
+.dropdown-menu a.active::before {
+    width: 3px;
+}
+
+/* ============================================
    NAV CTA BUTTON
    ============================================ */
 .nav-cta {
@@ -449,7 +611,8 @@
     }
 
     .nav-links,
-    .nav-cta {
+    .nav-cta,
+    .dropdown-menu {
         display: none;
     }
 

@@ -436,9 +436,27 @@
     //  BOOTSTRAP
     // ═══════════════════════════════════════════════════════════
 
+    function initHeroQuoteButton() {
+        const quoteBtn = document.getElementById('heroRequestQuote');
+        if (!quoteBtn) return;
+
+        quoteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.dispatchEvent(new CustomEvent('cfs:openDrawer', {
+                detail: {
+                    serviceType: 'choose',
+                    serviceName: 'Custom Package'
+                },
+                bubbles: true,
+                cancelable: true
+            }));
+        });
+    }
+
     function init() {
         initCanvas();
         initTyping();
+        initHeroQuoteButton();
     }
 
     if (document.readyState === 'loading') {

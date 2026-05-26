@@ -72,6 +72,11 @@
         if (state.mobileMenuBtn && state.mobileNav) {
             state.mobileMenuBtn.addEventListener('click', handlers.onMobileToggle);
         }
+
+        // Bind dropdown triggers
+        document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+            trigger.addEventListener('click', onDropdownToggle);
+        });
     }
 
     // ─── Scroll Handling ────────────────────────────────────────
@@ -99,6 +104,12 @@
                 currentId = section.id;
             }
         });
+
+        // Also highlight About dropdown when in Core Values section
+        const aboutTrigger = document.querySelector('.dropdown-trigger');
+        if (aboutTrigger) {
+            aboutTrigger.classList.toggle('active', currentId === 'core-values' || currentId === 'about');
+        }
 
         updateActiveLink(currentId);
     }
@@ -153,6 +164,36 @@
     function onMobileToggle(e) {
         e.stopPropagation();
         toggleMobileMenu();
+    }
+
+    // ─── Dropdown Toggle (click for button trigger) ────────────
+    function onDropdownToggle(e) {
+        e.stopPropagation();
+        const trigger = e.currentTarget;
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all other dropdowns first
+        document.querySelectorAll('.dropdown-trigger[aria-expanded="true"]').forEach(t => {
+            if (t !== trigger) {
+                t.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Toggle current
+        trigger.setAttribute('aria-expanded', String(!isExpanded));
+
+        // Close dropdown when clicking outside
+        if (!isExpanded) {
+            const closeOnClickOutside = function(ev) {
+                if (!trigger.closest('.nav-dropdown').contains(ev.target)) {
+                    trigger.setAttribute('aria-expanded', 'false');
+                    document.removeEventListener('click', closeOnClickOutside);
+                }
+            };
+            setTimeout(() => {
+                document.addEventListener('click', closeOnClickOutside);
+            }, 10);
+        }
     }
 
     function toggleMobileMenu() {

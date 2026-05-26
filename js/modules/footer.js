@@ -176,7 +176,7 @@
             // Dispatch event to services module — it handles validation & drawer state
             document.dispatchEvent(new CustomEvent('cfs:openDrawer', {
                 detail: {
-                    serviceType: 'bundle',
+                    serviceType: 'choose',
                     serviceName: 'Custom Package'
                 },
                 bubbles: true,
