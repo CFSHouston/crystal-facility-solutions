@@ -195,7 +195,7 @@
         <section class="hero" id="home" role="banner">
     <!-- Background Image Layer -->
     <div class="hero-bg" aria-hidden="true">
-        <img src="./images/herobackground.jpg" alt="" id="heroImage" loading="eager" fetchpriority="high">
+        <img src="./images/crystal_buildings.png" alt="" id="heroImage" loading="eager" fetchpriority="high">
         <div class="hero-bg-overlay"></div>
         <div class="hero-bg-vignette"></div>
         <div class="hero-scanline"></div>
@@ -357,7 +357,7 @@
                                 <div class="card-front">
                                     <div class="card-media">
                                         <div class="media-overlay"></div>
-                                        <img src="images/cleaning.jpeg" alt="Professional cleaning service" loading="lazy">
+                                        <img src="images/cleaning.png" alt="Professional cleaning service" loading="lazy">
                                         <div class="card-badge">
                                             <i class="fas fa-star"></i>
                                             <span>Most Popular</span>
@@ -856,66 +856,66 @@
                                         </div>
                                     </div>
 
+                                    <!-- Trip Type Toggle -->
+                                    <div class="form-group trip-type-group">
+                                        <label>Trip Type <span class="required">*</span></label>
+                                        <div class="trip-type-toggle" role="radiogroup" aria-label="Select trip type">
+                                            <button type="button" class="trip-toggle-btn active" data-trip="one-way" role="radio" aria-checked="true" tabindex="0">
+                                                <i class="fas fa-long-arrow-alt-right"></i>
+                                                <span>One-Way</span>
+                                            </button>
+                                            <button type="button" class="trip-toggle-btn" data-trip="round-trip" role="radio" aria-checked="false" tabindex="0">
+                                                <i class="fas fa-exchange-alt"></i>
+                                                <span>Round-Trip</span>
+                                            </button>
+                                        </div>
+                                        <input type="hidden" id="tripType" name="trip_type" value="one-way">
+                                        <span class="field-error" id="tripTypeError"></span>
+                                    </div>
+
                                     <!-- Pick-up Date & Time -->
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label for="pickupDate">Pick-Up Date <span class="required">*</span></label>
-                                            <div class="input-with-icon">
+                                            <div class="input-with-icon input-with-check">
                                                 <i class="fas fa-calendar-alt"></i>
                                                 <input type="date" id="pickupDate" name="pickup_date" required>
+                                                <span class="field-check"><i class="fas fa-check"></i></span>
                                             </div>
                                             <span class="field-error" id="pickupDateError"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="pickupTime">Pick-Up Time <span class="required">*</span></label>
-                                            <div class="input-with-icon">
+                                            <div class="input-with-icon input-with-check">
                                                 <i class="fas fa-clock"></i>
                                                 <input type="time" id="pickupTime" name="pickup_time" required>
+                                                <span class="field-check"><i class="fas fa-check"></i></span>
                                             </div>
                                             <span class="field-error" id="pickupTimeError"></span>
                                         </div>
                                     </div>
 
-                                    <!-- Drop-off Date & Time -->
-                                    <div class="form-row">
+                                    <!-- Return Date & Time (Round-Trip only) -->
+                                    <div class="form-row return-fields" id="returnDateTimeFields">
                                         <div class="form-group">
-                                            <label for="dropoffDate">Drop-Off Date <span class="required">*</span></label>
-                                            <div class="input-with-icon">
+                                            <label for="dropoffDate">Return Date <span class="required">*</span></label>
+                                            <div class="input-with-icon input-with-check">
                                                 <i class="fas fa-calendar-check"></i>
                                                 <input type="date" id="dropoffDate" name="dropoff_date" required>
+                                                <span class="field-check"><i class="fas fa-check"></i></span>
                                             </div>
                                             <span class="field-hint">Can be same as pick-up date</span>
                                             <span class="field-error" id="dropoffDateError"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for="dropoffTime">Drop-Off Time <span class="required">*</span></label>
-                                            <div class="input-with-icon">
+                                            <label for="dropoffTime">Return Time <span class="required">*</span></label>
+                                            <div class="input-with-icon input-with-check">
                                                 <i class="fas fa-hourglass-end"></i>
                                                 <input type="time" id="dropoffTime" name="dropoff_time" required>
+                                                <span class="field-check"><i class="fas fa-check"></i></span>
                                             </div>
-                                            <span class="field-hint">Estimated drop-off time</span>
                                             <span class="field-error" id="dropoffTimeError"></span>
                                         </div>
-                                    </div>
-
-                                    <!-- Trip Type -->
-                                    <div class="form-group">
-                                        <label for="tripType">Trip Type <span class="required">*</span></label>
-                                        <div class="input-with-icon">
-                                            <i class="fas fa-route"></i>
-                                            <select id="tripType" name="trip_type" required>
-                                                <option value="">Select trip type...</option>
-                                                <option value="school_daily">School Daily Route</option>
-                                                <option value="field_trip">Field Trip / Excursion</option>
-                                                <option value="corporate">Corporate Shuttle</option>
-                                                <option value="event">Special Event / Wedding</option>
-                                                <option value="airport">Airport Transfer</option>
-                                                <option value="sports">Sports Team Transport</option>
-                                                <option value="church">Church / Religious Event</option>
-                                                <option value="other">Other (specify in notes)</option>
-                                            </select>
-                                        </div>
-                                        <span class="field-error" id="tripTypeError"></span>
                                     </div>
 
                                     <!-- Pick-up Location -->
@@ -2464,7 +2464,7 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <span class="score-text">5 from 3 reviews</span>
+                        <span class="score-text">5 from 4 reviews</span>
                     </div>
                 </div>
 
@@ -2559,6 +2559,37 @@
                                 <div class="author-info">
                                     <h4>Arda E</h4>
                                     <p>Customer</p>
+                                    <span class="author-badge">
+                                        <i class="fas fa-check-circle"></i> Verified Client
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card" data-index="3">
+                            <div class="card-glow"></div>
+                            <div class="card-content">
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <p class="testimonial-text">Very proffessional. A pleasure to work with. Looking forward to working with you again.
+                                </p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <span>AE</span>
+                                    <div class="avatar-ring"></div>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Zenaida Ponce</h4>
+                                    <p>Partner</p>
                                     <span class="author-badge">
                                         <i class="fas fa-check-circle"></i> Verified Client
                                     </span>

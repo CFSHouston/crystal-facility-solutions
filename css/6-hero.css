@@ -36,11 +36,13 @@
     object-fit: cover;
     object-position: center 30%;
     transform: scale(1.05);
-    transition: transform 8s ease-out;
+    transition: transform 8s ease-out, opacity 0.8s ease-in-out;
+    opacity: 0;
 }
 
 .hero.loaded .hero-bg img {
     transform: scale(1);
+    opacity: 1;
 }
 
 /* Dark cinematic overlay — preserves text readability */

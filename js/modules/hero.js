@@ -453,10 +453,81 @@
         });
     }
 
+    // ═══════════════════════════════════════════════════════════
+    //  HERO BACKGROUND IMAGE ROTATOR
+    //  Cycles through 4 service images every 6 seconds
+    // ═══════════════════════════════════════════════════════════
+
+    const HERO_IMAGES = [
+        { src: './images/crystal_buildings.png', alt: 'Crystal Facility Solutions - Premium Services' },
+        { src: './images/transportation.png', alt: 'Safe School Transportation Services' },
+        { src: './images/landscaping.png', alt: 'Professional Landscaping Services' },
+        { src: './images/maintenance.png', alt: 'Comprehensive Maintenance Services' }
+    ];
+
+    let currentImageIndex = 0;
+    let imageRotationInterval = null;
+    let heroImageEl = null;
+    let heroBgContainer = null;
+
+    function initImageRotator() {
+        heroImageEl = document.getElementById('heroImage');
+        heroBgContainer = document.querySelector('.hero-bg');
+        if (!heroImageEl || !heroBgContainer) return;
+
+        // Preload all images
+        HERO_IMAGES.forEach(img => {
+            const preload = new Image();
+            preload.src = img.src;
+        });
+
+        // Start rotation after initial load
+        setTimeout(() => {
+            heroImageEl.classList.add('loaded');
+            startImageRotation();
+        }, 500);
+    }
+
+    function startImageRotation() {
+        if (imageRotationInterval) clearInterval(imageRotationInterval);
+
+        imageRotationInterval = setInterval(() => {
+            currentImageIndex = (currentImageIndex + 1) % HERO_IMAGES.length;
+            const nextImage = HERO_IMAGES[currentImageIndex];
+
+            // Create transition: fade out current, swap, fade in
+            heroImageEl.style.opacity = '0';
+
+            setTimeout(() => {
+                heroImageEl.src = nextImage.src;
+                heroImageEl.alt = nextImage.alt;
+                heroImageEl.style.opacity = '1';
+            }, 800); // Match CSS transition duration
+
+        }, 5000); // Change every 6 seconds
+    }
+
+    function stopImageRotation() {
+        if (imageRotationInterval) {
+            clearInterval(imageRotationInterval);
+            imageRotationInterval = null;
+        }
+    }
+
+    // Pause rotation when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopImageRotation();
+        } else {
+            startImageRotation();
+        }
+    });
+
     function init() {
         initCanvas();
         initTyping();
         initHeroQuoteButton();
+        initImageRotator();
     }
 
     if (document.readyState === 'loading') {
