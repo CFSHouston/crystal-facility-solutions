@@ -1641,6 +1641,24 @@
 
             const messageContent = this.buildEmailMessage(data);
 
+            // Build service title for email template
+            let serviceTitle = '';
+            if (this.selectedService === 'bundle') {
+                serviceTitle = 'Custom Bundle Package';
+            } else if (this.selectedService === 'cleaning') {
+                serviceTitle = 'Cleaning Services Quote';
+            } else if (this.selectedService === 'transportation') {
+                serviceTitle = 'Transportation Services Quote';
+            } else if (this.selectedService === 'landscaping') {
+                serviceTitle = 'Landscaping Services Quote';
+            } else if (this.selectedService === 'maintenance') {
+                serviceTitle = 'Maintenance Services Quote';
+            } else if (this.selectedService === 'other') {
+                serviceTitle = 'General Inquiry';
+            } else {
+                serviceTitle = 'Service Request';
+            }
+
             const templateParams = {
                 to_email: toEmail,
                 name: `${data.first_name} ${data.last_name}`,
@@ -1648,8 +1666,10 @@
                 from_name: `${data.first_name} ${data.last_name}`,
                 from_email: data.email,
                 service: data.service_type_display || this.selectedService,
+                title: serviceTitle,
                 time: new Date().toLocaleString(),
-                message: messageContent
+                message: messageContent,
+                user_message: data.message || 'No additional details provided.'
             };
 
             try {
