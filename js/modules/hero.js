@@ -469,23 +469,74 @@
     let imageRotationInterval = null;
     let heroImageEl = null;
     let heroBgContainer = null;
+    let imagesPreloaded = 0;
+    let isFirstImageLoaded = false;
 
     function initImageRotator() {
         heroImageEl = document.getElementById('heroImage');
         heroBgContainer = document.querySelector('.hero-bg');
         if (!heroImageEl || !heroBgContainer) return;
 
-        // Preload all images
-        HERO_IMAGES.forEach(img => {
+        // Set initial opacity to 0 while loading
+        heroImageEl.style.opacity = '0';
+
+        // Preload all images, then show first one and start rotation
+        let loadedCount = 0;
+        const totalImages = HERO_IMAGES.length;
+
+        HERO_IMAGES.forEach((imgData, index) => {
             const preload = new Image();
-            preload.src = img.src;
+
+            preload.onload = () => {
+                loadedCount++;
+                // When first image loads, show it immediately
+                if (index === 0 && !isFirstImageLoaded) {
+                    isFirstImageLoaded = true;
+                    heroImageEl.src = imgData.src;
+                    heroImageEl.alt = imgData.alt;
+                    heroImageEl.classList.add('loaded');
+                    // Fade in the first image
+                    requestAnimationFrame(() => {
+                        heroImageEl.style.opacity = '1';
+                    });
+                }
+                // Start rotation only after ALL images are preloaded
+                if (loadedCount === totalImages) {
+                    startImageRotation();
+                }
+            };
+
+            preload.onerror = () => {
+                loadedCount++;
+                console.warn('Failed to preload hero image:', imgData.src);
+                // Still start rotation if all images attempted to load
+                if (loadedCount === totalImages) {
+                    if (!isFirstImageLoaded) {
+                        // Fallback: show first image even if it failed to preload
+                        isFirstImageLoaded = true;
+                        heroImageEl.src = HERO_IMAGES[0].src;
+                        heroImageEl.alt = HERO_IMAGES[0].alt;
+                        heroImageEl.classList.add('loaded');
+                        heroImageEl.style.opacity = '1';
+                    }
+                    startImageRotation();
+                }
+            };
+
+            preload.src = imgData.src;
         });
 
-        // Start rotation after initial load
+        // Fallback: if images take too long, show first image anyway after 2 seconds
         setTimeout(() => {
-            heroImageEl.classList.add('loaded');
-            startImageRotation();
-        }, 500);
+            if (!isFirstImageLoaded) {
+                isFirstImageLoaded = true;
+                heroImageEl.src = HERO_IMAGES[0].src;
+                heroImageEl.alt = HERO_IMAGES[0].alt;
+                heroImageEl.classList.add('loaded');
+                heroImageEl.style.opacity = '1';
+                startImageRotation();
+            }
+        }, 2000);
     }
 
     function startImageRotation() {
@@ -504,7 +555,7 @@
                 heroImageEl.style.opacity = '1';
             }, 800); // Match CSS transition duration
 
-        }, 5000); // Change every 6 seconds
+        }, 5000); // Change every 5 seconds
     }
 
     function stopImageRotation() {
