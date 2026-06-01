@@ -457,7 +457,719 @@
     font-size: 0.85rem;
     line-height: 1.5;
 }
+/* ============================================
+   QUICK QUOTE DRAWER - CSS FIXES
+   Crystal Facility Solutions
+   ============================================ */
 
+/* ─── Field Error Messages - FIXED ─────────────────────────── */
+.field-error {
+    display: none;
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.375rem;
+    line-height: 1.4;
+    font-weight: 500;
+    padding-left: 0.25rem;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+/* When JS sets display: block, make it visible with animation */
+.field-error.visible,
+.field-error[style*="block"] {
+    display: block !important;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Force display for inline styles */
+.field-error[style*="display: block"] {
+    display: block !important;
+}
+
+/* ─── Shake Animation for Errors ──────────────────────────── */
+@keyframes fieldShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.input-with-icon input.shake-error,
+.input-with-icon select.shake-error,
+.input-with-icon textarea.shake-error {
+    animation: fieldShake 0.5s ease;
+}
+
+/* ─── Input Error States ──────────────────────────────────── */
+.input-with-icon input.error,
+.input-with-icon select.error,
+.input-with-icon textarea.error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    background: rgba(239, 68, 68, 0.05) !important;
+}
+
+.input-with-icon input.valid,
+.input-with-icon select.valid,
+.input-with-icon textarea.valid {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+    background: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* ─── Size Selector Error State ────────────────────────────── */
+.size-selector.has-error {
+    animation: fieldShake 0.5s ease;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 12px;
+    padding: 0.25rem;
+}
+
+/* ─── Return Fields (Round-Trip) - FIXED ───────────────────── */
+.return-fields {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease,
+                margin 0.4s ease,
+                gap 0.4s ease;
+    margin: 0;
+    gap: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.return-fields.visible {
+    max-height: 300px;
+    opacity: 1;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .return-fields {
+        grid-template-columns: 1fr;
+    }
+    .return-fields.visible {
+        gap: 0;
+    }
+}
+
+/* ─── Trip Type Toggle - Ensure Clickability ───────────────── */
+.trip-type-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 0.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    position: relative;
+    z-index: 5;
+}
+
+.trip-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1rem;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    position: relative;
+    z-index: 6;
+    pointer-events: auto;
+}
+
+.trip-toggle-btn i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.trip-toggle-btn:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.trip-toggle-btn.active {
+    background: linear-gradient(135deg, #7cb342, #9ccc65);
+    border-color: #7cb342;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(124, 179, 66, 0.35);
+}
+
+.trip-toggle-btn.active i {
+    transform: scale(1.1);
+}
+
+.trip-toggle-btn:focus-visible {
+    outline: 2px solid #7cb342;
+    outline-offset: 2px;
+}
+
+/* ─── Field Check Animation ────────────────────────────────── */
+.input-with-check {
+    position: relative;
+}
+
+.input-with-check .field-check {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.input-with-check input.valid ~ .field-check,
+.input-with-check select.valid ~ .field-check {
+    transform: translateY(-50%) scale(1);
+}
+
+.input-with-check input.valid,
+.input-with-check select.valid {
+    padding-right: 3rem;
+}
+
+/* ─── Step Completion Checkmark ──────────────────────────────── */
+.step-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.step-dot.active {
+    background: #7cb342;
+    box-shadow: 0 0 10px rgba(124, 179, 66, 0.5);
+    transform: scale(1.2);
+}
+
+.step-dot.completed {
+    background: #10b981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    transform: scale(1.1);
+}
+
+.step-dot.completed::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.9;
+}
+
+/* ─── Form Group Error Scroll Margin ───────────────────────── */
+.form-group.has-error {
+    scroll-margin-top: 100px;
+}
+
+/* ─── Transportation Fields Container ────────────────────────── */
+.transportation-fields {
+    transition: opacity 0.3s ease;
+}
+
+.transportation-fields .form-group {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ─── Smooth Scroll to Error ───────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ─── Service Selector ─────────────────────────────────────── */
+.service-selector-group {
+    margin-bottom: 2rem;
+}
+
+.service-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.75rem;
+}
+
+.service-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    text-align: center;
+}
+
+.service-option i {
+    font-size: 1.5rem;
+    color: #7cb342;
+    transition: all 0.3s ease;
+}
+
+.service-option:hover {
+    background: rgba(124, 179, 66, 0.1);
+    border-color: rgba(124, 179, 66, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.15);
+}
+
+.service-option.selected,
+.service-option[aria-checked="true"] {
+    background: rgba(124, 179, 66, 0.2);
+    border-color: #7cb342;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(124, 179, 66, 0.3);
+}
+
+.service-option.selected i,
+.service-option[aria-checked="true"] i {
+    transform: scale(1.15);
+}
+
+.service-option:focus-visible {
+    outline: 2px solid #7cb342;
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .service-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .service-option {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .service-option i {
+        font-size: 1.25rem;
+    }
+}
+
+/* ─── Toast Notifications ──────────────────────────────────── */
+.quote-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    z-index: 100000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease;
+}
+
+.toast-success {
+    background: #10b981;
+    color: white;
+}
+
+.toast-error {
+    background: #ef4444;
+    color: white;
+}
+
+.toast-hiding {
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* ─── Mobile Drawer Adjustments ──────────────────────────── */
+@media (max-width: 768px) {
+    .quick-quote-drawer .drawer-panel {
+        max-width: 100%;
+    }
+
+    .drawer-header {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .drawer-body {
+        padding: 1.5rem;
+    }
+
+    .drawer-footer {
+        padding: 1.25rem 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .quick-quote-drawer .drawer-panel {
+        max-width: 100%;
+    }
+
+    .drawer-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .drawer-body {
+        padding: 1.25rem;
+    }
+
+    .drawer-footer {
+        padding: 1rem 1.25rem;
+    }
+
+    .size-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .bundle-checkboxes {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ─── Real-Time Validation Feedback ────────────────────────── */
+
+/* Input field transitions for valid/invalid states */
+.input-with-icon input,
+.input-with-icon select,
+.input-with-icon textarea {
+    transition: border-color 0.3s ease, 
+                box-shadow 0.3s ease, 
+                background-color 0.3s ease;
+}
+
+/* When user is typing and field becomes valid */
+.input-with-icon input:not(.error):not(:placeholder-shown),
+.input-with-icon select:not(.error):not([value=""]) {
+    border-color: rgba(124, 179, 66, 0.5);
+}
+
+/* Error state - more prominent */
+.input-with-icon input.error,
+.input-with-icon select.error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+    background: rgba(239, 68, 68, 0.08) !important;
+}
+
+/* Valid state - green check feel */
+.input-with-icon input.valid,
+.input-with-icon select.valid {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+    background: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* Field error message - enhanced visibility */
+.field-error {
+    display: none;
+    color: #ff6b6b;
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.field-error.visible,
+.field-error[style*="block"] {
+    display: block !important;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Input Focus States ──────────────────────────────────── */
+.input-with-icon input:focus,
+.input-with-icon select:focus,
+.input-with-icon textarea:focus {
+    outline: none;
+    border-color: #7cb342;
+    box-shadow: 0 0 0 3px rgba(124, 179, 66, 0.2);
+}
+
+.input-with-icon input.error:focus,
+.input-with-icon select.error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+/* ─── Form Group Spacing ──────────────────────────────────── */
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* ─── Label Styling ───────────────────────────────────────── */
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+.form-group label .required {
+    color: #ef4444;
+    margin-left: 0.25rem;
+}
+
+/* ─── Input Icon Styling ──────────────────────────────────── */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: color 0.3s ease;
+    z-index: 2;
+}
+
+.input-with-icon input:focus ~ .input-icon,
+.input-with-icon select:focus ~ .input-icon {
+    color: #7cb342;
+}
+
+.input-with-icon input.error ~ .input-icon,
+.input-with-icon select.error ~ .input-icon {
+    color: #ef4444;
+}
+
+.input-with-icon input.valid ~ .input-icon,
+.input-with-icon select.valid ~ .input-icon {
+    color: #10b981;
+}
+
+.input-with-icon input,
+.input-with-icon select,
+.input-with-icon textarea {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.input-with-icon input::placeholder,
+.input-with-icon textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* ─── Number Input Spinners ───────────────────────────────── */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+/* ─── Select Dropdown Styling ─────────────────────────────── */
+.input-with-icon select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 2.5rem;
+}
+
+.input-with-icon select option {
+    background: #1a1f2e;
+    color: #ffffff;
+}
+
+/* ─── Date/Time Input Styling ─────────────────────────────── */
+input[type="date"],
+input[type="time"] {
+    color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* ─── Textarea Styling ────────────────────────────────────── */
+.input-with-icon textarea {
+    min-height: 100px;
+    resize: vertical;
+    padding-left: 1rem;
+}
+
+.input-with-icon textarea ~ .input-icon {
+    top: 1rem;
+    transform: none;
+}
+
+
+/* ─── Textarea - Remove Icon & Fix Padding ───────────────── */
+/* Hide the icon inside textarea containers */
+.input-with-icon:has(textarea) .input-icon {
+    display: none !important;
+}
+
+/* Remove left padding from textarea since there's no icon */
+.input-with-icon textarea {
+    padding-left: 1rem !important;
+    padding-top: 0.875rem;
+}
+
+/* Alternative for browsers that don't support :has() */
+@supports not selector(:has(*)) {
+    .input-with-icon textarea {
+        padding-left: 1rem !important;
+    }
+
+    .input-with-icon textarea ~ .input-icon {
+        display: none !important;
+    }
+}
+
+
+/* ─── Form Row (2-column layout) ──────────────────────────── */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─── Drawer Footer Buttons ───────────────────────────────── */
+.drawer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.btn-prev-step,
+.btn-next-step,
+.btn-submit-quote {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-prev-step {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-prev-step:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-prev-step:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-next-step,
+.btn-submit-quote {
+    background: linear-gradient(135deg, #7cb342, #9ccc65);
+    color: #ffffff;
+    margin-left: auto;
+}
+
+.btn-next-step:hover,
+.btn-submit-quote:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.35);
+}
+
+.btn-next-step:active,
+.btn-submit-quote:active {
+    transform: translateY(0);
+}
+
+/* ─── Step Indicator ──────────────────────────────────────── */
+.step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.step-dots {
+    display: flex;
+    gap: 0.4rem;
+}
 /* ─── Drawer Footer ────────────────────────────────────────── */
 .drawer-footer {
     display: flex;

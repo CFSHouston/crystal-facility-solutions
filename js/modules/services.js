@@ -16,7 +16,7 @@
         flipCooldown: 350,
         emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         phoneRegex: /^[\d\s\-\+\(\)]{10,}$/,
-        nameRegex: /^[a-zA-Z\s\-\'"]{2,50}$/,
+        nameRegex: /^[a-zA-Z\s\-'"]{2,50}$/,
         emails: {
             default: 'info@cfshouston.com',
             cleaning: 'cleaning@cfshouston.com',
@@ -209,7 +209,7 @@
                 return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
             }
 
-            if (digits.length > 11) {
+            if (digits.length > 10) {
                 digits = digits.slice(0, 10);
                 return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
             }
@@ -223,11 +223,15 @@
             if (errorEl) {
                 errorEl.textContent = message;
                 errorEl.style.display = 'block';
+                errorEl.classList.add('visible');
             }
             if (field) {
                 field.classList.add('error');
                 field.classList.remove('valid');
                 field.setAttribute('aria-invalid', 'true');
+                // Add shake animation
+                field.classList.add('shake-error');
+                setTimeout(() => field.classList.remove('shake-error'), 500);
             }
         }
 
@@ -237,6 +241,7 @@
             if (errorEl) {
                 errorEl.textContent = '';
                 errorEl.style.display = 'none';
+                errorEl.classList.remove('visible');
             }
             if (field) {
                 field.classList.remove('error');
@@ -249,6 +254,7 @@
             document.querySelectorAll('.field-error').forEach(el => {
                 el.textContent = '';
                 el.style.display = 'none';
+                el.classList.remove('visible');
             });
             document.querySelectorAll('input, select, textarea').forEach(field => {
                 field.classList.remove('error');
@@ -256,6 +262,7 @@
             });
         }
     }
+
 
     // ─── Services Theater ───────────────────────────────────────
     class ServicesTheater {
@@ -285,6 +292,7 @@
             this.setupEventListeners();
             this.setupValidationListeners();
             this.setupTransportationValidation();
+            this.setupTripTypeToggle();  // NEW: Bind trip type buttons
             this.setupIntersectionObserver();
 
             if (!this.isTouch && !this.prefersReducedMotion) {
@@ -493,6 +501,66 @@
             });
         }
 
+        // NEW: Setup Trip Type Toggle Buttons
+        setupTripTypeToggle() {
+            const toggleContainer = document.querySelector('.trip-type-toggle');
+            if (!toggleContainer) return;
+
+            const onClick = (e) => {
+                const btn = e.target.closest('.trip-toggle-btn');
+                if (!btn) return;
+
+                const tripType = btn.dataset.trip;
+                const hiddenInput = document.getElementById('tripType');
+                const returnFields = document.getElementById('returnDateTimeFields');
+
+                // Update visual state
+                toggleContainer.querySelectorAll('.trip-toggle-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-checked', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-checked', 'true');
+
+                // Update hidden input
+                if (hiddenInput) hiddenInput.value = tripType;
+
+                // Show/hide return fields
+                if (returnFields) {
+                    if (tripType === 'round-trip') {
+                        returnFields.classList.add('visible');
+                        // Make return fields required
+                        const dropoffDate = document.getElementById('dropoffDate');
+                        const dropoffTime = document.getElementById('dropoffTime');
+                        if (dropoffDate) dropoffDate.required = true;
+                        if (dropoffTime) dropoffTime.required = true;
+                    } else {
+                        returnFields.classList.remove('visible');
+                        // Make return fields not required
+                        const dropoffDate = document.getElementById('dropoffDate');
+                        const dropoffTime = document.getElementById('dropoffTime');
+                        if (dropoffDate) {
+                            dropoffDate.required = false;
+                            dropoffDate.value = '';
+                        }
+                        if (dropoffTime) {
+                            dropoffTime.required = false;
+                            dropoffTime.value = '';
+                        }
+                        // Clear any errors on return fields
+                        FormValidator.clearError('dropoffDate');
+                        FormValidator.clearError('dropoffTime');
+                    }
+                }
+
+                // Clear trip type error
+                FormValidator.clearError('tripType');
+            };
+
+            toggleContainer.addEventListener('click', onClick);
+            this.boundHandlers.tripToggle = { el: toggleContainer, onClick };
+        }
+
         setupDrawerListeners() {
             const closeBtn = this.drawer.querySelector('.btn-close-drawer');
             if (closeBtn) {
@@ -571,6 +639,17 @@
         }
 
         setupValidationListeners() {
+            // Helper to map input ID to error field ID
+            const getErrorFieldId = (inputId) => {
+                const map = {
+                    'quoteEmail': 'email',
+                    'quoteFirstName': 'firstName',
+                    'quoteLastName': 'lastName',
+                    'quotePhone': 'phone'
+                };
+                return map[inputId] || inputId.replace('quote', '').toLowerCase();
+            };
+
             const fields = [
                 { id: 'quoteEmail', validator: FormValidator.validateEmail, errorMsg: 'Please enter a valid email address' },
                 { id: 'quoteFirstName', validator: FormValidator.validateName, errorMsg: 'Please enter a valid name (letters only, min 2 characters)' },
@@ -581,17 +660,19 @@
                 const field = document.getElementById(id);
                 if (!field) return;
 
+                const errorFieldId = getErrorFieldId(id);
+
                 const onBlur = () => {
                     const value = field.value.trim();
                     if (value && !validator(value)) {
-                        FormValidator.showError(id.replace('quote', '').toLowerCase(), errorMsg);
+                        FormValidator.showError(errorFieldId, errorMsg);
                     } else if (value) {
-                        FormValidator.clearError(id.replace('quote', '').toLowerCase());
+                        FormValidator.clearError(errorFieldId);
                     }
                 };
 
                 const onInput = () => {
-                    FormValidator.clearError(id.replace('quote', '').toLowerCase());
+                    FormValidator.clearError(errorFieldId);
                 };
 
                 field.addEventListener('blur', onBlur);
@@ -606,7 +687,8 @@
             if (phoneField) {
                 const onInput = (e) => {
                     let digits = e.target.value.replace(/\D/g, '');
-                    if (digits.length > 11) digits = digits.slice(0, 11);
+                    // Cap at 10 digits (US phone number without country code)
+                    if (digits.length > 10) digits = digits.slice(0, 10);
                     e.target.value = FormValidator.formatPhone(digits);
                     FormValidator.clearError('phone');
                 };
@@ -616,7 +698,9 @@
                     const digits = value.replace(/\D/g, '');
                     if (value) {
                         if (digits.length < 10) {
-                            FormValidator.showError('phone', 'Please enter a complete phone number (10 digits)');
+                            FormValidator.showError('phone', 'Please enter a complete phone number (10 digits minimum)');
+                        } else if (digits.length > 10) {
+                            FormValidator.showError('phone', 'Phone number is too long (max 10 digits)');
                         } else {
                             FormValidator.clearError('phone');
                         }
@@ -629,6 +713,7 @@
             }
         }
 
+
         setupTransportationValidation() {
             const fields = {
                 busType: { el: document.getElementById('busType'), validate: (v) => !!v, error: 'Please select a bus type' },
@@ -638,8 +723,8 @@
                 pickupTime: { el: document.getElementById('pickupTime') },
                 dropoffTime: { el: document.getElementById('dropoffTime') },
                 tripType: { el: document.getElementById('tripType'), validate: (v) => !!v, error: 'Please select trip type' },
-                pickupLocation: { el: document.getElementById('pickupLocation'), minLen: 5, error: 'Please enter pick-up location', shortError: 'Please enter a complete address' },
-                dropoffLocation: { el: document.getElementById('dropoffLocation'), minLen: 5, error: 'Please enter drop-off location', shortError: 'Please enter a complete address' },
+                pickupLocation: { el: document.getElementById('pickupLocation'), minLen: 5, error: 'Please enter pick-up location', shortError: 'Please enter a complete address (min 5 characters)' },
+                dropoffLocation: { el: document.getElementById('dropoffLocation'), minLen: 5, error: 'Please enter drop-off location', shortError: 'Please enter a complete address (min 5 characters)' },
                 dropoffDate: { el: document.getElementById('dropoffDate') }
             };
 
@@ -647,6 +732,9 @@
             const today = now.toISOString().split('T')[0];
             if (fields.pickupDate.el) {
                 fields.pickupDate.el.setAttribute('min', today);
+            }
+            if (fields.dropoffDate.el) {
+                fields.dropoffDate.el.setAttribute('min', today);
             }
 
             // Set up min date for dropoff based on pickup
@@ -687,8 +775,14 @@
 
                 const onInput = (e) => {
                     let value = parseInt(e.target.value) || 0;
-                    if (value > config.max) e.target.value = config.max;
-                    if (value < 1 && e.target.value !== '') e.target.value = 1;
+                    if (value > config.max) {
+                        e.target.value = config.max;
+                        value = config.max;
+                    }
+                    if (value < 1 && e.target.value !== '') {
+                        e.target.value = 1;
+                        value = 1;
+                    }
                     if (value >= config.min && value <= config.max) {
                         FormValidator.clearError(key);
                         config.el.classList.add('valid');
@@ -701,6 +795,8 @@
                         FormValidator.showError(key, config.error);
                     } else if (value > config.max) {
                         FormValidator.showError(key, config.maxError);
+                    } else {
+                        FormValidator.clearError(key);
                     }
                 };
 
@@ -760,25 +856,15 @@
                 }
             });
 
-            // Trip type
+            // Trip type - already handled by setupTripTypeToggle, but add blur validation
             if (fields.tripType.el) {
-                const onChange = () => {
-                    if (fields.tripType.el.value) {
-                        FormValidator.clearError('tripType');
-                        fields.tripType.el.classList.add('valid');
-                    }
-                };
                 const onBlur = () => {
                     if (!fields.tripType.el.value) {
                         FormValidator.showError('tripType', fields.tripType.error);
                     }
                 };
-                fields.tripType.el.addEventListener('change', onChange);
-                fields.tripType.el.addEventListener('blur', onBlur);
-                this.boundHandlers.transport.push(
-                    { el: fields.tripType.el, onChange },
-                    { el: fields.tripType.el, onBlur }
-                );
+                // Note: change is handled by setupTripTypeToggle
+                this.boundHandlers.transport.push({ el: fields.tripType.el, onBlur });
             }
 
             // Location fields
@@ -787,7 +873,7 @@
                 const config = fields[key];
 
                 const onInput = () => {
-                    if (config.el.value.trim().length > config.minLen) {
+                    if (config.el.value.trim().length >= config.minLen) {
                         FormValidator.clearError(key);
                         config.el.classList.add('valid');
                     }
@@ -798,6 +884,8 @@
                         FormValidator.showError(key, config.error);
                     } else if (config.el.value.trim().length < config.minLen) {
                         FormValidator.showError(key, config.shortError);
+                    } else {
+                        FormValidator.clearError(key);
                     }
                 };
 
@@ -1087,6 +1175,12 @@
             if (serviceType === 'transportation') {
                 if (this.transportationFields) this.transportationFields.style.display = 'block';
                 if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
+                // Initialize trip type to one-way by default
+                const tripTypeInput = document.getElementById('tripType');
+                if (tripTypeInput && !tripTypeInput.value) tripTypeInput.value = 'one-way';
+                // Ensure return fields are hidden initially
+                const returnFields = document.getElementById('returnDateTimeFields');
+                if (returnFields) returnFields.classList.remove('visible');
             } else if (['cleaning', 'landscaping', 'maintenance'].includes(serviceType)) {
                 if (this.propertySizeGroup) {
                     this.propertySizeGroup.style.display = 'block';
@@ -1172,11 +1266,13 @@
             });
         }
 
+
         validateStep(step) {
             const currentStepEl = this.drawer.querySelector(`.form-step[data-step="${step}"]`);
             if (!currentStepEl) return true;
 
             let isValid = true;
+            let firstErrorField = null;
 
             // Step 1 validation
             if (step === 1) {
@@ -1189,6 +1285,7 @@
                         if (serviceError) {
                             serviceError.textContent = 'Please select a service to continue';
                             serviceError.style.display = 'block';
+                            serviceError.classList.add('visible');
                         }
                         const selector = document.querySelector('.service-selector');
                         if (selector) selector.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1205,7 +1302,9 @@
                         if (errorEl) {
                             errorEl.textContent = 'Please select at least one service';
                             errorEl.style.display = 'block';
+                            errorEl.classList.add('visible');
                         }
+                        if (!firstErrorField) firstErrorField = document.querySelector('.bundle-checkboxes');
                     }
 
                     const hasTransportation = Array.from(bundleCheckboxes).some(cb => cb.value === 'transportation');
@@ -1217,7 +1316,9 @@
                             if (sizeError) {
                                 sizeError.textContent = 'Please select a property size';
                                 sizeError.style.display = 'block';
+                                sizeError.classList.add('visible');
                             }
+                            if (!firstErrorField) firstErrorField = document.querySelector('.bundle-property-size .size-selector');
                         }
                     }
                 }
@@ -1231,6 +1332,7 @@
                         if (sizeError) {
                             sizeError.textContent = 'Please select a property size';
                             sizeError.style.display = 'block';
+                            sizeError.classList.add('visible');
                         }
                         const sizeSelector = document.querySelector('.property-size-group .size-selector');
                         if (sizeSelector) {
@@ -1238,6 +1340,7 @@
                             const timeoutId = setTimeout(() => sizeSelector.classList.remove('has-error'), 3000);
                             this.timeouts.push(timeoutId);
                         }
+                        if (!firstErrorField) firstErrorField = document.querySelector('.property-size-group');
                     }
                 }
 
@@ -1247,85 +1350,149 @@
                     if (!busType) {
                         isValid = false;
                         FormValidator.showError('busType', 'Please select a bus type');
+                        if (!firstErrorField) firstErrorField = document.getElementById('busType');
                     }
 
                     const busCount = parseInt(document.getElementById('numBuses')?.value) || 0;
                     if (busCount < 1 || busCount > 25) {
                         isValid = false;
                         FormValidator.showError('numBuses', 'Please enter 1-25 buses');
+                        if (!firstErrorField) firstErrorField = document.getElementById('numBuses');
                     }
 
                     const passCount = parseInt(document.getElementById('numPassengers')?.value) || 0;
                     if (passCount < 1 || passCount > 1000) {
                         isValid = false;
                         FormValidator.showError('numPassengers', 'Please enter 1-1000 passengers');
+                        if (!firstErrorField) firstErrorField = document.getElementById('numPassengers');
+                    }
+
+                    const tripType = document.getElementById('tripType')?.value;
+                    if (!tripType) {
+                        isValid = false;
+                        FormValidator.showError('tripType', 'Please select One-Way or Round-Trip');
+                        if (!firstErrorField) firstErrorField = document.querySelector('.trip-type-toggle');
                     }
 
                     const pickDate = document.getElementById('pickupDate')?.value;
                     if (!pickDate) {
                         isValid = false;
                         FormValidator.showError('pickupDate', 'Please select pick-up date');
+                        if (!firstErrorField) firstErrorField = document.getElementById('pickupDate');
                     }
 
                     const pickTime = document.getElementById('pickupTime')?.value;
                     if (!pickTime) {
                         isValid = false;
                         FormValidator.showError('pickupTime', 'Please select pick-up time');
+                        if (!firstErrorField) firstErrorField = document.getElementById('pickupTime');
+                    }
+
+                    // Round-trip specific validation
+                    if (tripType === 'round-trip') {
+                        const dropDate = document.getElementById('dropoffDate')?.value;
+                        if (!dropDate) {
+                            isValid = false;
+                            FormValidator.showError('dropoffDate', 'Please select return date');
+                            if (!firstErrorField) firstErrorField = document.getElementById('dropoffDate');
+                        }
+
+                        const dropTime = document.getElementById('dropoffTime')?.value;
+                        if (!dropTime) {
+                            isValid = false;
+                            FormValidator.showError('dropoffTime', 'Please select return time');
+                            if (!firstErrorField) firstErrorField = document.getElementById('dropoffTime');
+                        }
                     }
 
                     const pickLoc = document.getElementById('pickupLocation')?.value?.trim();
                     if (!pickLoc) {
                         isValid = false;
                         FormValidator.showError('pickupLocation', 'Please enter pick-up location');
+                        if (!firstErrorField) firstErrorField = document.getElementById('pickupLocation');
+                    } else if (pickLoc.length < 5) {
+                        isValid = false;
+                        FormValidator.showError('pickupLocation', 'Please enter a complete address (min 5 characters)');
+                        if (!firstErrorField) firstErrorField = document.getElementById('pickupLocation');
                     }
 
                     const dropLoc = document.getElementById('dropoffLocation')?.value?.trim();
                     if (!dropLoc) {
                         isValid = false;
                         FormValidator.showError('dropoffLocation', 'Please enter drop-off location');
+                        if (!firstErrorField) firstErrorField = document.getElementById('dropoffLocation');
+                    } else if (dropLoc.length < 5) {
+                        isValid = false;
+                        FormValidator.showError('dropoffLocation', 'Please enter a complete address (min 5 characters)');
+                        if (!firstErrorField) firstErrorField = document.getElementById('dropoffLocation');
                     }
                 }
             }
 
-            // Step 2 validation (contact info)
+            // Step 2 validation (contact info) - FIXED
             if (step === 2) {
-                const requiredFields = currentStepEl.querySelectorAll('[required]');
-                requiredFields.forEach(field => {
-                    const isHidden = field.offsetParent === null;
-                    if (!isHidden && !field.value.trim()) {
-                        isValid = false;
-                        field.classList.add('error');
-                        const errorEl = document.getElementById(field.id + 'Error');
-                        if (errorEl) {
-                            errorEl.textContent = 'This field is required';
-                            errorEl.style.display = 'block';
-                        }
-                    }
-                });
-
-                const email = document.getElementById('quoteEmail')?.value.trim();
-                if (email && !FormValidator.validateEmail(email)) {
-                    FormValidator.showError('email', 'Please enter a valid email address');
-                    isValid = false;
-                }
-
-                const phone = document.getElementById('quotePhone')?.value.trim();
-                if (phone && !FormValidator.validatePhone(phone)) {
-                    FormValidator.showError('phone', 'Please enter a valid phone number');
-                    isValid = false;
-                }
-
+                // First Name
                 const firstName = document.getElementById('quoteFirstName')?.value.trim();
-                if (firstName && !FormValidator.validateName(firstName)) {
-                    FormValidator.showError('firstName', 'Please enter a valid first name');
+                if (!firstName) {
                     isValid = false;
+                    FormValidator.showError('firstName', 'First name is required');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quoteFirstName');
+                } else if (!FormValidator.validateName(firstName)) {
+                    isValid = false;
+                    FormValidator.showError('firstName', 'Please enter a valid name (letters only, min 2 characters)');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quoteFirstName');
                 }
 
+                // Last Name
                 const lastName = document.getElementById('quoteLastName')?.value.trim();
-                if (lastName && !FormValidator.validateName(lastName)) {
-                    FormValidator.showError('lastName', 'Please enter a valid last name');
+                if (!lastName) {
                     isValid = false;
+                    FormValidator.showError('lastName', 'Last name is required');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quoteLastName');
+                } else if (!FormValidator.validateName(lastName)) {
+                    isValid = false;
+                    FormValidator.showError('lastName', 'Please enter a valid name (letters only, min 2 characters)');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quoteLastName');
                 }
+
+                // Email
+                const email = document.getElementById('quoteEmail')?.value.trim();
+                if (!email) {
+                    isValid = false;
+                    FormValidator.showError('email', 'Email address is required');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quoteEmail');
+                } else if (!FormValidator.validateEmail(email)) {
+                    isValid = false;
+                    FormValidator.showError('email', 'Please enter a valid email address');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quoteEmail');
+                }
+
+                // Phone - FIXED: strict validation
+                const phone = document.getElementById('quotePhone')?.value.trim();
+                const phoneDigits = phone ? phone.replace(/\D/g, '') : '';
+                if (!phone) {
+                    isValid = false;
+                    FormValidator.showError('phone', 'Phone number is required');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quotePhone');
+                } else if (phoneDigits.length < 10) {
+                    isValid = false;
+                    FormValidator.showError('phone', 'Phone number must have at least 10 digits');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quotePhone');
+                } else if (phoneDigits.length > 11) {
+                    isValid = false;
+                    FormValidator.showError('phone', 'Phone number is too long (max 11 digits)');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quotePhone');
+                } else if (!FormValidator.validatePhone(phone)) {
+                    isValid = false;
+                    FormValidator.showError('phone', 'Please enter a valid phone number');
+                    if (!firstErrorField) firstErrorField = document.getElementById('quotePhone');
+                }
+            }
+
+            // Scroll to first error
+            if (!isValid && firstErrorField) {
+                firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (firstErrorField.focus) firstErrorField.focus();
             }
 
             return isValid;
@@ -1351,6 +1518,7 @@
                 if (errorEl) {
                     errorEl.textContent = '';
                     errorEl.style.display = 'none';
+                    errorEl.classList.remove('visible');
                 }
                 parent.classList.remove('has-error');
             }
@@ -1371,6 +1539,28 @@
             // Reset all selections
             this.selectedService = null;
             if (this.serviceTypeInput) this.serviceTypeInput.value = '';
+
+            // Reset trip type to one-way
+            const tripTypeInput = document.getElementById('tripType');
+            if (tripTypeInput) tripTypeInput.value = 'one-way';
+
+            // Reset trip toggle buttons
+            const toggleContainer = document.querySelector('.trip-type-toggle');
+            if (toggleContainer) {
+                toggleContainer.querySelectorAll('.trip-toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-checked', 'false');
+                });
+                const oneWayBtn = toggleContainer.querySelector('[data-trip="one-way"]');
+                if (oneWayBtn) {
+                    oneWayBtn.classList.add('active');
+                    oneWayBtn.setAttribute('aria-checked', 'true');
+                }
+            }
+
+            // Hide return fields
+            const returnFields = document.getElementById('returnDateTimeFields');
+            if (returnFields) returnFields.classList.remove('visible');
 
             this.drawer.querySelectorAll('.size-option').forEach(opt => {
                 opt.classList.remove('selected');
@@ -1606,6 +1796,7 @@
                 this.timeouts.push(timeoutId);
             });
         }
+
 
         openDetailDrawer(serviceType) {
             const drawerMap = {
