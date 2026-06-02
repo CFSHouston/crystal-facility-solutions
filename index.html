@@ -108,10 +108,11 @@
         },
         "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "opens": "00:00",
-            "closes": "23:59"
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "16:00"
         },
+        "description": "Office hours: Monday–Friday 8:00 AM – 4:00 PM. Scheduled cleaning, transportation, landscaping, and maintenance services available 24/7 including weekends.",
         "areaServed": {
             "@type": "City",
             "name": "Houston"
@@ -126,20 +127,7 @@
     }
     </script>
 
-    <!-- JSON-LD: WebSite (SearchAction for Sitelinks Searchbox) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Crystal Facility Solutions",
-        "url": "https://cfshouston.com",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://cfshouston.com/?s={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
+
 
     <!-- EmailJS — External Init File (CSP Compliant) -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
@@ -1085,18 +1073,7 @@
                                 </div>
                             </div>
                         </div>
-                    <!-- Honeypot field - hidden from humans, catches bots -->
-                    <div style="position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden;" aria-hidden="true">
-                        <label for="website">Website</label>
-                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                    </div>
                     </form>
-
-                    <!-- Privacy Policy Consent -->
-                    <p class="form-consent">
-                        By submitting this form, you agree to our 
-                        <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
-                    </p>
                 </div>
                 <div class="drawer-footer">
                     <button type="button" class="btn-prev-step" disabled>
@@ -2803,11 +2780,7 @@
                                         <div class="input-glow"></div>
                                         <span class="char-counter">0/300</span>
                                     </div>
-                                    <!-- Privacy Policy Consent -->
-                                    <p class="form-consent">
-                                        By submitting this form, you agree to our 
-                                        <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
-                                    </p>
+
                                     <button type="submit" class="btn-cinematic">
                                         <span class="btn-text">Start Conversation</span>
                                         <span class="btn-icon">
@@ -2970,9 +2943,6 @@
                     <span class="copy-year">2026</span>
                     <span class="copy-brand">Crystal Facility Solutions</span>.
                     <span class="copy-tag">All rights reserved.</span>
-                </p>
-                <p class="footer-legal">
-                    <a href="privacy-policy.html">Privacy Policy</a>
                 </p>
             </div>
         </div>
