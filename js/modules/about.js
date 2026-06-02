@@ -171,12 +171,12 @@
         }
 
         animateElement(el) {
-            el.style.opacity = '0';
+            // SEO-friendly: content always visible, just slides up
+            el.style.opacity = '1';
             el.style.transform = 'translateY(30px)';
+            el.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
             const rafId = requestAnimationFrame(() => {
-                el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-                el.style.opacity = '1';
-                el.style.transform = '';
+                el.style.transform = 'translateY(0)';
             });
             this.rafIds.push(rafId);
         }
@@ -231,12 +231,12 @@
             }
             this.timelineItems.forEach((item, i) => {
                 const t = setTimeout(() => {
-                    item.style.opacity = '0';
+                    // SEO-friendly: content always visible, just slides up
+                    item.style.opacity = '1';
                     item.style.transform = 'translateY(20px)';
+                    item.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
                     const rafId = requestAnimationFrame(() => {
-                        item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                        item.style.opacity = '1';
-                        item.style.transform = '';
+                        item.style.transform = 'translateY(0)';
                     });
                     this.rafIds.push(rafId);
                 }, i * 200);

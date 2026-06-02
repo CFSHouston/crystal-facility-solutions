@@ -43,6 +43,10 @@
     function init() {
         if (state.isInitialized) return;
 
+        // Add js-enabled class for SEO-friendly animations
+        // Content is always visible, but enhanced animations work when JS is available
+        document.body.classList.add('js-enabled');
+
         initScrollAnimations();
         initSmoothScrollPolyfill();
         initLazyLoading();

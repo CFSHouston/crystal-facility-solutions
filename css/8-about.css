@@ -1721,3 +1721,32 @@
         border-width: 2px;
     }
 }
+
+/* ============================================
+   SEO SAFETY — Ensure content is always visible
+   even if JavaScript fails or is disabled
+   ============================================ */
+
+/* Stat cards, story cards, excellence cards always visible */
+.stat-card,
+.story-card,
+.excellence-card,
+.timeline-item {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* When JS is enabled, allow the slide-up animation */
+.js-enabled .stat-card,
+.js-enabled .story-card,
+.js-enabled .excellence-card,
+.js-enabled .timeline-item {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Counter values always visible */
+.counter {
+    opacity: 1 !important;
+}
