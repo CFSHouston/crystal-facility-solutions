@@ -765,7 +765,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     padding: 0 3rem;
     z-index: 2;
 }
@@ -843,7 +843,7 @@
 .client-logo {
     font-size: 1.1rem;
     font-weight: var(--font-weight-semibold);
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.95);
     white-space: nowrap;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -867,7 +867,7 @@
    TIMELINE
    ============================================ */
 .timeline-section {
-    margin-top: 6rem;
+    margin-top: 4rem;
     text-align: center;
     position: relative;
     z-index: 2;
@@ -1597,16 +1597,18 @@
         padding: 2rem 0.5rem 0.5rem;
     }
 
-    /* Mobile: Always show detail cards */
-    .details-content {
-        max-height: none !important;
-        opacity: 1 !important;
-        padding: 2rem 0.5rem 0.5rem !important;
-        overflow: visible !important;
+    /* Mobile: Same toggle behavior as desktop */
+    .details-content[aria-hidden="true"] {
+        max-height: 0;
+        opacity: 0;
+        padding: 0 0.5rem;
+        overflow: hidden;
     }
 
-    .details-toggle {
-        display: none !important;
+    .details-content[aria-hidden="false"] {
+        max-height: 2000px;
+        opacity: 1;
+        padding: 2rem 0.5rem 0.5rem;
     }
 
     /* Facility Tooltip Mobile */
