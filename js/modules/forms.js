@@ -36,7 +36,8 @@
     const state = {
         isInitialized: false,
         timeouts: [],
-        boundHandlers: {}
+        boundHandlers: {},
+        lastSubmitTime: null
     };
 
     // ─── Input Sanitization ─────────────────────────────────────
@@ -274,13 +275,30 @@
         setLoadingState(form, true);
 
         try {
-            await submitToSalesforce(form);
+            const templateParams = {
+                to_email: 'info@cfshouston.com',
+                name: name,
+                email: email,
+                from_name: name,
+                from_email: email,
+                service: 'Feedback Form',
+                title: 'Customer Feedback',
+                time: new Date().toLocaleString(),
+                message: `User Type: ${userType}\nService Used: ${serviceUsed}\nRating: ${rating} stars\nFeedback: ${feedback}`,
+                user_message: feedback
+            };
+
+            await submitToEmailJS(form, templateParams);
             showSuccessMessage(`Thank you ${name}! Your ${rating}-star feedback has been submitted.`);
             form.reset();
             resetRating();
             clearAllFeedbackErrors(form);
         } catch (error) {
-            showErrorMessage('Something went wrong. Please try again or call us directly at ' + CONFIG.phone + '.');
+            if (error.message.includes('wait')) {
+                showErrorMessage(error.message);
+            } else {
+                showErrorMessage('Something went wrong. Please try again or call us directly at ' + CONFIG.phone + '.');
+            }
         } finally {
             setLoadingState(form, false);
         }
@@ -442,7 +460,20 @@
         setLoadingState(form, true);
 
         try {
-            await submitToSalesforce(form);
+            const templateParams = {
+                to_email: 'info@cfshouston.com',
+                name: values.name,
+                email: values.email,
+                from_name: values.name,
+                from_email: values.email,
+                service: values.serviceType || 'General Quote',
+                title: `${values.serviceType || 'General'} Quote Request`,
+                time: new Date().toLocaleString(),
+                message: `Phone: ${values.phone}\nCompany: ${values.company}\nProperty Type: ${values.propertyType}\nProperty Size: ${values.propertySize} sq ft\nFrequency: ${values.frequency}`,
+                user_message: `Service Type: ${values.serviceType}\nProperty: ${values.propertyType} (${values.propertySize} sq ft)\nFrequency: ${values.frequency}`
+            };
+
+            await submitToEmailJS(form, templateParams);
             showSuccessMessage(`Thank you ${values.name}! Your quote request for ${values.serviceType} has been submitted. We'll contact you within 24 hours.`);
             form.reset();
             clearAllQuoteErrors(form);
@@ -458,7 +489,11 @@
             state.timeouts.push(timeoutId);
 
         } catch (error) {
-            showErrorMessage('Something went wrong. Please try again or call us directly at ' + CONFIG.phone + '.');
+            if (error.message.includes('wait')) {
+                showErrorMessage(error.message);
+            } else {
+                showErrorMessage('Something went wrong. Please try again or call us directly at ' + CONFIG.phone + '.');
+            }
         } finally {
             setLoadingState(form, false);
         }
@@ -615,26 +650,36 @@
         }
     }
 
+    // ─── EmailJS Configuration ──────────────────────────────────
+    const EMAILJS_CONFIG = {
+        serviceId: 'default_service',
+        templateId: 'template_jvn3yzi'
+    };
+
     // ─── Submission ─────────────────────────────────────────────
-    async function submitToSalesforce(form) {
-        // Simulate network delay
-        await new Promise(resolve => {
-            const timeoutId = setTimeout(resolve, 1500);
-            state.timeouts.push(timeoutId);
-        });
+    async function submitToEmailJS(form, templateParams) {
+        // Honeypot check
+        const honeypot = form.querySelector('#website');
+        if (honeypot && honeypot.value) {
+            console.warn('Honeypot triggered - possible spam submission');
+            throw new Error('Spam detected');
+        }
 
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
+        // Rate limiting
+        const now = Date.now();
+        if (state.lastSubmitTime && (now - state.lastSubmitTime < 30000)) {
+            throw new Error('Please wait 30 seconds before submitting another request.');
+        }
+        state.lastSubmitTime = now;
 
-        // Sanitize all data
-        Object.keys(data).forEach(key => {
-            if (typeof data[key] === 'string') {
-                data[key] = sanitizeInput(data[key]);
-            }
-        });
+        // Send via EmailJS
+        const response = await emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.templateId,
+            templateParams
+        );
 
-        // TODO: Replace with actual Salesforce API call
-        return { success: true, data };
+        return { success: true, data: response };
     }
 
     // ─── Toast Messages ─────────────────────────────────────────
