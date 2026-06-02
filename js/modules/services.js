@@ -286,6 +286,8 @@
             this.setupTransportationValidation();
             this.setupTripTypeToggle();
             this.setupIntersectionObserver();
+            this.drawerTitle = document.getElementById('drawerTitle');
+            this.drawerIcon = document.getElementById('drawerIcon');
 
             if (!this.isTouch && !this.prefersReducedMotion) {
                 this.setup3DTilt();
@@ -942,6 +944,11 @@
         showServiceSelector() {
             this.currentStep = 1;
 
+            // Reset title to Quick Quote
+            if (this.drawerTitle) this.drawerTitle.textContent = 'Quick Quote';
+            if (this.drawerIcon) this.drawerIcon.className = 'fas fa-calculator';
+            if (this.drawerServiceName) this.drawerServiceName.textContent = 'Choose from our services';
+
             if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
             if (this.transportationFields) this.transportationFields.style.display = 'none';
             if (this.bundleFields) this.bundleFields.style.display = 'none';
@@ -1011,22 +1018,32 @@
                 }
             }
         }
-
         showBundleSelector() {
             this.currentStep = 1;
 
+            // Set Bulk Quote title
+            if (this.drawerTitle) this.drawerTitle.textContent = 'Bulk Quote';
+            if (this.drawerIcon) this.drawerIcon.className = 'fas fa-layer-group';
+            if (this.drawerServiceName) this.drawerServiceName.textContent = 'Combine multiple services';
+
+            // Hide service selector
             const selectorGroup = this.drawer.querySelector('.service-selector-group');
             if (selectorGroup) selectorGroup.style.display = 'none';
 
+            // Hide individual service fields
             if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
             if (this.transportationFields) this.transportationFields.style.display = 'none';
+            
+            // Show bundle fields
             if (this.bundleFields) this.bundleFields.style.display = 'block';
 
+            // Update step title
             if (this.step1Title) this.step1Title.textContent = 'Build Your Custom Package';
-            if (this.drawerServiceName) this.drawerServiceName.textContent = 'Select multiple services';
 
-            if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'inline-flex';
+            // NO Change Service button for bundle flow
+            if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'none';
 
+            // Activate step 1
             this.drawer.querySelectorAll('.form-step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -1079,7 +1096,8 @@
             }
 
             if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'inline-flex';
-
+            if (this.drawerTitle) this.drawerTitle.textContent = 'Quick Quote';
+            if (this.drawerIcon) this.drawerIcon.className = 'fas fa-calculator';
             this.drawer.querySelectorAll('.form-step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -1456,6 +1474,8 @@
             if (this.transportationFields) this.transportationFields.style.display = 'none';
             if (this.bundleFields) this.bundleFields.style.display = 'none';
             if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'none';
+            if (this.drawerTitle) this.drawerTitle.textContent = 'Quick Quote';
+            if (this.drawerIcon) this.drawerIcon.className = 'fas fa-calculator';
 
             this.updateStepUI();
         }

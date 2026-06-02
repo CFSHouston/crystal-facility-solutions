@@ -979,10 +979,7 @@
     .testimonial-text {
         font-size: 1rem;
     }
-
-    .quote-mark {
-        font-size: 100px;
-    }
+}
 
     .nav-btn {
         width: 48px;
@@ -1056,7 +1053,6 @@
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
     .testimonials-bg *,
-    .floating-quotes .quote-mark,
     .testimonial-card,
     .google-review-card {
         animation: none !important;

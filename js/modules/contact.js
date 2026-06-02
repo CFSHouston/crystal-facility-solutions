@@ -9,7 +9,6 @@
     // ─── Configuration ──────────────────────────────────────────
     const CONFIG = {
         emailjs: {
-            publicKey: 'F2TtT04bpqE_Lew1Q',
             serviceId: 'service_jd5lns8',
             templateId: 'template_jvn3yzi'
         },
@@ -128,7 +127,6 @@
         if (state.isInitialized) return;
         if (!document.querySelector('.contact-cinematic')) return;
 
-        initEmailJS();
         initParticles();
         initMethodCards();
         initButton();
@@ -142,12 +140,6 @@
         state.isInitialized = true;
     }
 
-    // ─── EmailJS ────────────────────────────────────────────────
-    function initEmailJS() {
-        if (typeof emailjs !== 'undefined') {
-            emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
-        }
-    }
 
     // ─── Particle System ────────────────────────────────────────
     function initParticles() {
@@ -493,7 +485,7 @@
     // ─── Form Submission ────────────────────────────────────────
     function handleFormSubmit(contactForm, formInputs, submitBtn) {
         if (typeof emailjs === 'undefined') {
-            showFormError(contactForm, submitBtn, 'Email service not available. Please contact us directly.');
+            showFormError(contactForm, submitBtn, 'Email service not available. Please contact us directly at info@cfshouston.com');
             return;
         }
 

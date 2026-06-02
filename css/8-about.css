@@ -843,7 +843,7 @@
 .client-logo {
     font-size: 1.1rem;
     font-weight: var(--font-weight-semibold);
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.85);
     white-space: nowrap;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -856,7 +856,7 @@
 
 .client-logo:hover,
 .client-logo:focus {
-    color: var(--cfs-green);
+    color: var(--cfs-light-green);
     background: rgba(124, 179, 66, 0.1);
     text-shadow: 0 0 20px rgba(124, 179, 66, 0.3);
     transform: translateY(-2px);
@@ -1595,6 +1595,18 @@
 
     .details-content[aria-hidden="false"] {
         padding: 2rem 0.5rem 0.5rem;
+    }
+
+    /* Mobile: Always show detail cards */
+    .details-content {
+        max-height: none !important;
+        opacity: 1 !important;
+        padding: 2rem 0.5rem 0.5rem !important;
+        overflow: visible !important;
+    }
+
+    .details-toggle {
+        display: none !important;
     }
 
     /* Facility Tooltip Mobile */

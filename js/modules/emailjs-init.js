@@ -1,5 +1,6 @@
 /* ============================================
    EMAILJS INITIALIZATION
+   Crystal Facility Solutions
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,14 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     emailjs.init({
         publicKey: "WdC_iLm3gS_5aSWQz",
-
-        // Reduce simple automated abuse
         blockHeadless: true,
-
-        // Allow one submission attempt every 10 seconds
         limitRate: {
-            id: "cfs-contact-form",
-            throttle: 10000
+            id: "cfs-website",
+            throttle: 30000
         }
     });
 });
