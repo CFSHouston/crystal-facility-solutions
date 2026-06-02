@@ -159,8 +159,7 @@
    ============================================ */
 @media print {
     .nav,
-    .chat-widget,
-    .hero-buttons,
+        .hero-buttons,
     .mobile-menu-btn,
     .mobile-nav,
     .back-to-top,
@@ -288,8 +287,7 @@
     .btn:focus-visible,
     .modal-close:focus-visible,
     .dot:focus-visible,
-    .chat-button:focus-visible,
-    .filter-btn:focus-visible,
+        .filter-btn:focus-visible,
     .nav-btn:focus-visible,
     .size-option:focus-visible,
     .bundle-checkbox:focus-within {

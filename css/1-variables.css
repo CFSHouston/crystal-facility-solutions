@@ -149,7 +149,7 @@
     --z-popover: 3000;
     --z-tooltip: 4000;
     --z-toast: 5000;
-    --chat-z-index: 2147483647;
+    --z-skip-link: 2147483647;
 
     /* ============================================
        TRANSITIONS & ANIMATION
@@ -226,20 +226,7 @@
     --spinner-color: var(--cfs-green);
 }
 
-/* ============================================
-   DARK MODE SUPPORT (Future-proofing)
-   ============================================ */
-@media (prefers-color-scheme: dark) {
-    /* :root { */
-        /* Uncomment when ready for dark mode
-        --dark: #f5f5f5;
-        --dark-secondary: #e0e0e0;
-        --gray: #999;
-        --light-gray: #2d2d2d;
-        --white: #1a1a1a;
-        --bg-gradient-main: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        */
-    /* } */
+ */
 }
 
 /* ============================================

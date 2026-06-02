@@ -139,8 +139,7 @@
    ============================================ */
 @media print {
     .nav,
-    .chat-widget,
-    .hero-buttons,
+        .hero-buttons,
     .modal,
     .dots,
     .mobile-menu-btn,

@@ -590,20 +590,6 @@
 }
 
 /* ============================================
-   SCROLL PROGRESS INDICATOR
-   ============================================ */
-.nav-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--cfs-green), var(--cfs-light-green));
-    width: 0%;
-    transition: width 0.1s linear;
-    box-shadow: 0 0 10px var(--cfs-green);
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 768px) {

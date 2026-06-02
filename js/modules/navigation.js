@@ -30,7 +30,10 @@
 
     // ─── Initialization ─────────────────────────────────────────
     function init() {
-        if (state.isInitialized) return;
+        if (state.isInitialized) {
+            console.warn("Navigation module already initialized");
+            return;
+        }
 
         cacheElements();
         if (!state.nav) return;
@@ -279,6 +282,11 @@
             clearTimeout(state.mobileCloseTimeout);
             state.mobileCloseTimeout = null;
         }
+
+        // Remove dropdown listeners
+        document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+            trigger.removeEventListener('click', onDropdownToggle);
+        });
 
         // Reset state
         state.isInitialized = false;

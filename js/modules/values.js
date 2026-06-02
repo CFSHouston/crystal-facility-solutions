@@ -38,15 +38,17 @@
         isInitialized: false,
         timeouts: [],
         rafIds: [],
-        boundHandlers: {}
+        boundHandlers: {},
+        moduleInstance: null
     };
 
     // ─── Initialization ─────────────────────────────────────────
     function init() {
         if (state.isInitialized) return;
-        if (!document.querySelector('.values-container')) return;
+        const container = document.querySelector('.values-container');
+        if (!container) return;
 
-        new CoreValuesModule();
+        state.moduleInstance = new CoreValuesModule();
         state.isInitialized = true;
     }
 
@@ -84,7 +86,11 @@
 
             // Card click handlers
             this.cards.forEach((card, index) => {
-                const onClick = (e) => self.handleCardClick(e, card, index);
+                const onClick = (e) => {
+                    // Don't trigger if clicking a link inside
+                    if (e.target.tagName === 'A' || e.target.closest('a')) return;
+                    self.handleCardClick(e, card, index);
+                };
                 const onKeyDown = (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -100,6 +106,21 @@
 
                 if (!this.boundHandlers.cards) this.boundHandlers.cards = [];
                 this.boundHandlers.cards.push({ card, onClick, onKeyDown });
+            });
+
+            // Toggle button handlers (prevent bubbling to card)
+            this.toggles.forEach(toggle => {
+                const onToggleClick = (e) => {
+                    e.stopPropagation();
+                    const card = toggle.closest('.value-card');
+                    if (card) {
+                        const index = Array.from(this.cards).indexOf(card);
+                        self.handleCardClick(e, card, index);
+                    }
+                };
+                toggle.addEventListener('click', onToggleClick);
+                if (!this.boundHandlers.toggles) this.boundHandlers.toggles = [];
+                this.boundHandlers.toggles.push({ toggle, onToggleClick });
             });
 
             // Escape key
@@ -123,7 +144,6 @@
         }
 
         handleCardClick(e, card, index) {
-            if (e.target.tagName === 'A') return;
             const isActive = card.classList.contains('active');
             this.closeAllCards();
             if (!isActive) {
@@ -135,6 +155,11 @@
         openCard(card, index) {
             card.classList.add('active');
             card.setAttribute('aria-expanded', 'true');
+            
+            // Update toggle button aria-expanded
+            const toggle = card.querySelector('.value-toggle');
+            if (toggle) toggle.setAttribute('aria-expanded', 'true');
+            
             this.activeCard = card;
             this.updateProgressIndicator(index);
 
@@ -153,6 +178,8 @@
             this.cards.forEach(c => {
                 c.classList.remove('active');
                 c.setAttribute('aria-expanded', 'false');
+                const toggle = c.querySelector('.value-toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
             });
             this.activeCard = null;
             this.updateProgressIndicator(-1);
@@ -186,7 +213,9 @@
             card.style.transform = `perspective(${CONFIG.tiltPerspective}px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-12px) scale(1.02)`;
         }
 
-        resetTilt(card) { card.style.transform = ''; }
+        resetTilt(card) { 
+            card.style.transform = ''; 
+        }
 
         // ─── Magnetic Buttons ─────────────────────────────────────
         setupMagneticButtons() {
@@ -217,15 +246,17 @@
                 particle.className = 'particle';
                 const size = utils.random(6, 12);
                 const color = i % 2 === 0 ? 'var(--cfs-green, #7cb342)' : 'var(--cfs-light-green, #9ccc65)';
-                particle.style.position = 'fixed';
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.background = color;
-                particle.style.borderRadius = '50%';
-                particle.style.pointerEvents = 'none';
-                particle.style.zIndex = '9999';
-                particle.style.left = (rect.left + rect.width / 2) + 'px';
-                particle.style.top = (rect.top + rect.height / 2) + 'px';
+                particle.style.cssText = `
+                    position: fixed;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    left: ${rect.left + rect.width / 2}px;
+                    top: ${rect.top + rect.height / 2}px;
+                `;
                 document.body.appendChild(particle);
 
                 particles.push({
@@ -274,6 +305,7 @@
                     const dot = document.createElement('button');
                     dot.className = 'progress-dot';
                     dot.setAttribute('aria-label', 'Go to value ' + (index + 1));
+                    dot.type = 'button';
                     const onClick = () => {
                         this.cards[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
                         this.cards[index].focus();
@@ -302,34 +334,27 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                        entry.target.style.animationPlayState = 'running';
-                        entry.target.querySelectorAll('.value-icon, .value-content').forEach((child, i) => {
-                            child.style.animationDelay = (i * 0.1) + 's';
-                            child.classList.add('animate-in');
-                        });
                     }
                 });
             }, opts);
 
             this.cards.forEach(card => {
-                card.style.animationPlayState = 'paused';
                 this.observer.observe(card);
             });
         }
 
         // ─── Entry Animation ──────────────────────────────────────
         animateEntry() {
-            this.cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(50px)';
-
-                const timeoutId = setTimeout(() => {
-                    card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                    card.style.opacity = '1';
-                    card.style.transform = '';
-                }, index * 100);
-                this.timeouts.push(timeoutId);
-            });
+            // Cards start hidden (handled by CSS), observer triggers in-view
+            // Force check in case already in viewport
+            setTimeout(() => {
+                this.cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        card.classList.add('in-view');
+                    }
+                });
+            }, 100);
         }
 
         // ─── Resize Handler ───────────────────────────────────────
@@ -347,19 +372,23 @@
             announcement.setAttribute('aria-live', 'polite');
             announcement.setAttribute('aria-atomic', 'true');
             announcement.className = 'sr-only';
-            announcement.style.position = 'absolute';
-            announcement.style.width = '1px';
-            announcement.style.height = '1px';
-            announcement.style.padding = '0';
-            announcement.style.margin = '-1px';
-            announcement.style.overflow = 'hidden';
-            announcement.style.clip = 'rect(0, 0, 0, 0)';
-            announcement.style.whiteSpace = 'nowrap';
-            announcement.style.border = '0';
+            announcement.style.cssText = `
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            `;
             announcement.textContent = message;
 
             document.body.appendChild(announcement);
-            const timeoutId = setTimeout(() => { if (announcement.parentNode) announcement.remove(); }, 1000);
+            const timeoutId = setTimeout(() => { 
+                if (announcement.parentNode) announcement.remove(); 
+            }, 1000);
             this.timeouts.push(timeoutId);
         }
 
@@ -369,28 +398,50 @@
             this.timeouts = [];
             this.rafIds.forEach(id => cancelAnimationFrame(id));
             this.rafIds = [];
-            if (this.observer) { this.observer.disconnect(); this.observer = null; }
+            if (this.observer) { 
+                this.observer.disconnect(); 
+                this.observer = null; 
+            }
+            document.querySelectorAll('.particle').forEach(p => p.remove());
 
-            Object.keys(this.boundHandlers).forEach(key => {
-                const h = this.boundHandlers[key];
-                if (Array.isArray(h)) {
-                    h.forEach(item => {
-                        if (item.card) {
-                            if (item.onClick) item.card.removeEventListener('click', item.onClick);
-                            if (item.onKeyDown) item.card.removeEventListener('keydown', item.onKeyDown);
-                        } else if (item.toggle) {
-                            if (item.onMove) item.toggle.removeEventListener('mousemove', item.onMove);
-                            if (item.onLeave) item.toggle.removeEventListener('mouseleave', item.onLeave);
-                        } else if (item.dot && item.onClick) {
-                            item.dot.removeEventListener('click', item.onClick);
-                        }
-                    });
-                } else if (key === 'escape' || key === 'documentClick') {
-                    document.removeEventListener(key === 'escape' ? 'keydown' : 'click', h);
-                } else if (key === 'resize') {
-                    window.removeEventListener('resize', h);
-                }
-            });
+            // Clean up all bound handlers
+            if (this.boundHandlers.cards) {
+                this.boundHandlers.cards.forEach(({ card, onClick, onKeyDown }) => {
+                    card.removeEventListener('click', onClick);
+                    card.removeEventListener('keydown', onKeyDown);
+                });
+            }
+            if (this.boundHandlers.toggles) {
+                this.boundHandlers.toggles.forEach(({ toggle, onToggleClick }) => {
+                    toggle.removeEventListener('click', onToggleClick);
+                });
+            }
+            if (this.boundHandlers.tilt) {
+                this.boundHandlers.tilt.forEach(({ card, onMove, onLeave }) => {
+                    card.removeEventListener('mousemove', onMove);
+                    card.removeEventListener('mouseleave', onLeave);
+                });
+            }
+            if (this.boundHandlers.magnetic) {
+                this.boundHandlers.magnetic.forEach(({ toggle, onMove, onLeave }) => {
+                    toggle.removeEventListener('mousemove', onMove);
+                    toggle.removeEventListener('mouseleave', onLeave);
+                });
+            }
+            if (this.boundHandlers.progress) {
+                this.boundHandlers.progress.forEach(({ dot, onClick }) => {
+                    dot.removeEventListener('click', onClick);
+                });
+            }
+            if (this.boundHandlers.escape) {
+                document.removeEventListener('keydown', this.boundHandlers.escape);
+            }
+            if (this.boundHandlers.documentClick) {
+                document.removeEventListener('click', this.boundHandlers.documentClick);
+            }
+            if (this.boundHandlers.resize) {
+                window.removeEventListener('resize', this.boundHandlers.resize);
+            }
             this.boundHandlers = {};
         }
     }
@@ -398,6 +449,10 @@
     // ─── Cleanup / Destroy ──────────────────────────────────────
     function destroy() {
         if (!state.isInitialized) return;
+        if (state.moduleInstance) {
+            state.moduleInstance.destroy();
+            state.moduleInstance = null;
+        }
         state.timeouts.forEach(id => clearTimeout(id));
         state.timeouts = [];
         state.rafIds.forEach(id => cancelAnimationFrame(id));

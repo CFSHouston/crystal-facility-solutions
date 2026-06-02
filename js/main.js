@@ -61,6 +61,8 @@
             '.service-card, .stat, .info-item, .section-title, .about-text, .visual-box'
         );
 
+        if (!revealElements.length) return;
+
         if (!('IntersectionObserver' in window)) {
             revealElements.forEach(el => {
                 el.style.opacity = '1';
@@ -165,8 +167,11 @@
 
     // ─── Error Handling ─────────────────────────────────────────
     function handleError(msg, url, lineNo, columnNo, error) {
-        // Silent error handling in production
-        // Log to analytics service if available
+        // Log to console in development, silent in production
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.error('Global error:', { msg, url, lineNo, columnNo, error });
+        }
+        // Return false to allow default browser error handling
         return false;
     }
 
@@ -177,6 +182,10 @@
         // Disconnect observers
         state.observers.forEach(observer => observer.disconnect());
         state.observers = [];
+
+        // Remove reveal styles
+        const revealStyles = document.getElementById('main-reveal-styles');
+        if (revealStyles) revealStyles.remove();
 
         // Remove smooth scroll listeners
         if (state.boundHandlers.smoothScroll) {

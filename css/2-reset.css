@@ -115,7 +115,7 @@ ul, ol {
     margin: 0;
     clip: auto;
     white-space: normal;
-    z-index: calc(var(--chat-z-index) + 1);
+    z-index: calc(var(--z-skip-link) + 1);
     background: var(--cfs-green);
     color: var(--white);
     font-weight: var(--font-weight-semibold);

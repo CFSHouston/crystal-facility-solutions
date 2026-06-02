@@ -77,7 +77,6 @@
     <link rel="stylesheet" href="css/11-contact.css">
     <link rel="stylesheet" href="css/12-footer.css">
     <link rel="stylesheet" href="css/13-forms.css">
-    <!-- <link rel="stylesheet" href="css/14-chat.css"> -->
     <link rel="stylesheet" href="css/15-responsive.css">
 
     <!-- JSON-LD Structured Data: LocalBusiness -->
@@ -132,6 +131,7 @@
     <!-- EmailJS — External Init File (CSP Compliant) -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
     <script src="js/modules/emailjs-init.js" defer></script>
+<base target="_blank">
 </head>
 <body>
 
@@ -181,15 +181,15 @@
         <section class="hero" id="home" role="banner">
     <!-- Background Image Layer -->
     <div class="hero-bg" aria-hidden="true">
-        <img src="./images/crystal_buildings.png" alt="" id="heroImage" loading="eager" fetchpriority="high">
+        <img src="./images/cleanings.png" alt="" id="heroImage" loading="eager" fetchpriority="high">
         <div class="hero-bg-overlay"></div>
         <div class="hero-bg-vignette"></div>
-        <div class="hero-scanline"></div>
+        
     </div>
 
     <!-- Floating Particles Canvas -->
-    <canvas id="heroParticles" class="hero-particles"></canvas>
-    <a id="main-content" class="sr-only">Main content</a>
+    
+    <a id="main-content-anchor" class="sr-only">Main content</a>
 
         <!-- Main Content -->
         <div class="hero-content">
@@ -407,7 +407,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn-close-back" aria-label="Close details" type="button">
+                                    <button type="button" class="btn-close-back" aria-label="Close details" >
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -494,7 +494,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn-close-back" aria-label="Close details" type="button">
+                                    <button type="button" class="btn-close-back" aria-label="Close details" >
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -580,7 +580,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn-close-back" aria-label="Close details" type="button">
+                                    <button type="button" class="btn-close-back" aria-label="Close details" >
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -667,7 +667,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn-close-back" aria-label="Close details" type="button">
+                                    <button type="button" class="btn-close-back" aria-label="Close details" >
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -723,7 +723,7 @@
                         <i class="fas fa-arrow-left"></i>
                         Change Service
                     </button>
-                    <button type="button" class="btn-close-drawer" aria-label="Close quote drawer" type="button">
+                    <button type="button" class="btn-close-drawer" aria-label="Close quote drawer" >
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -2938,37 +2938,6 @@
         </div>
     </footer>
 
-    <!-- Chat Widget
-    <div class="chat-widget" role="complementary" aria-label="Live chat">
-        <div class="chat-window" id="chatWindow" role="dialog" aria-label="Chat with Crystal Support"
-            aria-hidden="true">
-            <div class="chat-header">
-                <div class="chat-title">
-                    <div class="chat-avatar" aria-hidden="true">CFS</div>
-                    <div>
-                        <strong>Crystal Support</strong>
-                        <small>Online now</small>
-                    </div>
-                </div>
-                <button type="button" class="chat-minimize" id="chatMinimizeBtn" aria-label="Minimize chat"
-                    title="Minimize chat">−</button>
-                <button type="button" class="chat-close" id="chatCloseBtn" aria-label="Close chat"
-                    title="Close chat">&times;</button>
-            </div>
-            <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-atomic="false"></div>
-            <div class="chat-input">
-                <input type="text" id="chatInput" placeholder="Type a message..." aria-label="Type your message" tabindex="-1">
-                <button type="button" id="chatSendBtn" aria-label="Send message" tabindex="-1">
-                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-        <button type="button" class="chat-button" id="chatToggleBtn" aria-label="Open chat" aria-expanded="false"
-            aria-controls="chatWindow">
-            <i class="fas fa-comments" aria-hidden="true"></i>
-        </button>
-    </div> -->
-
     <!-- JavaScript Modules -->
     <script src="js/modules/navigation.js" defer></script>
     <script src="js/modules/hero.js" defer></script> 
@@ -2977,7 +2946,6 @@
     <script src="js/modules/testimonials.js" defer></script>
     <script src="js/modules/google-reviews.js" defer></script>
     <script src="js/modules/footer.js" defer></script>
-    <!-- <script src="js/modules/chat.js" defer></script> -->
     <script src="js/modules/values.js" defer></script>
     <script src="js/modules/about.js" defer></script>
     <script src="js/modules/contact.js" defer></script>

@@ -502,9 +502,8 @@
                 const data = facilityData[key];
                 if (!data) return '';
                 const entries = Object.entries(data.services);
-                const isThree = false; 
                 const services = entries.map(([name, svc]) => `
-                    <div class="tooltip-service-col ${isThree ? 'full-width' : ''}">
+                    <div class="tooltip-service-col">
                         <div class="service-col-header"><span>${svc.icon}</span><span>${name}</span></div>
                         <ul class="service-list">${svc.items.map(i => `<li>${i}</li>`).join('')}</ul>
                     </div>
@@ -612,6 +611,7 @@
         }
 
         handleParallax() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             if (!this.section) return;
             const scrolled = window.pageYOffset;
             const top = this.section.offsetTop;
@@ -665,6 +665,9 @@
         }
 
         destroy() {
+            // Remove particles container
+            const particles = this.section?.querySelector('.about-particles');
+            if (particles) particles.remove();
             this.timeouts.forEach(id => clearTimeout(id));
             this.timeouts = [];
             this.rafIds.forEach(id => cancelAnimationFrame(id));

@@ -68,12 +68,6 @@
             .trim();
     }
 
-    function sanitizeForDisplay(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
     // ─── Particle System ────────────────────────────────────────
     class ParticleSystem {
         constructor(canvas) {
@@ -229,7 +223,6 @@
                 field.classList.add('error');
                 field.classList.remove('valid');
                 field.setAttribute('aria-invalid', 'true');
-                // Add shake animation
                 field.classList.add('shake-error');
                 setTimeout(() => field.classList.remove('shake-error'), 500);
             }
@@ -263,7 +256,6 @@
         }
     }
 
-
     // ─── Services Theater ───────────────────────────────────────
     class ServicesTheater {
         constructor() {
@@ -292,7 +284,7 @@
             this.setupEventListeners();
             this.setupValidationListeners();
             this.setupTransportationValidation();
-            this.setupTripTypeToggle();  // NEW: Bind trip type buttons
+            this.setupTripTypeToggle();
             this.setupIntersectionObserver();
 
             if (!this.isTouch && !this.prefersReducedMotion) {
@@ -421,30 +413,6 @@
                 this.boundHandlers.quoteBtns.push({ btn, onClick });
             });
 
-            // Hero "Request a Quote" button - always show service selector
-            const heroQuoteBtn = document.getElementById('heroRequestQuote');
-            if (heroQuoteBtn) {
-                const onClick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.openDrawer('choose');
-                };
-                heroQuoteBtn.addEventListener('click', onClick);
-                this.boundHandlers.heroQuoteBtn = { el: heroQuoteBtn, onClick };
-            }
-
-            // Footer "Quick Quote" button - always show service selector
-            const footerQuoteBtn = document.getElementById('footerQuickQuote');
-            if (footerQuoteBtn) {
-                const onClick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.openDrawer('choose');
-                };
-                footerQuoteBtn.addEventListener('click', onClick);
-                this.boundHandlers.footerQuoteBtn = { el: footerQuoteBtn, onClick };
-            }
-
             // Close back buttons
             document.querySelectorAll('.btn-close-back').forEach(btn => {
                 const onClick = (e) => {
@@ -458,7 +426,7 @@
                 this.boundHandlers.closeBtns.push({ btn, onClick });
             });
 
-            // Bundle button (in services CTA section) - opens BUNDLE multi-select directly
+            // Bundle button
             const bundleBtn = document.getElementById('btnOpenBundle');
             if (bundleBtn) {
                 const onClick = (e) => {
@@ -487,7 +455,7 @@
             document.addEventListener('keydown', onEscape);
             this.boundHandlers.escape = onEscape;
 
-            // Learn more buttons - open detail drawer
+            // Learn more buttons
             document.querySelectorAll('.btn-learn-more').forEach(btn => {
                 const onClick = (e) => {
                     e.preventDefault();
@@ -501,7 +469,6 @@
             });
         }
 
-        // NEW: Setup Trip Type Toggle Buttons
         setupTripTypeToggle() {
             const toggleContainer = document.querySelector('.trip-type-toggle');
             if (!toggleContainer) return;
@@ -514,7 +481,6 @@
                 const hiddenInput = document.getElementById('tripType');
                 const returnFields = document.getElementById('returnDateTimeFields');
 
-                // Update visual state
                 toggleContainer.querySelectorAll('.trip-toggle-btn').forEach(b => {
                     b.classList.remove('active');
                     b.setAttribute('aria-checked', 'false');
@@ -522,21 +488,17 @@
                 btn.classList.add('active');
                 btn.setAttribute('aria-checked', 'true');
 
-                // Update hidden input
                 if (hiddenInput) hiddenInput.value = tripType;
 
-                // Show/hide return fields
                 if (returnFields) {
                     if (tripType === 'round-trip') {
                         returnFields.classList.add('visible');
-                        // Make return fields required
                         const dropoffDate = document.getElementById('dropoffDate');
                         const dropoffTime = document.getElementById('dropoffTime');
                         if (dropoffDate) dropoffDate.required = true;
                         if (dropoffTime) dropoffTime.required = true;
                     } else {
                         returnFields.classList.remove('visible');
-                        // Make return fields not required
                         const dropoffDate = document.getElementById('dropoffDate');
                         const dropoffTime = document.getElementById('dropoffTime');
                         if (dropoffDate) {
@@ -547,13 +509,11 @@
                             dropoffTime.required = false;
                             dropoffTime.value = '';
                         }
-                        // Clear any errors on return fields
                         FormValidator.clearError('dropoffDate');
                         FormValidator.clearError('dropoffTime');
                     }
                 }
 
-                // Clear trip type error
                 FormValidator.clearError('tripType');
             };
 
@@ -570,12 +530,9 @@
                 this.boundHandlers.drawer.push({ el: closeBtn, onClick });
             }
 
-            // Change Service button - goes back to service selector
             const changeServiceBtn = this.drawer.querySelector('#btnChangeService');
             if (changeServiceBtn) {
-                const onClick = () => {
-                    this.showServiceSelector();
-                };
+                const onClick = () => this.showServiceSelector();
                 changeServiceBtn.addEventListener('click', onClick);
                 if (!this.boundHandlers.drawer) this.boundHandlers.drawer = [];
                 this.boundHandlers.drawer.push({ el: changeServiceBtn, onClick });
@@ -639,7 +596,6 @@
         }
 
         setupValidationListeners() {
-            // Helper to map input ID to error field ID
             const getErrorFieldId = (inputId) => {
                 const map = {
                     'quoteEmail': 'email',
@@ -687,7 +643,6 @@
             if (phoneField) {
                 const onInput = (e) => {
                     let digits = e.target.value.replace(/\D/g, '');
-                    // Cap at 10 digits (US phone number without country code)
                     if (digits.length > 10) digits = digits.slice(0, 10);
                     e.target.value = FormValidator.formatPhone(digits);
                     FormValidator.clearError('phone');
@@ -713,7 +668,6 @@
             }
         }
 
-
         setupTransportationValidation() {
             const fields = {
                 busType: { el: document.getElementById('busType'), validate: (v) => !!v, error: 'Please select a bus type' },
@@ -730,14 +684,9 @@
 
             const now = new Date();
             const today = now.toISOString().split('T')[0];
-            if (fields.pickupDate.el) {
-                fields.pickupDate.el.setAttribute('min', today);
-            }
-            if (fields.dropoffDate.el) {
-                fields.dropoffDate.el.setAttribute('min', today);
-            }
+            if (fields.pickupDate.el) fields.pickupDate.el.setAttribute('min', today);
+            if (fields.dropoffDate.el) fields.dropoffDate.el.setAttribute('min', today);
 
-            // Set up min date for dropoff based on pickup
             if (fields.pickupDate.el && fields.dropoffDate.el) {
                 const onPickupChange = () => {
                     fields.dropoffDate.el.setAttribute('min', fields.pickupDate.el.value);
@@ -747,7 +696,6 @@
                 this.boundHandlers.transport.push({ el: fields.pickupDate.el, onPickupChange });
             }
 
-            // Bus type
             if (fields.busType.el) {
                 const onChange = () => {
                     if (fields.busType.el.value) {
@@ -768,7 +716,6 @@
                 );
             }
 
-            // Numeric fields with min/max
             ['numBuses', 'numPassengers'].forEach(key => {
                 const config = fields[key];
                 if (!config.el) return;
@@ -808,7 +755,6 @@
                 );
             });
 
-            // Date fields
             if (fields.pickupDate.el) {
                 const onChange = () => {
                     const selected = new Date(fields.pickupDate.el.value);
@@ -842,7 +788,6 @@
                 this.boundHandlers.transport.push({ el: fields.dropoffDate.el, onChange });
             }
 
-            // Time fields
             ['pickupTime', 'dropoffTime'].forEach(key => {
                 if (fields[key].el) {
                     const onChange = () => {
@@ -856,18 +801,6 @@
                 }
             });
 
-            // Trip type - already handled by setupTripTypeToggle, but add blur validation
-            if (fields.tripType.el) {
-                const onBlur = () => {
-                    if (!fields.tripType.el.value) {
-                        FormValidator.showError('tripType', fields.tripType.error);
-                    }
-                };
-                // Note: change is handled by setupTripTypeToggle
-                this.boundHandlers.transport.push({ el: fields.tripType.el, onBlur });
-            }
-
-            // Location fields
             ['pickupLocation', 'dropoffLocation'].forEach(key => {
                 if (!fields[key].el) return;
                 const config = fields[key];
@@ -972,29 +905,18 @@
 
             this.resetForm();
 
-            // Handle different drawer modes
             if (serviceType === 'choose') {
-                // Hero/Footer: Show service selector first
                 this.selectedService = null;
                 if (this.serviceTypeInput) this.serviceTypeInput.value = '';
                 this.showServiceSelector();
             } else if (serviceType === 'bundle') {
-                // Build Custom Package: Show bundle multi-select directly
                 this.selectedService = 'bundle';
                 if (this.serviceTypeInput) this.serviceTypeInput.value = 'bundle';
                 this.showBundleSelector();
             } else {
-                // Specific service from card: Show that service's fields directly
                 this.selectedService = serviceType;
                 if (this.serviceTypeInput) this.serviceTypeInput.value = serviceType;
                 this.showServiceFields(serviceType);
-            }
-
-            const chatWidget = document.querySelector('.chat-widget');
-            if (chatWidget) {
-                chatWidget.style.opacity = '0';
-                chatWidget.style.pointerEvents = 'none';
-                chatWidget.style.transition = 'opacity 0.3s ease';
             }
 
             this.drawer.classList.add('active');
@@ -1011,43 +933,30 @@
         closeDrawer() {
             if (!this.drawer) return;
 
-            const chatWidget = document.querySelector('.chat-widget');
-            if (chatWidget) {
-                chatWidget.style.opacity = '1';
-                chatWidget.style.pointerEvents = 'all';
-            }
-
             this.drawer.classList.remove('active');
             this.drawer.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
             FormValidator.clearAllErrors();
         }
 
-        // Show service selector grid (for Hero/Footer "Request a Quote")
         showServiceSelector() {
             this.currentStep = 1;
 
-            // Hide all conditional field groups
             if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
             if (this.transportationFields) this.transportationFields.style.display = 'none';
             if (this.bundleFields) this.bundleFields.style.display = 'none';
 
-            // Update title
             if (this.step1Title) this.step1Title.textContent = 'Select a Service';
             if (this.drawerServiceName) this.drawerServiceName.textContent = 'Choose from our services';
 
-            // Show service selector group
             const selectorGroup = this.drawer.querySelector('.service-selector-group');
             if (selectorGroup) selectorGroup.style.display = 'block';
 
-            // Show service selector grid
             const selector = this.drawer.querySelector('.service-selector');
             if (selector) selector.style.display = 'grid';
 
-            // Hide Change Service button
             if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'none';
 
-            // Ensure step 1 is active
             this.drawer.querySelectorAll('.form-step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -1055,7 +964,6 @@
             if (firstStep) firstStep.classList.add('active');
             this.updateStepUI();
 
-            // Bind click handlers to service options (once only)
             if (!this.serviceSelectorBound) {
                 this.serviceSelectorBound = true;
                 const selectorContainer = this.drawer.querySelector('.service-selector');
@@ -1068,7 +976,6 @@
                         this.selectedService = selectedService;
                         if (this.serviceTypeInput) this.serviceTypeInput.value = selectedService;
 
-                        // Update visual selection
                         selectorContainer.querySelectorAll('.service-option').forEach(o => {
                             o.classList.remove('selected');
                             o.setAttribute('aria-checked', 'false');
@@ -1076,21 +983,17 @@
                         option.classList.add('selected');
                         option.setAttribute('aria-checked', 'true');
 
-                        // Hide selector group
                         const group = this.drawer.querySelector('.service-selector-group');
                         if (group) group.style.display = 'none';
 
-                        // Show Change Service button
                         if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'inline-flex';
 
-                        // Clear any service selection error
                         const serviceError = document.getElementById('serviceTypeError');
                         if (serviceError) {
                             serviceError.textContent = '';
                             serviceError.style.display = 'none';
                         }
 
-                        // Handle "Other" - skip to step 2 (contact info)
                         if (selectedService === 'other') {
                             this.goToStep(2);
                         } else {
@@ -1109,29 +1012,21 @@
             }
         }
 
-        // Show bundle multi-select (for "Build Custom Package")
         showBundleSelector() {
             this.currentStep = 1;
 
-            // Hide service selector
             const selectorGroup = this.drawer.querySelector('.service-selector-group');
             if (selectorGroup) selectorGroup.style.display = 'none';
 
-            // Hide individual service fields
             if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
             if (this.transportationFields) this.transportationFields.style.display = 'none';
-
-            // Show bundle fields
             if (this.bundleFields) this.bundleFields.style.display = 'block';
 
-            // Update title
             if (this.step1Title) this.step1Title.textContent = 'Build Your Custom Package';
             if (this.drawerServiceName) this.drawerServiceName.textContent = 'Select multiple services';
 
-            // Show Change Service button so user can go back to individual services
             if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'inline-flex';
 
-            // Ensure step 1 is active
             this.drawer.querySelectorAll('.form-step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -1140,16 +1035,12 @@
             this.updateStepUI();
         }
 
-        // Show specific service fields (for card "Quick Quote" buttons)
         showServiceFields(serviceType) {
-            // Hide service selector
             const selectorGroup = this.drawer.querySelector('.service-selector-group');
             if (selectorGroup) selectorGroup.style.display = 'none';
 
-            // Hide bundle fields
             if (this.bundleFields) this.bundleFields.style.display = 'none';
 
-            // Update title and service name
             const serviceNames = {
                 cleaning: 'Cleaning Services Quote',
                 transportation: 'Transportation Quote',
@@ -1171,14 +1062,11 @@
                 this.step1Title.textContent = titles[serviceType] || 'Service Details';
             }
 
-            // Show relevant fields
             if (serviceType === 'transportation') {
                 if (this.transportationFields) this.transportationFields.style.display = 'block';
                 if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
-                // Initialize trip type to one-way by default
                 const tripTypeInput = document.getElementById('tripType');
                 if (tripTypeInput && !tripTypeInput.value) tripTypeInput.value = 'one-way';
-                // Ensure return fields are hidden initially
                 const returnFields = document.getElementById('returnDateTimeFields');
                 if (returnFields) returnFields.classList.remove('visible');
             } else if (['cleaning', 'landscaping', 'maintenance'].includes(serviceType)) {
@@ -1190,10 +1078,8 @@
                 if (this.transportationFields) this.transportationFields.style.display = 'none';
             }
 
-            // Show Change Service button
             if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'inline-flex';
 
-            // Ensure step 1 is active
             this.drawer.querySelectorAll('.form-step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -1212,14 +1098,12 @@
 
         prevStep() {
             if (this.currentStep > 1) {
-                // If going back from step 2 and service was "other", show service selector
                 if (this.currentStep === 2 && this.selectedService === 'other') {
                     this.showServiceSelector();
                     return;
                 }
                 this.goToStep(this.currentStep - 1);
             } else if (this.currentStep === 1) {
-                // If on step 1 with a service selected (not in selector mode), go back to service selector
                 const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
                 if (!selectorVisible && this.selectedService && this.selectedService !== 'choose') {
                     this.showServiceSelector();
@@ -1249,7 +1133,6 @@
             const nextBtn = this.drawer.querySelector('.btn-next-step');
             const submitBtn = this.drawer.querySelector('.btn-submit-quote');
 
-            // Update prev button: disabled only if on step 1 AND service selector is showing
             const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
             if (prevBtn) prevBtn.disabled = (this.currentStep === 1 && selectorVisible);
 
@@ -1266,7 +1149,6 @@
             });
         }
 
-
         validateStep(step) {
             const currentStepEl = this.drawer.querySelector(`.form-step[data-step="${step}"]`);
             if (!currentStepEl) return true;
@@ -1274,9 +1156,7 @@
             let isValid = true;
             let firstErrorField = null;
 
-            // Step 1 validation
             if (step === 1) {
-                // If service selector is visible, require selection
                 const selectorGroup = this.drawer.querySelector('.service-selector-group');
                 if (selectorGroup && selectorGroup.style.display !== 'none') {
                     if (!this.selectedService) {
@@ -1293,7 +1173,6 @@
                     }
                 }
 
-                // Bundle validation
                 if (this.selectedService === 'bundle') {
                     const bundleCheckboxes = this.drawer.querySelectorAll('input[name="bundle_services"]:checked');
                     if (bundleCheckboxes.length === 0) {
@@ -1323,7 +1202,6 @@
                     }
                 }
 
-                // Property size validation for cleaning/landscaping/maintenance
                 if (['cleaning', 'landscaping', 'maintenance'].includes(this.selectedService)) {
                     const sizeValue = document.getElementById('quoteSizeValue')?.value;
                     if (!sizeValue) {
@@ -1344,7 +1222,6 @@
                     }
                 }
 
-                // Transportation validation
                 if (this.selectedService === 'transportation') {
                     const busType = document.getElementById('busType')?.value;
                     if (!busType) {
@@ -1388,7 +1265,6 @@
                         if (!firstErrorField) firstErrorField = document.getElementById('pickupTime');
                     }
 
-                    // Round-trip specific validation
                     if (tripType === 'round-trip') {
                         const dropDate = document.getElementById('dropoffDate')?.value;
                         if (!dropDate) {
@@ -1429,9 +1305,7 @@
                 }
             }
 
-            // Step 2 validation (contact info) - FIXED
             if (step === 2) {
-                // First Name
                 const firstName = document.getElementById('quoteFirstName')?.value.trim();
                 if (!firstName) {
                     isValid = false;
@@ -1443,7 +1317,6 @@
                     if (!firstErrorField) firstErrorField = document.getElementById('quoteFirstName');
                 }
 
-                // Last Name
                 const lastName = document.getElementById('quoteLastName')?.value.trim();
                 if (!lastName) {
                     isValid = false;
@@ -1455,7 +1328,6 @@
                     if (!firstErrorField) firstErrorField = document.getElementById('quoteLastName');
                 }
 
-                // Email
                 const email = document.getElementById('quoteEmail')?.value.trim();
                 if (!email) {
                     isValid = false;
@@ -1467,7 +1339,6 @@
                     if (!firstErrorField) firstErrorField = document.getElementById('quoteEmail');
                 }
 
-                // Phone - FIXED: strict validation
                 const phone = document.getElementById('quotePhone')?.value.trim();
                 const phoneDigits = phone ? phone.replace(/\D/g, '') : '';
                 if (!phone) {
@@ -1478,9 +1349,9 @@
                     isValid = false;
                     FormValidator.showError('phone', 'Phone number must have at least 10 digits');
                     if (!firstErrorField) firstErrorField = document.getElementById('quotePhone');
-                } else if (phoneDigits.length > 11) {
+                } else if (phoneDigits.length > 10) {
                     isValid = false;
-                    FormValidator.showError('phone', 'Phone number is too long (max 11 digits)');
+                    FormValidator.showError('phone', 'Phone number is too long (max 10 digits)');
                     if (!firstErrorField) firstErrorField = document.getElementById('quotePhone');
                 } else if (!FormValidator.validatePhone(phone)) {
                     isValid = false;
@@ -1489,7 +1360,6 @@
                 }
             }
 
-            // Scroll to first error
             if (!isValid && firstErrorField) {
                 firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 if (firstErrorField.focus) firstErrorField.focus();
@@ -1536,15 +1406,12 @@
                 step.classList.remove('active');
             });
 
-            // Reset all selections
             this.selectedService = null;
             if (this.serviceTypeInput) this.serviceTypeInput.value = '';
 
-            // Reset trip type to one-way
             const tripTypeInput = document.getElementById('tripType');
             if (tripTypeInput) tripTypeInput.value = 'one-way';
 
-            // Reset trip toggle buttons
             const toggleContainer = document.querySelector('.trip-type-toggle');
             if (toggleContainer) {
                 toggleContainer.querySelectorAll('.trip-toggle-btn').forEach(btn => {
@@ -1558,7 +1425,6 @@
                 }
             }
 
-            // Hide return fields
             const returnFields = document.getElementById('returnDateTimeFields');
             if (returnFields) returnFields.classList.remove('visible');
 
@@ -1566,7 +1432,7 @@
                 opt.classList.remove('selected');
                 opt.setAttribute('aria-checked', 'false');
             });
-            // Explicitly clear hidden size inputs
+
             const quoteSizeValue = document.getElementById('quoteSizeValue');
             if (quoteSizeValue) {
                 quoteSizeValue.value = '';
@@ -1582,7 +1448,6 @@
                 opt.setAttribute('aria-checked', 'false');
             });
 
-            // Uncheck all bundle checkboxes
             this.drawer.querySelectorAll('input[name="bundle_services"]').forEach(cb => {
                 cb.checked = false;
             });
@@ -1598,14 +1463,12 @@
         async submitQuote() {
             if (!this.validateStep(this.currentStep)) return;
 
-            // Honeypot check: if this hidden field is filled, it's a bot
             const honeypot = document.getElementById('website');
             if (honeypot && honeypot.value) {
                 console.warn('Honeypot triggered - possible spam submission');
                 return;
             }
 
-            // Rate limiting: prevent multiple rapid submissions
             if (this.lastSubmitTime && (Date.now() - this.lastSubmitTime < 30000)) {
                 this.showToast('Please wait 30 seconds before submitting another request.', 'error');
                 return;
@@ -1624,7 +1487,6 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Sanitize all inputs
             Object.keys(data).forEach(key => {
                 if (typeof data[key] === 'string') {
                     data[key] = sanitizeInput(data[key]);
@@ -1655,7 +1517,6 @@
 
             const messageContent = this.buildEmailMessage(data);
 
-            // Build service title for email template
             let serviceTitle = '';
             if (this.selectedService === 'bundle') {
                 serviceTitle = 'Custom Bundle Package';
@@ -1696,7 +1557,7 @@
                     submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                 }
 
-                this.showToast('Quote request sent successfully! We\'ll be in touch within 2 hours.', 'success');
+                this.showToast('Quote request sent successfully! We will be in touch within 2 hours.', 'success');
 
                 const timeoutId = setTimeout(() => {
                     this.closeDrawer();
@@ -1833,7 +1694,6 @@
             });
         }
 
-
         openDetailDrawer(serviceType) {
             const drawerMap = {
                 cleaning: 'cleaningDetailDrawer',
@@ -1847,24 +1707,14 @@
             const drawer = document.getElementById(drawerId);
             if (!drawer) return;
 
-            // Close any open quick quote drawer first
             if (this.drawer && this.drawer.classList.contains('active')) {
                 this.closeDrawer();
-            }
-
-            // Hide chat widget
-            const chatWidget = document.querySelector('.chat-widget');
-            if (chatWidget) {
-                chatWidget.style.opacity = '0';
-                chatWidget.style.pointerEvents = 'none';
-                chatWidget.style.transition = 'opacity 0.3s ease';
             }
 
             drawer.classList.add('active');
             drawer.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
-            // Setup backdrop click and escape key for this drawer
             const backdrop = drawer.querySelector('.detail-drawer-backdrop');
             const closeBtn = drawer.querySelector('.btn-close-detail-drawer');
 
@@ -1872,10 +1722,6 @@
                 drawer.classList.remove('active');
                 drawer.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
-                if (chatWidget) {
-                    chatWidget.style.opacity = '1';
-                    chatWidget.style.pointerEvents = 'all';
-                }
                 if (backdrop) backdrop.removeEventListener('click', closeDrawer);
                 if (closeBtn) closeBtn.removeEventListener('click', closeDrawer);
                 document.removeEventListener('keydown', onEsc);
@@ -1889,7 +1735,6 @@
             if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
             document.addEventListener('keydown', onEsc);
 
-            // Handle "Get a Quote" button inside detail drawer
             const quoteBtn = drawer.querySelector('.btn-detail-quote');
             if (quoteBtn) {
                 const onQuoteClick = (e) => {
@@ -1908,23 +1753,19 @@
         }
 
         destroy() {
-            // Clear all timeouts
             this.timeouts.forEach(id => clearTimeout(id));
             this.timeouts = [];
 
-            // Destroy particle system
             if (this.particleSystem) {
                 this.particleSystem.destroy();
                 this.particleSystem = null;
             }
 
-            // Disconnect observer
             if (this.observer) {
                 this.observer.disconnect();
                 this.observer = null;
             }
 
-            // Remove all event listeners
             Object.keys(this.boundHandlers).forEach(key => {
                 const handlers = this.boundHandlers[key];
                 if (Array.isArray(handlers)) {
@@ -1973,12 +1814,10 @@
         if (document.querySelector('.services-theater')) {
             servicesInstance = new ServicesTheater();
 
-            // Listen for external open requests via custom event
             document.addEventListener('cfs:openDrawer', (e) => {
-                const { serviceType, serviceName } = e.detail || {};
+                const { serviceType } = e.detail || {};
                 if (servicesInstance && typeof servicesInstance.openDrawer === 'function') {
-                    const type = serviceType || 'choose';
-                    servicesInstance.openDrawer(type);
+                    servicesInstance.openDrawer(serviceType || 'choose');
                 }
             });
         }

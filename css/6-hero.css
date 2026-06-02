@@ -16,31 +16,9 @@
     background: #0a1628;
 }
 
-/* Mobile: Reduce hero height so image shows better */
-@media (max-width: 768px) {
-    .hero {
-        min-height: auto;
-        height: auto;
-        min-height: 85vh;
-        min-height: 85dvh;
-        max-height: none;
-        padding: calc(70px + 1rem) 1.5rem 3rem;
-    }
-
-    .hero-bg img {
-        object-fit: cover;
-        object-position: center top;
-    }
-}
-
 @supports (height: 100dvh) {
     .hero {
         min-height: 100dvh;
-    }
-    @media (max-width: 768px) {
-        .hero {
-            min-height: 85dvh;
-        }
     }
 }
 
@@ -67,7 +45,8 @@
     opacity: 0;
 }
 
-.hero.loaded .hero-bg img {
+.hero.loaded .hero-bg img,
+.hero-bg img.loaded {
     opacity: 1;
 }
 
@@ -86,7 +65,7 @@
     z-index: 1;
 }
 
-/* Very subtle vignette — lighter for better image visibility */
+/* Very subtle vignette */
 .hero-bg-vignette {
     position: absolute;
     inset: 0;
@@ -97,22 +76,6 @@
         rgba(10, 22, 40, 0.25) 100%
     );
     z-index: 2;
-    pointer-events: none;
-}
-
-/* Scanline effect removed for cleaner look with background images */
-.hero-scanline {
-    display: none;
-}
-
-/* ============================================
-   FLOATING PARTICLES OVERLAY
-   ============================================ */
-
-.hero-particles {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
     pointer-events: none;
 }
 
@@ -277,15 +240,12 @@
     flex-shrink: 0;
 }
 
-/* Fallback for when typing JS fails */
 .typing-fallback {
     color: #7dd3fc;
     font-weight: 700;
     letter-spacing: 0.12em;
     font-size: inherit;
 }
-
-
 
 @keyframes cursorBlink {
     0%, 100% { opacity: 1; }
@@ -542,7 +502,6 @@
         min-height: 85dvh;
     }
 
-    /* Better background image on mobile - show more of the image */
     .hero-bg img {
         object-fit: cover;
         object-position: center 30%;
@@ -628,7 +587,6 @@
         font-size: 0.9rem;
     }
 
-    /* Hide scroll indicator on mobile - it overlaps */
     .hero-scroll-indicator {
         display: none;
     }
@@ -689,12 +647,11 @@
         font-size: 0.65rem;
     }
 
-    /* Hide scroll indicator */
     .hero-scroll-indicator {
         display: none;
     }
 
-        .hero-bg img {
+    .hero-bg img {
         object-fit: cover;
         object-position: center 20%;
     }
@@ -707,7 +664,6 @@
 @media (prefers-reduced-motion: reduce) {
     .badge,
     .typing-cursor,
-    .hero-scanline,
     .hero-scroll-indicator .scroll-wheel {
         animation: none;
     }
@@ -722,73 +678,5 @@
 
     .hero-bg img {
         transition: none;
-    }
-}
-
-/* ============================================
-   SERVICE SELECTOR (Quick Quote Drawer)
-   ============================================ */
-.service-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.75rem;
-    margin: 1rem 0;
-}
-
-.service-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: inherit;
-}
-
-.service-option i {
-    font-size: 1.5rem;
-    color: var(--cfs-green, #7cb342);
-    transition: all 0.3s ease;
-}
-
-.service-option:hover {
-    background: rgba(124, 179, 66, 0.1);
-    border-color: rgba(124, 179, 66, 0.4);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.15);
-}
-
-.service-option.selected,
-.service-option[aria-checked="true"] {
-    background: rgba(124, 179, 66, 0.2);
-    border-color: var(--cfs-green, #7cb342);
-    color: #ffffff;
-    box-shadow: 0 0 20px rgba(124, 179, 66, 0.3);
-}
-
-.service-option.selected i,
-.service-option[aria-checked="true"] i {
-    transform: scale(1.15);
-}
-
-@media (max-width: 480px) {
-    .service-selector {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .service-option {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.8rem;
-    }
-
-    .service-option i {
-        font-size: 1.25rem;
     }
 }

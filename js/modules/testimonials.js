@@ -374,12 +374,19 @@
         const scrollProgress = -rect.top / window.innerHeight;
 
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-            section.querySelectorAll('.bg-glow').forEach((glow, index) => {
-                glow.style.transform = `translateY(${scrollProgress * (index + 1) * 20}px)`;
-            });
-            section.querySelectorAll('.quote-mark').forEach((quote, index) => {
-                quote.style.transform = `translateY(${scrollProgress * (index + 1) * 10}px)`;
-            });
+            // Defensive: only animate if elements exist (CSS may have removed them)
+            const glows = section.querySelectorAll('.bg-glow');
+            if (glows.length) {
+                glows.forEach((glow, index) => {
+                    glow.style.transform = `translateY(${scrollProgress * (index + 1) * 20}px)`;
+                });
+            }
+            const quotes = section.querySelectorAll('.quote-mark');
+            if (quotes.length) {
+                quotes.forEach((quote, index) => {
+                    quote.style.transform = `translateY(${scrollProgress * (index + 1) * 10}px)`;
+                });
+            }
         }
     }
 

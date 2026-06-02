@@ -35,7 +35,6 @@
         linear-gradient(rgba(124, 179, 66, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(124, 179, 66, 0.02) 1px, transparent 1px);
     background-size: 60px 60px;
-    animation: gridFloat 20s linear infinite;
 }
 
 @keyframes gridFloat {
@@ -333,16 +332,7 @@
     opacity: 0;
 }
 
-.method-phone .icon-ring {
-    animation: ring-pulse 2s ease-out infinite;
-}
 
-.ring-1 { width: 60px; height: 60px; animation-delay: 0s; }
-.ring-2 { width: 70px; height: 70px; animation-delay: 0.5s; }
-.ring-3 { width: 80px; height: 80px; animation-delay: 1s; }
-
-@keyframes ring-pulse {
-    0% { transform: scale(1); opacity: 0.5; }
     100% { transform: scale(1.5); opacity: 0; }
 }
 
@@ -441,39 +431,18 @@
 
 .form-glass {
     position: relative;
-    /* LIGHTENED: was rgba(255,255,255,0.03) */
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 2.5rem;
     backdrop-filter: blur(20px);
     transform-style: preserve-3d;
-    animation: form-float 6s ease-in-out infinite;
     overflow: hidden;
 }
-
-@keyframes form-float {
-    0%, 100% { transform: translateY(0) rotateX(0); }
     50% { transform: translateY(-10px) rotateX(2deg); }
 }
 
-.form-reflection {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg,
-        transparent 40%,
-        /* LIGHTENED reflection */
-        rgba(255,255,255,0.04) 50%,
-        transparent 60%);
-    animation: reflection-sweep 8s linear infinite;
-    pointer-events: none;
-}
 
-@keyframes reflection-sweep {
-    0% { transform: translateX(-100%) rotate(45deg); }
     100% { transform: translateX(100%) rotate(45deg); }
 }
 
