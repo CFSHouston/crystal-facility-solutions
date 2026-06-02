@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://cfshouston.github.io/crystal-facility-solutions/
+Sitemap: https://cfshouston.com/sitemap.xml
 
 # Disallow admin or private areas (if any exist)
 # Disallow: /admin/

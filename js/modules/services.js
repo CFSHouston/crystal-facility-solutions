@@ -1598,6 +1598,20 @@
         async submitQuote() {
             if (!this.validateStep(this.currentStep)) return;
 
+            // Honeypot check: if this hidden field is filled, it's a bot
+            const honeypot = document.getElementById('website');
+            if (honeypot && honeypot.value) {
+                console.warn('Honeypot triggered - possible spam submission');
+                return;
+            }
+
+            // Rate limiting: prevent multiple rapid submissions
+            if (this.lastSubmitTime && (Date.now() - this.lastSubmitTime < 30000)) {
+                this.showToast('Please wait 30 seconds before submitting another request.', 'error');
+                return;
+            }
+            this.lastSubmitTime = Date.now();
+
             const submitBtn = this.drawer.querySelector('.btn-submit-quote');
             const originalText = submitBtn ? submitBtn.textContent : '';
 
@@ -1663,13 +1677,15 @@
                 to_email: toEmail,
                 name: `${data.first_name} ${data.last_name}`,
                 email: data.email,
+                reply_to: data.email,
                 from_name: `${data.first_name} ${data.last_name}`,
                 from_email: data.email,
                 service: data.service_type_display || this.selectedService,
                 title: serviceTitle,
                 time: new Date().toLocaleString(),
                 message: messageContent,
-                user_message: data.message || 'No additional details provided.'
+                user_message: data.message || 'No additional details provided.',
+                privacy_consent: 'Customer agreed to Privacy Policy via form submission'
             };
 
             try {
