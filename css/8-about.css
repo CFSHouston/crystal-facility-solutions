@@ -720,10 +720,23 @@
    ============================================ */
 .facility-types-header {
     text-align: center;
-    margin: 4rem 0 2rem;
+    margin: 6rem 0 2rem;
     padding: 2rem 0;
     position: relative;
     z-index: 2;
+}
+
+.facility-types-header::before {
+    content: '';
+    position: absolute;
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--cfs-green), transparent);
+    border-radius: 2px;
+    opacity: 0.5;
 }
 
 .facility-types-header .header-eyebrow {
@@ -765,7 +778,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
     padding: 0 3rem;
     z-index: 2;
 }
@@ -1606,9 +1619,9 @@
     }
 
     .details-content[aria-hidden="false"] {
-        max-height: 2000px;
+        max-height: 4000px;
         opacity: 1;
-        padding: 2rem 0.5rem 0.5rem;
+        padding: 2rem 0.5rem 2rem;
     }
 
     /* Facility Tooltip Mobile */
