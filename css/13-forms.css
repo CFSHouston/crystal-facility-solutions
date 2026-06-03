@@ -55,6 +55,13 @@
     gap: 1rem;
 }
 
+.drawer-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
 .drawer-title {
     display: flex;
     align-items: center;
