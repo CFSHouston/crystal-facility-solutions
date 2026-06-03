@@ -524,7 +524,16 @@
                 const vh = window.innerHeight;
                 const m = 12;
 
-                // Default: below the target
+                // MOBILE: Center in viewport
+                if (window.innerWidth <= 768) {
+                    tooltip.style.top = '50%';
+                    tooltip.style.left = '50%';
+                    tooltip.style.transform = 'translate(-50%, -50%)';
+                    tooltip.classList.remove('position-above');
+                    return;
+                }
+
+                // DESKTOP: Position near target
                 let top = rect.bottom + 10;
                 let left = rect.left + rect.width / 2 - tw / 2;
 

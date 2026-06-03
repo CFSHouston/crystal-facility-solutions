@@ -1206,6 +1206,72 @@
 }
 
 /* ============================================
+   FACILITY TOOLTIP MOBILE FIX
+   ============================================ */
+@media (max-width: 768px) {
+    .facility-tooltip {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(0.96) !important;
+        width: calc(100vw - 32px) !important;
+        max-width: 400px !important;
+        max-height: 80vh !important;
+        z-index: 999999 !important;
+    }
+
+    .facility-tooltip.visible {
+        transform: translate(-50%, -50%) scale(1) !important;
+    }
+
+    .facility-tooltip::after,
+    .facility-tooltip.position-above::after {
+        display: none !important;
+    }
+
+    .tooltip-services {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.35rem;
+        padding: 0 0.75rem 0.5rem;
+    }
+
+    .tooltip-service-col {
+        padding: 0.5rem;
+    }
+
+    .service-list li {
+        font-size: 0.7rem;
+        line-height: 1.25;
+    }
+
+    .tooltip-header {
+        padding: 0.75rem 1rem 0.625rem;
+    }
+
+    .tooltip-description {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    .tooltip-highlight {
+        margin: 0 1rem 0.75rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tooltip-services {
+        grid-template-columns: 1fr;
+    }
+    
+    .facility-tooltip {
+        max-height: 85vh !important;
+        width: calc(100vw - 16px) !important;
+    }
+}
+
+/* ============================================
    COMPANY DETAILS - EXPANDABLE SECTION
    ============================================ */
 

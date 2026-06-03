@@ -1018,6 +1018,7 @@
                 }
             }
         }
+
         showBundleSelector() {
             this.currentStep = 1;
 
@@ -1114,14 +1115,32 @@
             }
         }
 
+        // ═══════════════════════════════════════════════════════════
+        // CHANGED: prevStep() — BUNDLE MODE never goes back to Quick Quote
+        // ═══════════════════════════════════════════════════════════
         prevStep() {
+            // BUNDLE MODE: Never go back to Quick Quote service selector
+            if (this.selectedService === 'bundle') {
+                // On step 1 of bundle, close the drawer (no back to Quick Quote)
+                if (this.currentStep === 1) {
+                    this.closeDrawer();
+                    return;
+                }
+                // On steps 2+, go back one step within the bundle form
+                this.goToStep(this.currentStep - 1);
+                return;
+            }
+
+            // NORMAL QUICK QUOTE FLOW
             if (this.currentStep > 1) {
+                // If on step 2 and service is "other", go back to service selector
                 if (this.currentStep === 2 && this.selectedService === 'other') {
                     this.showServiceSelector();
                     return;
                 }
                 this.goToStep(this.currentStep - 1);
             } else if (this.currentStep === 1) {
+                // On step 1, check if service selector is visible
                 const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
                 if (!selectorVisible && this.selectedService && this.selectedService !== 'choose') {
                     this.showServiceSelector();
@@ -1146,13 +1165,32 @@
             this.timeouts.push(timeoutId);
         }
 
+        // ═══════════════════════════════════════════════════════════
+        // CHANGED: updateStepUI() — Hide Back button for bundle on step 1
+        // ═══════════════════════════════════════════════════════════
         updateStepUI() {
             const prevBtn = this.drawer.querySelector('.btn-prev-step');
             const nextBtn = this.drawer.querySelector('.btn-next-step');
             const submitBtn = this.drawer.querySelector('.btn-submit-quote');
 
-            const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
-            if (prevBtn) prevBtn.disabled = (this.currentStep === 1 && selectorVisible);
+            // BUNDLE MODE: Hide Back button on step 1, show on steps 2+
+            if (this.selectedService === 'bundle') {
+                if (prevBtn) {
+                    if (this.currentStep === 1) {
+                        prevBtn.style.display = 'none';  // No back on step 1 for bundle
+                    } else {
+                        prevBtn.style.display = 'inline-flex';
+                        prevBtn.disabled = false;
+                    }
+                }
+            } else {
+                // NORMAL QUICK QUOTE FLOW
+                const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
+                if (prevBtn) {
+                    prevBtn.style.display = 'inline-flex';
+                    prevBtn.disabled = (this.currentStep === 1 && selectorVisible);
+                }
+            }
 
             if (this.currentStep === this.totalSteps) {
                 if (nextBtn) nextBtn.style.display = 'none';
