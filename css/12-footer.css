@@ -244,6 +244,7 @@
 
 .link-text {
     position: relative;
+    font-weight: bolder;
 }
 
 .link-text::after {
