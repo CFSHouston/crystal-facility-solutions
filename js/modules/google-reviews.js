@@ -9,8 +9,8 @@
     // ─── CONFIG: Update these manually ────────────────────────
     const CONFIG = {
         rating: 5.0,      // ← Change this when reviews update
-        count: 4,         // ← Change this when reviews update
-        lastUpdated: '2026-06-01'  // ← Change date when updated
+        count: 5,         // ← Change this when reviews update
+        lastUpdated: '2026-06-05'  // ← Change date when updated
     };
 
     // ─── Star Generator ───────────────────────────────────────
