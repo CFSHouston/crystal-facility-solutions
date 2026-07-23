@@ -6,6 +6,36 @@
 (function() {
     'use strict';
 
+    // ─── Text Utilities ─────────────────────────────────────────
+    const TextUtils = {
+        capitalizeFirst: (str) => {
+            if (!str || typeof str !== 'string') return str;
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+
+        capitalizeWords: (str) => {
+            if (!str || typeof str !== 'string') return str;
+            return str
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        },
+
+        formatForEmail: (data) => {
+            const formatted = { ...data };
+
+            ['first_name', 'last_name', 'firstName', 'lastName', 'company', 'school', 'name'].forEach(key => {
+                if (formatted[key]) formatted[key] = TextUtils.capitalizeWords(formatted[key]);
+            });
+
+            ['property_size', 'propertySize', 'service_type', 'serviceType', 'service'].forEach(key => {
+                if (formatted[key]) formatted[key] = TextUtils.capitalizeFirst(formatted[key]);
+            });
+
+            return formatted;
+        }
+    };
+
     // ─── Configuration ──────────────────────────────────────────
     const CONFIG = {
         tiltMaxAngle: 8,
@@ -944,7 +974,6 @@
         showServiceSelector() {
             this.currentStep = 1;
 
-            // Reset title to Quick Quote
             if (this.drawerTitle) this.drawerTitle.textContent = 'Quick Quote';
             if (this.drawerIcon) this.drawerIcon.className = 'fas fa-calculator';
             if (this.drawerServiceName) this.drawerServiceName.textContent = 'Choose from our services';
@@ -1022,29 +1051,22 @@
         showBundleSelector() {
             this.currentStep = 1;
 
-            // Set Bulk Quote title
             if (this.drawerTitle) this.drawerTitle.textContent = 'Bulk Quote';
             if (this.drawerIcon) this.drawerIcon.className = 'fas fa-layer-group';
             if (this.drawerServiceName) this.drawerServiceName.textContent = 'Combine multiple services';
 
-            // Hide service selector
             const selectorGroup = this.drawer.querySelector('.service-selector-group');
             if (selectorGroup) selectorGroup.style.display = 'none';
 
-            // Hide individual service fields
             if (this.propertySizeGroup) this.propertySizeGroup.style.display = 'none';
             if (this.transportationFields) this.transportationFields.style.display = 'none';
-            
-            // Show bundle fields
+
             if (this.bundleFields) this.bundleFields.style.display = 'block';
 
-            // Update step title
             if (this.step1Title) this.step1Title.textContent = 'Build Your Custom Package';
 
-            // NO Change Service button for bundle flow
             if (this.changeServiceBtn) this.changeServiceBtn.style.display = 'none';
 
-            // Activate step 1
             this.drawer.querySelectorAll('.form-step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -1115,32 +1137,23 @@
             }
         }
 
-        // ═══════════════════════════════════════════════════════════
-        // CHANGED: prevStep() — BUNDLE MODE never goes back to Quick Quote
-        // ═══════════════════════════════════════════════════════════
         prevStep() {
-            // BUNDLE MODE: Never go back to Quick Quote service selector
             if (this.selectedService === 'bundle') {
-                // On step 1 of bundle, close the drawer (no back to Quick Quote)
                 if (this.currentStep === 1) {
                     this.closeDrawer();
                     return;
                 }
-                // On steps 2+, go back one step within the bundle form
                 this.goToStep(this.currentStep - 1);
                 return;
             }
 
-            // NORMAL QUICK QUOTE FLOW
             if (this.currentStep > 1) {
-                // If on step 2 and service is "other", go back to service selector
                 if (this.currentStep === 2 && this.selectedService === 'other') {
                     this.showServiceSelector();
                     return;
                 }
                 this.goToStep(this.currentStep - 1);
             } else if (this.currentStep === 1) {
-                // On step 1, check if service selector is visible
                 const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
                 if (!selectorVisible && this.selectedService && this.selectedService !== 'choose') {
                     this.showServiceSelector();
@@ -1165,26 +1178,21 @@
             this.timeouts.push(timeoutId);
         }
 
-        // ═══════════════════════════════════════════════════════════
-        // CHANGED: updateStepUI() — Hide Back button for bundle on step 1
-        // ═══════════════════════════════════════════════════════════
         updateStepUI() {
             const prevBtn = this.drawer.querySelector('.btn-prev-step');
             const nextBtn = this.drawer.querySelector('.btn-next-step');
             const submitBtn = this.drawer.querySelector('.btn-submit-quote');
 
-            // BUNDLE MODE: Hide Back button on step 1, show on steps 2+
             if (this.selectedService === 'bundle') {
                 if (prevBtn) {
                     if (this.currentStep === 1) {
-                        prevBtn.style.display = 'none';  // No back on step 1 for bundle
+                        prevBtn.style.display = 'none';
                     } else {
                         prevBtn.style.display = 'inline-flex';
                         prevBtn.disabled = false;
                     }
                 }
             } else {
-                // NORMAL QUICK QUOTE FLOW
                 const selectorVisible = this.drawer.querySelector('.service-selector-group')?.style.display !== 'none';
                 if (prevBtn) {
                     prevBtn.style.display = 'inline-flex';
@@ -1556,6 +1564,11 @@
                 data.bundle_services = Array.from(checkedServices).map(cb => cb.value).join(', ');
             }
 
+            // ═══════════════════════════════════════════════════════════
+            // CAPITALIZATION: Format data before building email
+            // ═══════════════════════════════════════════════════════════
+            const formattedData = TextUtils.formatForEmail(data);
+
             let toEmail = CONFIG.emails.default;
             if (['cleaning', 'landscaping', 'maintenance'].includes(this.selectedService)) {
                 toEmail = CONFIG.emails.cleaning;
@@ -1573,7 +1586,7 @@
                 }
             }
 
-            const messageContent = this.buildEmailMessage(data);
+            const messageContent = this.buildEmailMessage(formattedData);
 
             let serviceTitle = '';
             if (this.selectedService === 'bundle') {
@@ -1592,18 +1605,21 @@
                 serviceTitle = 'Service Request';
             }
 
+            // ═══════════════════════════════════════════════════════════
+            // CAPITALIZATION: Use formattedData for templateParams
+            // ═══════════════════════════════════════════════════════════
             const templateParams = {
                 to_email: toEmail,
-                name: `${data.first_name} ${data.last_name}`,
-                email: data.email,
-                reply_to: data.email,
-                from_name: `${data.first_name} ${data.last_name}`,
-                from_email: data.email,
-                service: data.service_type_display || this.selectedService,
+                name: `${formattedData.first_name} ${formattedData.last_name}`,
+                email: formattedData.email,
+                reply_to: formattedData.email,
+                from_name: `${formattedData.first_name} ${formattedData.last_name}`,
+                from_email: formattedData.email,
+                service: formattedData.service_type_display || TextUtils.capitalizeFirst(this.selectedService),
                 title: serviceTitle,
                 time: new Date().toLocaleString(),
                 message: messageContent,
-                user_message: data.message || 'No additional details provided.',
+                user_message: formattedData.message || 'No additional details provided.',
                 privacy_consent: 'Customer agreed to Privacy Policy via form submission'
             };
 

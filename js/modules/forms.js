@@ -6,11 +6,41 @@
 (function() {
     'use strict';
 
+    // ─── Text Utilities ─────────────────────────────────────────
+    const TextUtils = {
+        capitalizeFirst: (str) => {
+            if (!str || typeof str !== 'string') return str;
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+
+        capitalizeWords: (str) => {
+            if (!str || typeof str !== 'string') return str;
+            return str
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        },
+
+        formatForEmail: (data) => {
+            const formatted = { ...data };
+
+            ['first_name', 'last_name', 'firstName', 'lastName', 'company', 'school', 'name'].forEach(key => {
+                if (formatted[key]) formatted[key] = TextUtils.capitalizeWords(formatted[key]);
+            });
+
+            ['property_size', 'propertySize', 'service_type', 'serviceType', 'service'].forEach(key => {
+                if (formatted[key]) formatted[key] = TextUtils.capitalizeFirst(formatted[key]);
+            });
+
+            return formatted;
+        }
+    };
+
     // ─── Configuration ──────────────────────────────────────────
     const CONFIG = {
         phone: '281-506-8826',
         validators: {
-            name: (name) => /^[a-zA-Z\\s]{2,}$/.test(name.trim()),
+            name: (name) => /^[a-zA-Z\s]{2,}$/.test(name.trim()),
             email: (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()),
             phone: (phone) => phone.replace(/\D/g, '').length >= 10,
             sqFt: (sqFt) => /^\d+(\.\d+)?$/.test(sqFt.trim()) && parseFloat(sqFt) > 0,
@@ -274,12 +304,17 @@
 
         setLoadingState(form, true);
 
+        // ═══════════════════════════════════════════════════════════
+        // CAPITALIZATION: Format name before sending
+        // ═══════════════════════════════════════════════════════════
+        const formattedName = TextUtils.capitalizeWords(name);
+
         try {
             const templateParams = {
                 to_email: 'info@cfshouston.com',
-                name: name,
+                name: formattedName,
                 email: email,
-                from_name: name,
+                from_name: formattedName,
                 from_email: email,
                 service: 'Feedback Form',
                 title: 'Customer Feedback',
@@ -289,7 +324,7 @@
             };
 
             await submitToEmailJS(form, templateParams);
-            showSuccessMessage(`Thank you ${name}! Your ${rating}-star feedback has been submitted.`);
+            showSuccessMessage(`Thank you ${formattedName}! Your ${rating}-star feedback has been submitted.`);
             form.reset();
             resetRating();
             clearAllFeedbackErrors(form);
@@ -459,22 +494,32 @@
 
         setLoadingState(form, true);
 
+        // ═══════════════════════════════════════════════════════════
+        // CAPITALIZATION: Format values before building templateParams
+        // ═══════════════════════════════════════════════════════════
+        const formattedValues = {
+            ...values,
+            name: TextUtils.capitalizeWords(values.name),
+            company: TextUtils.capitalizeWords(values.company),
+            serviceType: TextUtils.capitalizeFirst(values.serviceType || 'General')
+        };
+
         try {
             const templateParams = {
                 to_email: 'info@cfshouston.com',
-                name: values.name,
-                email: values.email,
-                from_name: values.name,
-                from_email: values.email,
-                service: values.serviceType || 'General Quote',
-                title: `${values.serviceType || 'General'} Quote Request`,
+                name: formattedValues.name,
+                email: formattedValues.email,
+                from_name: formattedValues.name,
+                from_email: formattedValues.email,
+                service: formattedValues.serviceType,
+                title: `${formattedValues.serviceType} Quote Request`,
                 time: new Date().toLocaleString(),
-                message: `Phone: ${values.phone}\nCompany: ${values.company}\nProperty Type: ${values.propertyType}\nProperty Size: ${values.propertySize} sq ft\nFrequency: ${values.frequency}`,
-                user_message: `Service Type: ${values.serviceType}\nProperty: ${values.propertyType} (${values.propertySize} sq ft)\nFrequency: ${values.frequency}`
+                message: `Phone: ${formattedValues.phone}\nCompany: ${formattedValues.company}\nProperty Type: ${formattedValues.propertyType}\nProperty Size: ${formattedValues.propertySize} sq ft\nFrequency: ${formattedValues.frequency}`,
+                user_message: `Service Type: ${formattedValues.serviceType}\nProperty: ${formattedValues.propertyType} (${formattedValues.propertySize} sq ft)\nFrequency: ${formattedValues.frequency}`
             };
 
             await submitToEmailJS(form, templateParams);
-            showSuccessMessage(`Thank you ${values.name}! Your quote request for ${values.serviceType} has been submitted. We'll contact you within 24 hours.`);
+            showSuccessMessage(`Thank you ${formattedValues.name}! Your quote request for ${formattedValues.serviceType} has been submitted. We'll contact you within 24 hours.`);
             form.reset();
             clearAllQuoteErrors(form);
 
