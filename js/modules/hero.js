@@ -114,10 +114,10 @@
     ];
 
     const HERO_IMAGES_MOBILE = [
-        { src: './images/cleaning_mobile.png', alt: 'Crystal Facility Solutions - Premium Services' },
-        { src: './images/transportation_mobile.png', alt: 'Safe School Transportation Services' },
-        { src: './images/landscaping_mobile.png', alt: 'Professional Landscaping Services' },
-        { src: './images/maintenance_mobile.png', alt: 'Comprehensive Maintenance Services' }
+        { src: './images/cleaning_mobile.webp', alt: 'Crystal Facility Solutions - Premium Services' },
+        { src: './images/transportation_mobile.webp', alt: 'Safe School Transportation Services' },
+        { src: './images/landscaping_mobile.webp', alt: 'Professional Landscaping Services' },
+        { src: './images/maintenance_mobile.webp', alt: 'Comprehensive Maintenance Services' }
     ];
 
     let currentImageIndex = 0;
