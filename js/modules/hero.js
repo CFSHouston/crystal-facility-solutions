@@ -107,10 +107,10 @@
 
     // ─── Background Image Rotator ─────────────────────────────
     const HERO_IMAGES_DESKTOP = [
-        { src: './images/cleanings.png', alt: 'Crystal Facility Solutions - Premium Services' },
-        { src: './images/transportation.png', alt: 'Safe School Transportation Services' },
-        { src: './images/landscaping.png', alt: 'Professional Landscaping Services' },
-        { src: './images/maintenance.png', alt: 'Comprehensive Maintenance Services' }
+        { src: './images/cleanings.webp', alt: 'Crystal Facility Solutions - Premium Services' },
+        { src: './images/transportation.webp', alt: 'Safe School Transportation Services' },
+        { src: './images/landscaping.webp', alt: 'Professional Landscaping Services' },
+        { src: './images/maintenance.webp', alt: 'Comprehensive Maintenance Services' }
     ];
 
     const HERO_IMAGES_MOBILE = [
